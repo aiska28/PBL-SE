@@ -1,0 +1,49 @@
+body {
+  background-image: url('img/Gedung_TI.jpg');
+  font-family: 'Poppins', sans-serif;
+}
+
+.dropdown-menu {
+  border-radius: 0;
+  padding: 0.5rem 0;
+}
+
+.dropdown-item {
+  padding: 10px 20px;
+}
+
+.dropdown-item:hover {
+  background-color: #0a2d79;
+  color: white;
+}
+
+.form-card {
+  max-width: 700px;
+  border-radius: 15px;
+  padding: 30px;
+  border: 1px solid #e0e0e0;
+}
+
+.form-label {
+  font-weight: 600;
+  color: #0a2d79;
+}
+
+.btn-primary {
+  background-color: #0a2d79;
+  border: none;
+  transition: 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #133ea5;
+}
+
+input.form-control {
+  border-radius: 20px;
+  padding: 10px 15px;
+}
+
+h4 {
+  color: #0a2d79;
+}

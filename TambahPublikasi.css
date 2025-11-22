@@ -1,0 +1,53 @@
+/* Bagian Tambah Publikasi */
+body {
+  background: url(img/Gedung_TI.jpg);
+  background-size: cover;
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+}
+
+.dropdown-menu {
+  border-radius: 0;
+  padding: 0.5rem 0;
+}
+
+.dropdown-item {
+  padding: 10px 20px;
+}
+
+.dropdown-item:hover {
+  background-color: #0a2d79;
+  color: white;
+}
+
+.publikasi-card {
+  background-color: rgba(3, 24, 77, 0.95);
+  color: white;
+  border-radius: 15px;
+  padding: 30px;
+  max-width: 600px;
+  margin: auto;
+  margin-top: 80px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+
+.publikasi-card h3 {
+  color: #f5a623;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.btn-primary {
+  background-color: #f5a623;
+  border: none;
+  transition: 0.3s;
+}
+
+.btn-primary:hover {
+  background-color: #d48c1e;
+}
+
+.form-label {
+  font-weight: 600;
+}

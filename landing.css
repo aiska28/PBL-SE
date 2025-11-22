@@ -1,0 +1,252 @@
+/* GLOBAL */
+body {
+  background-color: #ffffff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* SECTION TITLE (FINAL – TIDAK GANDA) */
+.section-title {
+  font-weight: 900;
+  color: #1c2d64;
+  text-align: center;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  display: inline-block;
+  border-bottom: 3px solid #f28705;
+  padding-bottom: 5px;
+}
+
+/* PROFIL LAB */
+.lab-profile {
+  text-align: center;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+.lab-profile img {
+  width: 220px;
+  height: auto;
+  margin-bottom: 15px;
+  transition: transform 0.3s ease;
+}
+
+.lab-profile img:hover {
+  transform: scale(1.05);
+}
+
+/* CARD STYLE GLOBAL */
+.card {
+  border: none;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+/* FOKUS RISET */
+.badge.bg-light.text-primary {
+  color: #6c757d !important;
+  border-color: #dee2e6 !important;
+  transition: all 0.2s ease;
+}
+
+.badge.bg-light.text-primary:hover {
+  background-color: #f8f9fa;
+  color: #343a40 !important;
+  transform: scale(1.02);
+}
+
+/* PUBLIKASI */
+.publikasi {
+  background-color: #1c2d64;
+  border-radius: 10px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.publikasi .card-header {
+  background-color: #162450;
+  border-bottom: none;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.publikasi .card-body {
+  flex: 1;
+}
+
+.publikasi .tahun {
+  font-size: 1.2rem;
+  color: #ffcc00;
+  font-weight: bold;
+}
+
+/* DOSEN */
+.dosen {
+  background-color: #f28705;
+  border-radius: 10px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.dosen .card-header {
+  background-color: #d26f00;
+  border-bottom: none;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dosen .card-body {
+  flex: 1;
+}
+
+.dosen button {
+  border-radius: 20px;
+}
+
+/* buat kolom selalu sama tinggi */
+.row.align-items-stretch > [class*="col-"] {
+  display: flex;
+}
+
+/* FASILITAS */
+.fasilitas {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+}
+
+.fasilitas:hover {
+  transform: translateY(-5px);
+}
+
+.fasilitas h4 {
+  color: #1c2d64;
+  font-weight: 600;
+}
+
+.fasilitas .card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* KEGIATAN */
+.kegiatan {
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+}
+
+.kegiatan:hover {
+  transform: translateY(-5px);
+}
+
+.kegiatan h4 {
+  color: #1c2d64;
+  font-weight: 600;
+}
+
+.kegiatan .card-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* PERKULIAHAN TERKAIT */
+.card-container {
+  background-color: #1c2d64;
+  border-radius: 10px;
+  padding: 30px;
+  color: white;
+}
+
+.card-container .col-md-4 h6 {
+  font-weight: 700;
+  color: #ffcc00;
+}
+
+.card-container p {
+  font-size: 0.95rem;
+  color: #f1f1f1;
+}
+
+/* SOP LAYANAN */
+.sop-section {
+  margin-top: 50px;
+}
+
+.sop-title {
+  font-weight: bold;
+  color: #1c2d64;
+}
+
+.sop-box {
+  background-color: #f1f1f1;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.sop-btn {
+  border-radius: 20px;
+  padding: 10px 20px;
+}
+
+/* FOOTER */
+.footer-custom {
+  background: #1549A8;
+  color: #fff;
+}
+
+.footer-title {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.footer-subtitle {
+  font-size: 16px;
+  line-height: 1.2;
+}
+
+.footer-subtitle-bold {
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.footer-address {
+  font-size: 14px;
+}
+
+.footer-line {
+  border-top: 2px solid #fff;
+  width: 80%;
+  margin: 4px 0 10px 0;
+}
+
+.footer-link {
+  display: block;
+  color: #fff;
+  text-decoration: underline;
+  font-size: 16px;
+}
+
+.footer-link:hover {
+  opacity: 0.8;
+}
+
+.social-link img {
+  transition: 0.2s;
+}
+
+.social-link img:hover {
+  transform: scale(1.1);
+}

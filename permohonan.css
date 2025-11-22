@@ -1,0 +1,54 @@
+body { 
+  background-color: #f7f7f7; 
+}
+
+.side-card { 
+  width: 160px;
+  background-color: #2E1973;
+  color: white;
+  border-radius: 12px;
+}
+
+.layanan-card {
+  border-radius: 14px;
+  background: white;
+  padding: 18px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+  transition: 0.2s;
+}
+
+.layanan-card:hover {
+  transform: translateY(-4px);
+}
+
+.btn-surat, .btn-hapus {
+  width: auto !important;
+  padding: 6px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  display: inline-block;
+}
+
+/* SURAT */
+.btn-surat {
+  border: 2px solid #012970;
+  color: #012970;
+}
+
+.btn-surat:hover {
+  background: #012970;
+  color: white;
+}
+
+/* HAPUS */
+.btn-hapus {
+  background: #d00000; 
+  color: white;
+  border: none;
+  border-radius: 6px;
+}
+
+.btn-hapus:hover {
+  background: #b30000;
+  color: white;
+}

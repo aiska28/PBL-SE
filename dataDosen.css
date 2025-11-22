@@ -1,0 +1,76 @@
+body {
+  background-color: #f8f9fa;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.lab-header {
+  background-color: #2c106a;
+}
+
+.footer {
+  background-color: #002b7a;
+}
+
+.footer a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.card ul {
+  padding-left: 20px;
+}
+
+/* FOOTER */
+.footer-custom {
+  background: #1549A8;
+  color: #fff;
+}
+
+.footer-title {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.footer-subtitle {
+  font-size: 16px;
+  line-height: 1.2;
+}
+
+.footer-subtitle-bold {
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 1.2;
+}
+
+.footer-address {
+  font-size: 14px;
+}
+
+.footer-line {
+  border-top: 2px solid #fff;
+  width: 80%;
+  margin: 4px 0 10px 0;
+}
+
+.footer-link {
+  display: block;
+  color: #fff;
+  text-decoration: underline;
+  font-size: 16px;
+}
+
+.footer-link:hover {
+  opacity: 0.8;
+}
+
+.social-link img {
+  transition: 0.2s;
+}
+
+.social-link img:hover {
+  transform: scale(1.1);
+}

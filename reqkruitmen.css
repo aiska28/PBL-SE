@@ -1,0 +1,25 @@
+/* body {
+  background-color: #ffffff;
+  font-family: "Poppins", sans-serif;
+}
+
+.card {
+  border-radius: 12px;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 6px 10px;
+  border-radius: 12px;
+}
+
+.container.my-4.text-center {
+  margin-top: 60px;
+  margin-bottom: 40px;
+} */

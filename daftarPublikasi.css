@@ -1,0 +1,41 @@
+/* Gaya Kustom untuk menyesuaikan tampilan */
+
+/* Warna Biru Tua yang digunakan */
+:root {
+    --primary-blue: #0d1a4e;
+    --accent-yellow: #d8c363;
+    --text-detail: #495057;
+}
+
+/* Gaya Tabel */
+.header-bg {
+    background-color: var(--primary-blue);
+    color: white;
+}
+.table-custom thead th {
+    /* Garis kuning di bawah header */
+    border-bottom: 3px solid var(--accent-yellow);
+}
+.table-custom tbody tr:nth-child(odd) {
+    /* Warna abu-abu muda untuk baris ganjil */
+    background-color: #f8f9fa; 
+}
+.table-custom td, .table-custom th {
+    padding: 1rem 0.5rem;
+    vertical-align: middle;
+    font-size: 1rem;
+}
+.table-custom td.ps-4 {
+    /* Membuat nama dosen tebal, sesuai gambar */
+    font-weight: 600; 
+}
+
+/* Gaya Tautan DETAIL */
+.detail-link {
+    color: var(--text-detail);
+    text-decoration: none;
+    font-weight: bold;
+}
+.detail-link:hover {
+    color: var(--accent-yellow);
+}
