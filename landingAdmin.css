@@ -157,3 +157,10 @@ button, a, .nav-link {
   outline: none;
   box-shadow: 0 0 0 3px rgba(10, 45, 121, 0.25);
 }
+
+@media (max-width: 576px) {
+  form {
+    padding: 10px;
+  }
+}
+

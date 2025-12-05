@@ -187,11 +187,11 @@ $pub = pg_fetch_assoc($result_pub);
                 ?>
               </ul>
 
-              <div class="mt-3">
+              <!-- <div class="mt-3">
                 <a href="<?php echo htmlspecialchars($pub['google_scholar'] ?? '#'); ?>" class="btn btn-outline-dark btn-sm me-2">Google Scholar</a>
                 <a href="<?php echo htmlspecialchars($pub['sinta'] ?? '#'); ?>" class="btn btn-outline-dark btn-sm me-2">Sinta</a>
                 <a href="<?php echo htmlspecialchars($pub['scopus'] ?? '#'); ?>" class="btn btn-outline-dark btn-sm me-2">Scopus</a>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
