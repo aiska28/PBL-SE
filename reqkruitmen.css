@@ -1,25 +1,149 @@
-/* body {
-  background-color: #ffffff;
-  font-family: "Poppins", sans-serif;
+/* =======================
+   BODY & FONT
+   ======================= */
+body { 
+    background-color: #f7f7f7; 
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
-.card {
-  border-radius: 12px;
-  transition: all 0.3s ease;
+/* =======================
+   STATISTIK CARD
+   ======================= */
+.stats-card { 
+    border-radius: 15px; 
+    padding: 25px; 
+    color: white; 
+    font-weight: bold; 
+    text-align: center; 
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    width: 100%;
+    max-width: 400px; /* supaya card tidak terlalu lebar di desktop */
+    margin: 0 auto 15px auto; /* center card */
 }
 
-.card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+.stats-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.15);
 }
 
-.badge {
-  font-size: 0.75rem;
-  padding: 6px 10px;
-  border-radius: 12px;
+.total-card { 
+    background-color: #012970; 
 }
 
-.container.my-4.text-center {
-  margin-top: 60px;
-  margin-bottom: 40px;
-} */
+.approved-card { 
+    background-color: #28a745; 
+}
+
+.stats-number { 
+    font-size: 40px; 
+    font-weight: bold; 
+    margin: 10px 0;
+}
+
+/* =======================
+   LAYANAN CARD
+   ======================= */
+.layanan-card { 
+    border-radius: 20px; 
+    background: white; 
+    padding: 18px; 
+    box-shadow: 0 3px 10px rgba(0,0,0,0.12); 
+    transition: transform 0.2s, box-shadow 0.2s; 
+}
+
+.layanan-card:hover { 
+    transform: translateY(-4px); 
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+
+/* =======================
+   BUTTON HAPUS
+   ======================= */
+.btn-hapus { 
+    background: #d00000; 
+    color: white; 
+    border: none; 
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+.btn-hapus:hover { 
+    background: #b30000; 
+    transform: translateY(-2px);
+}
+
+/* =======================
+   RESPONSIVE MOBILE
+   ======================= */
+@media (max-width: 768px) {
+
+    /* Card statistik full width */
+    .stats-card {
+        padding: 15px;
+        font-size: 14px;
+    }
+
+    .stats-number {
+        font-size: 28px;
+    }
+
+    /* Search bar full width */
+    #searchInput {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-bottom: 10px;
+        box-sizing: border-box;
+    }
+
+    /* JTable & Bootstrap Table responsive */
+    .jtable-main-container,
+    .table-responsive {
+        overflow-x: auto;
+        width: 100%;
+    }
+
+    .jtable, table.table {
+        width: 100% !important;
+        font-size: 12px !important;
+    }
+
+    .jtable td, .jtable th,
+    table.table td, table.table th {
+        padding: 6px !important;
+        white-space: nowrap;
+    }
+
+    /* Tombol kecil */
+    .btn-sm {
+        padding: 4px 8px !important;
+        font-size: 11px !important;
+    }
+
+    /* Flex wrap untuk tombol/aksi */
+    .d-flex.gap-2 {
+        flex-wrap: wrap;
+        gap: 6px !important;
+        justify-content: center;
+    }
+
+    /* Card centering */
+    .card-center {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+/* =======================
+   UTILITY CLASS
+   ======================= */
+.card-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

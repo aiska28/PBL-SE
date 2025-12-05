@@ -1,29 +1,29 @@
 <?php
 session_start();
 
-// Redirect jika sudah login
-if (isset($_SESSION['admin'])) {
-    header("Location: LandingAdmin.php");
-    exit;
-}
+// Panggil koneksi PostgreSQL
+require "konekDB.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $admin_user = "admin";
-    $admin_pass = "1234"; 
+    // Ambil data user
+    $query = "SELECT * FROM users WHERE username = $1 LIMIT 1";
+    $result = pg_query_params($conn, $query, [$username]);
+    $user = pg_fetch_assoc($result);
 
-    if ($username === $admin_user && $password === $admin_pass) {
-        $_SESSION['admin'] = $username;
+    if ($user && password_verify($password, $user['password'])) {
+
+        $_SESSION['admin'] = $user['username'];
+
         header("Location: LandingAdmin.php");
         exit;
     } else {
         echo "<script>alert('Username atau password salah!');</script>";
     }
 }
-
 ?>
 
 

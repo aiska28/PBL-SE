@@ -42,6 +42,15 @@ body {
   border-radius: 10px;
 }
 
+.vm-box {
+  width: 100%;
+  max-width: 500px;  /* supaya bentuknya proporsional dan kelihatan sama */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  height: 100%;
+}
+
 /* FOKUS RISET */
 .badge.bg-light.text-primary {
   color: #6c757d !important;
