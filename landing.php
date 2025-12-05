@@ -1,4 +1,5 @@
 <?php
+// koneksi ke database
 include 'konekDB.php';
 ?>
 
@@ -93,15 +94,16 @@ include 'konekDB.php';
     $qVM = pg_query($conn, "SELECT * FROM visi_misi LIMIT 1");
     $vm = pg_fetch_assoc($qVM);
   ?>
-  <div class="row g-4">
+
+  <div class="row g-4 align-items-stretch">
     <div class="col-md-6">
-      <div class="card p-4">
+      <div class="card p-4 h-100 vm-box text-center">
         <h4>VISI</h4>
         <p><?= nl2br($vm['visi']); ?></p>
       </div>
     </div>
     <div class="col-md-6">
-      <div class="card p-4">
+      <div class="card p-4 h-100 vm-box text-center">
         <h4>MISI</h4>
         <ul class="text-start">
           <?php
@@ -194,14 +196,15 @@ include 'konekDB.php';
     <?php
       $qFasilitas = pg_query($conn, "SELECT * FROM FasilitasPeralatan");
       while($fasilitas = pg_fetch_assoc($qFasilitas)) {
-        echo '<div class="col-md-3">
-                <div class="card fasilitas">
-                  <div class="card-body">
-                    <h4>'.$fasilitas['judul'].'</h4>
-                    <p>'.$fasilitas['deskripsi'].'</p>
-                  </div>
-                </div>
-              </div>';
+        echo '
+        <div class="col-md-3">
+          <div class="card fasilitas">
+            <div class="card-body">               
+             <h4>'.$fasilitas['judul'].'</h4>
+              <p>'.$fasilitas['deskripsi'].'</p>
+            </div>
+          </div>
+        </div>';
       }
     ?>
   </div>
@@ -214,14 +217,15 @@ include 'konekDB.php';
     <?php
       $qKegiatan = pg_query($conn, "SELECT * FROM KegiatanProyek");
       while($kegiatan = pg_fetch_assoc($qKegiatan)) {
-        echo '<div class="col-md-3">
-                <div class="card kegiatan">
-                  <div class="card-body">
-                    <h4>'.$kegiatan['judul'].'</h4>
-                    <p>'.$kegiatan['deskripsi'].'</p>
-                  </div>
-                </div>
-              </div>';
+        echo 
+          '<div class="col-md-3">
+            <div class="card kegiatan">
+              <div class="card-body">
+                <h4>'.$kegiatan['judul'].'</h4>
+                <p>'.$kegiatan['deskripsi'].'</p>
+              </div>
+            </div>
+        </div>';
       }
     ?>
   </div>

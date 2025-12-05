@@ -78,7 +78,9 @@ if (!$result) {
 
   <div class="d-flex justify-content-between align-items-center">
     <h3 class="fw-semibold text-secondary mb-0">Tim Laboratorium</h3>
-    <a href="landing.php" class="btn btn-outline-primary btn-sm">← Kembali</a>
+    <a href="landing.php" class="btn btn-warning fw-bold shadow-sm">
+      <i class="bi bi-arrow-left-circle me-1"></i> Kembali
+  </a>
   </div>
 
   <hr>
@@ -86,29 +88,43 @@ if (!$result) {
   <div class="row">
     <?php 
     while ($row = pg_fetch_assoc($result)) {
-        // jika ada foto, gunakan path aslinya, kalau tidak gunakan default
-        $foto = !empty($row['foto']) ? $row['foto'] : 'uploads/default.png';
-        if (!file_exists($foto)) {
-            $foto = 'uploads/default.png';
+        $folder = "uploads/";
+        $fotoFile = trim($row['foto']);
+        $fotoPath = $folder . $fotoFile;
+        if (empty($fotoFile) || !file_exists($fotoPath)) {
+            $fotoPath = $folder . "default.png";
         }
     ?>
       <div class="col-md-4 col-lg-3 mb-4">
         <div class="card text-center shadow-sm border-0">
-          <img src="<?php echo htmlspecialchars($foto); ?>"
-               class="card-img-top mx-auto mt-3"
-               style="width:100px;height:100px;border-radius:50%;object-fit:cover;">
+
+      <div style="
+        width: 130px;
+        height: 130px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin: auto;
+        background: #fff;">
+      <img src="<?= $fotoPath ?>"
+            style="
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                object-position: top;">
+        </div>
 
           <div class="card-body">
-            <h6 class="card-title fw-bold"><?php echo htmlspecialchars($row['nama']); ?></h6>
-            <p class="badge bg-primary">
-              <?php echo htmlspecialchars($row['jabatan'] ?: 'Tidak Ada Jabatan'); ?>
-            </p>
-            <!-- Tombol Detail Dosen -->
-            <a href="dataDosen.php?id_dosen=<?= $row['id_dosen']; ?>" class="btn btn-sm btn-outline-secondary mt-2">Detail Dosen</a>
+            <h6 class="card-title fw-bold"><?= htmlspecialchars($row['nama']); ?></h6>
+            <p class="badge bg-primary"><?= htmlspecialchars($row['jabatan'] ?: 'Tidak Ada Jabatan'); ?></p>
+            <a href="dataDosen.php?id_dosen=<?= $row['id_dosen']; ?>" 
+              class="btn btn-sm btn-outline-secondary mt-2">
+              Detail Dosen
+            </a>
           </div>
         </div>
       </div>
     <?php } ?>
+
   </div>
 </div>
 

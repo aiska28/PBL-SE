@@ -12,6 +12,14 @@ body {
   border: none;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   transition: 0.3s ease;
+  overflow: visible !important;
+}
+
+.card-body {
+  overflow: visible !important;
+  padding-top: 20px; /* supaya tab tidak ketimpa */
+  position: relative; 
+  z-index: 1;
 }
 
 .card:hover {
@@ -131,6 +139,19 @@ td:nth-child(8) {
     text-align: center;
   }
 
+  #adminTab {
+    flex-wrap: wrap; /* biar tombol tab pindah baris */
+    justify-content: center; /* tombol tab di tengah */
+    gap: 5px; /* jarak antar tab */
+  }
+
+  #adminTab .nav-link {
+    flex: 1 1 45%; /* tombol tab bisa fleksibel, 2 per baris */
+    text-align: center;
+    font-size: 14px; /* lebih kecil di mobile */
+    white-space: normal; /* biar teks panjang wrap */
+  }
+
   .container-fluid .btn {
     margin: 5px 0;
     width: 100%;
@@ -163,4 +184,3 @@ button, a, .nav-link {
     padding: 10px;
   }
 }
-
