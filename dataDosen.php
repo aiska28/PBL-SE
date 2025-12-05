@@ -162,7 +162,6 @@ $link_sosial = json_decode($dosen['link_sosial'], true);
                   <li><?= htmlspecialchars($edu['jenjang'] . " | " . $edu['jurusan'] . " | " . $edu['universitas'] . " | " . $edu['tahun']) ?></li>
                 <?php endforeach; ?>
               </ul>
-
               <div class="mt-3 d-flex gap-3">
                 <!-- Publikasi / Link Sosial -->
                 <a href="<?= htmlspecialchars($publikasi[0]['link'] ?? '#') ?>" target="_blank">
