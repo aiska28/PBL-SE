@@ -31,7 +31,7 @@ if (isset($_POST['delete'])) {
 
 /* HITUNG TOTAL & APPROVED */
 $total = pg_fetch_assoc(pg_query($conn,"SELECT COUNT(*) AS total FROM layanan"))['total'];
-$approved = pg_fetch_assoc(pg_query($conn,"SELECT COUNT(*) AS approve FROM layanan WHERE status='approved'"))['approve'];
+$approved = pg_fetch_assoc(pg_query($conn,"SELECT COUNT(*) AS approve FROM layanan WHERE status='pending'"))['approve'];
 
 /* AMBIL DATA LAYANAN */
 $result = pg_query($conn, "
@@ -40,7 +40,6 @@ $result = pg_query($conn, "
         l.full_name AS fullname,
         l.phone_number AS phone,
         l.email,
-        l.tempat_pelaksanaan AS tempat,
         l.tanggal,
         l.file_surat AS surat,
         l.status,
@@ -138,7 +137,6 @@ $result = pg_query($conn, "
         <th>Email</th>
         <th>No HP</th>
         <th>Layanan</th>
-        <th>Tempat</th>
         <th>Tanggal</th>
         <th>Surat</th>
         <th>Status</th>
@@ -153,7 +151,6 @@ $result = pg_query($conn, "
         <td><?= htmlspecialchars($row['email']) ?></td>
         <td><?= htmlspecialchars($row['phone']) ?></td>
         <td><?= htmlspecialchars($row['jenis_layanan']) ?></td>
-        <td><?= htmlspecialchars($row['tempat']) ?></td>
         <td><?= htmlspecialchars($row['tanggal']) ?></td>
         <td>
           <?php if(!empty($row['surat']) && file_exists('uploads/' . $row['surat'])): ?>

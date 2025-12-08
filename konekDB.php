@@ -1,9 +1,9 @@
 <?php
 $host = "localhost";
-$port = "5432";
-$dbname = "softwareEn";
+$port = "5434";
+$dbname = "softwareen";
 $user = "postgres";
-$password = "ailsasahda13"; // ubah sesuai password PostgreSQL kamu
+$password = "12345678"; // ubah sesuai password PostgreSQL kamu
 
 $conn = pg_connect("host=$host port=$port dbname=$dbname user=$user password=$password");
 if (!$conn) {
