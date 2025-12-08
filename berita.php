@@ -1,6 +1,4 @@
 <?php
-// berita.php - halaman lengkap Berita & Pengumuman
-// Pastikan file koneksi db-mu bernama 'konekDB.php' atau ubah include sesuai nama file
 include 'konekDB.php';
 
 // Ambil parameter search/tahun/page jika diakses tanpa ajax (server-side initial render)

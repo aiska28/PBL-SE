@@ -11,10 +11,11 @@ body {
   text-align: center;
   margin-top: 40px;
   margin-bottom: 20px;
-  display: inline-block;
+  display: inline-block;     /* <- balik jadi inline-block */
   border-bottom: 3px solid #f28705;
   padding-bottom: 5px;
 }
+
 
 /* PROFIL LAB */
 .lab-profile {
@@ -44,7 +45,7 @@ body {
 
 .vm-box {
   width: 100%;
-  max-width: 500px;  /* supaya bentuknya proporsional dan kelihatan sama */
+  max-width: 500px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -258,4 +259,99 @@ body {
 
 .social-link img:hover {
   transform: scale(1.1);
+}
+
+/* ========================================================= */
+/* ===============   TIMELINE ROADMAP  ====================== */
+/* ========================================================= */
+
+.timeline {
+    position: relative;
+    max-width: 900px;
+    margin: auto;
+    padding: 20px 0;
+}
+
+.timeline::after {
+    content: '';
+    position: absolute;
+    width: 4px;
+    background-color: #d0d7e4;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 2px;
+}
+
+.timeline-container {
+    padding: 20px 40px;
+    position: relative;
+    width: 50%;
+}
+
+.timeline-container.left {
+    left: 0;
+}
+
+.timeline-container.right {
+    left: 50%;
+}
+
+.timeline-container::before {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-color: #1c2d64;
+    border: 4px solid #ffffff;
+    top: 30px;
+    border-radius: 50%;
+    z-index: 10;
+    left: calc(50% - 12px);
+}
+
+.timeline-content {
+    background: white;
+    padding: 20px 25px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 14px rgba(0,0,0,0.08);
+    width: 100%;
+    border-left: 4px solid #1c2d64;
+}
+
+.timeline-content h3 {
+    margin: 0;
+    color: #1c2d64;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.timeline-content p {
+    margin-top: 8px;
+    line-height: 1.6;
+    color: #333;
+    font-size: 15px;
+}
+
+/* RESPONSIVE TIMELINE */
+@media (max-width: 768px) {
+
+    .timeline-container {
+        width: 100%;
+        padding-left: 70px;
+        padding-right: 25px;
+    }
+
+    .timeline-container.right {
+        left: 0;
+    }
+
+    .timeline::after {
+        left: 30px;
+    }
+
+    .timeline-container::before {
+        left: 22px;
+    }
 }

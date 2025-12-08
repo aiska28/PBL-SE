@@ -58,7 +58,7 @@ include 'konekDB.php';
     $qProfile = pg_query($conn, "SELECT * FROM ProfileLab LIMIT 1");
     $profile = pg_fetch_assoc($qProfile);
   ?>
-  <h3 class="section-title"><?= $profile['judul']; ?></h3>
+  <h2 class="section-title"><?= $profile['judul']; ?></h2>
   <p class="text-center"><?= nl2br($profile['deskripsi']); ?></p>
 
   <!-- Carousel Multi-item -->
@@ -98,13 +98,13 @@ include 'konekDB.php';
   <div class="row g-4 align-items-stretch">
     <div class="col-md-6">
       <div class="card p-4 h-100 vm-box text-center">
-        <h4>VISI</h4>
+        <h2>VISI</h2>
         <p><?= nl2br($vm['visi']); ?></p>
       </div>
     </div>
     <div class="col-md-6">
       <div class="card p-4 h-100 vm-box text-center">
-        <h4>MISI</h4>
+        <h2>MISI</h2>
         <ul class="text-start">
           <?php
             $misiList = explode("\n", $vm['misi']);
@@ -119,9 +119,52 @@ include 'konekDB.php';
   </div>
 </section>
 
+<!-- ROAD MAPP -->
+<?php
+// Ambil data roadmap
+$query = pg_query($conn, "SELECT * FROM roadmap ORDER BY tahun ASC");
+
+// Jika query gagal → jadikan array kosong
+if (!$query) {
+    $roadmap = [];
+} else {
+    $roadmap = pg_fetch_all($query);
+    if (!is_array($roadmap)) {
+        $roadmap = [];
+    }
+}
+?>
+
+<<div class="container"> 
+  <h2 class="section-title">ROADMAP</h2> 
+</div>
+<div class="timeline">
+
+<?php 
+$i = 0;
+
+foreach ($roadmap as $row): 
+    $posisi = ($i % 2 == 0) ? "left" : "right";
+?>
+    <div class="timeline-container <?= $posisi ?>">
+        <div class="timeline-content">
+            <h3><?= htmlspecialchars($row['tahun']) ?></h3>
+            <p><?= htmlspecialchars($row['deskripsi']) ?></p>
+        </div>
+    </div>
+<?php 
+$i++;
+endforeach; 
+?>
+
+</div>
+
+
+
+
 <!-- FOKUS RISET -->
 <section class="container mt-5">
-  <h4 class="section-title">Fokus Riset</h4>
+  <h2 class="section-title">FOKUS RISET</h2>
   <div class="d-flex flex-wrap gap-3" style="justify-content:flex-start;">
     <?php
       $qRiset = pg_query($conn, "SELECT * FROM FokusRiset");
@@ -140,7 +183,7 @@ include 'konekDB.php';
     <div class="col-md-8 d-flex">
       <div class="card publikasi flex-fill">
         <div class="card-header d-flex justify-content-between align-items-center">
-          <h5 class="text-white mb-0">Publikasi</h5>
+          <h2 class="text-white mb-0">PUBLIKASI</h2>
           <span class="tahun">2025</span>
         </div>
         <div class="card-body text-white d-flex flex-column justify-content-between">
@@ -191,7 +234,7 @@ include 'konekDB.php';
 
 <!-- FASILITAS & PERALATAN -->
 <section class="container my-5">
-  <h4 class="section-title">Fasilitas & Peralatan</h4>
+  <h2 class="section-title">FASILITAS & PERALATAN</h2>
   <div class="row g-4 mt-3 text-center">
     <?php
       $qFasilitas = pg_query($conn, "SELECT * FROM FasilitasPeralatan");
@@ -212,7 +255,7 @@ include 'konekDB.php';
 
 <!-- KEGIATAN & PROYEK -->
 <section class="container my-5">
-  <h4 class="section-title">Kegiatan & Proyek</h4>
+  <h2 class="section-title">KEGIATAN & PROYEK</h2>
   <div class="row g-4 mt-3 text-center">
     <?php
       $qKegiatan = pg_query($conn, "SELECT * FROM KegiatanProyek");
@@ -233,7 +276,7 @@ include 'konekDB.php';
 
 <!-- PERKULIAHAN TERKAIT -->
 <section class="container mt-5">
-  <h4 class="section-title">Perkuliahan Terkait</h4>
+  <h2 class="section-title">PERKULIAHAN TERKAIT</h2>
   <div class="card-container mt-4">
     <div class="row g-4">
       <?php
@@ -251,7 +294,7 @@ include 'konekDB.php';
 
 <!-- SOP LAYANAN -->
 <section class="container sop-section">
-  <h5 class="sop-title mb-3">SOP LAYANAN</h5>
+  <h2 class="sop-title mb-3">SOP LAYANAN</h2>
   <div class="row align-items-center">
     <div class="col-md-6">
       <div class="sop-box">
