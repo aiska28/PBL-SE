@@ -31,7 +31,7 @@ if (isset($_POST['delete'])) {
 
 /* HITUNG TOTAL & APPROVED */
 $total = pg_fetch_assoc(pg_query($conn,"SELECT COUNT(*) AS total FROM layanan"))['total'];
-$approved = pg_fetch_assoc(pg_query($conn,"SELECT COUNT(*) AS approve FROM layanan WHERE status='approved'"))['approve'];
+$approved = pg_fetch_assoc(pg_query($conn,"SELECT COUNT(*) AS approve FROM layanan WHERE status='pending'"))['approve'];
 
 /* AMBIL DATA LAYANAN */
 $result = pg_query($conn, "

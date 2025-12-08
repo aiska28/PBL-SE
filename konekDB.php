@@ -1,7 +1,7 @@
 <?php
 $host = "localhost";
-$port = "5432";
-$dbname = "softwareEn";
+$port = "5434";
+$dbname = "softwareen";
 $user = "postgres";
 $password = "ailsasahda13"; // ubah sesuai password PostgreSQL kamu
 
