@@ -86,6 +86,9 @@ if (isset($_GET['hapus_dosen'])) {
         <a href="permohonan.php" class="btn btn-outline-secondary fw-semibold">
           <i class="bi bi-list-ul me-1"></i> Daftar Permohonan
         </a>
+        <a href="login.php" class="btn btn-outline-secondary fw-semibold">
+          <i class="bi bi-list-ul me-1"></i> Logout
+        </a>
       </div>
     </div>
   </div>

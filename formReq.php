@@ -5,6 +5,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // Ambil data input
     $fullname = $_POST['fullname'];
+    $nim = $_POST['nim'];
     $email    = $_POST['email'];
     $phone    = $_POST['phone'];
 
@@ -43,14 +44,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //  Insert ke Database
     $query = "
         INSERT INTO open_recruitment
-        (full_name, email_kampus, phone_number, file_cv, file_ktm)
-        VALUES ($1, $2, $3, $4, $5)
+        (full_name, nim, email_kampus, phone_number, file_cv, file_ktm)
+        VALUES ($1, $2, $3, $4, $5, $6)
     ";
 
     $result = pg_query_params(
         $conn,
         $query,
-        array($fullname, $email, $phone, $cvFile, $ktmFile)
+        array($fullname, $nim, $email, $phone, $cvFile, $ktmFile)
     );
 
     if ($result) {
@@ -146,6 +147,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <label class="form-label">Full Name :</label>
             <input type="text" name="fullname" class="form-control" placeholder="Enter Your Full Name" required>
           </div>
+
+          <div class="mb-3">
+            <label class="form-label">NIM :</label>
+            <input type="text" name="nim" class="form-control" placeholder="Enter Your Student ID" required>
+          </div>
+
 
           <div class="mb-3">
             <label class="form-label">Email Kampus :</label>
