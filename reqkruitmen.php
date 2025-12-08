@@ -8,6 +8,7 @@ if (!$conn) {
 if (isset($_POST['submit_recruitment'])) {
 
     $full_name = $_POST['full_name'];
+    $nim = $_POST['nim'];
     $email_kampus = $_POST['email_kampus'];
     $phone_number = $_POST['phone_number'];
 
@@ -166,6 +167,7 @@ $result = pg_query($conn, "SELECT * FROM open_recruitment ORDER BY created_at DE
             <td><?= $no++ ?></td>
 
             <td class="nama-cell fw-bold"><?= htmlspecialchars($row['full_name']) ?></td>
+            <td><?= htmlspecialchars($row['nim']) ?></td>
             <td><?= htmlspecialchars($row['email_kampus']) ?></td>
             <td><?= htmlspecialchars($row['phone_number']) ?></td>
 
@@ -267,6 +269,7 @@ $(function () {
         fields: {
             no: { title: "No", width: "5%" },
             full_name: { title: "Nama Lengkap", width: "18%" },
+            nim: { title: "NIM", width: "12%" },
             email_kampus: { title: "Email Kampus", width: "18%" },
             phone_number: { title: "No HP", width: "12%" },
             file_cv: { title: "CV", width: "10%" },
@@ -285,6 +288,7 @@ $(function () {
             data.push({
                 no: tds.eq(0).html(),
                 full_name: tds.eq(1).html(),
+                nim: tds.eq(2).html(), 
                 email_kampus: tds.eq(2).html(),
                 phone_number: tds.eq(3).html(),
                 file_cv: tds.eq(4).html(),

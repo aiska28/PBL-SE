@@ -6,7 +6,7 @@ if (isset($_GET['hapus_publikasi'])) {
     $id = $_GET['hapus_publikasi'];
     $query = "DELETE FROM publikasi WHERE id_publikasi = $1";
     pg_query_params($conn, $query, array($id));
-    header("Location: LandingAdmin.php?msg=deleted");
+    header("Location: landingAdmin.php?msg=deleted");
     exit;
 }
 
@@ -15,56 +15,96 @@ if (isset($_GET['hapus_dosen'])) {
     $id = $_GET['hapus_dosen'];
     $query = "DELETE FROM dosen WHERE id_dosen = $1";
     pg_query_params($conn, $query, array($id));
-    header("Location: LandingAdmin.php?msg=deleted");
+    header("Location: landingAdmin.php?msg=deleted");
+    exit;
+}
+
+// ------------------ HANDLE UPDATE PROFILE LAB ------------------
+if (isset($_POST['update_profilelab'])) {
+
+    $id = $_POST['id'];
+    $judul = $_POST['judul'];
+    $deskripsi = $_POST['deskripsi'];
+
+    pg_query_params($conn,
+        "UPDATE ProfileLab SET judul=$1, deskripsi=$2 WHERE id=$3",
+        array($judul, $deskripsi, $id)
+    );
+
+    header("Location: landingAdmin.php?msg=profile_updated");
+    exit;
+}
+
+// ------------------ HANDLE UPDATE VISI MISI ------------------
+if (isset($_POST['update_visimisi'])) {
+
+    $id = $_POST['id'];
+    $visi = $_POST['visi'];
+    $misi = $_POST['misi'];
+
+    pg_query_params($conn,
+        "UPDATE visi_misi SET visi=$1, misi=$2 WHERE id=$3",
+        array($visi, $misi, $id)
+    );
+
+    header("Location: landingAdmin.php?msg=vm_updated");
+    exit;
+}
+
+
+// ------------------ HANDLE HAPUS RISET ------------------
+if (isset($_GET['hapus_riset'])) {
+    pg_query_params($conn,
+        "DELETE FROM FokusRiset WHERE id=$1",
+        array($_GET['hapus_riset'])
+    );
+    header("Location: landingAdmin.php?msg=riset_deleted");
+    exit;
+}
+
+// ------------------ HANDLE HAPUS FASILITAS ------------------
+if (isset($_GET['hapus_fasilitas'])) {
+    pg_query_params($conn,
+        "DELETE FROM FasilitasPeralatan WHERE id=$1",
+        array($_GET['hapus_fasilitas'])
+    );
+    header("Location: landingAdmin.php?msg=fasilitas_deleted");
+    exit;
+}
+
+// ------------------ HANDLE HAPUS KEGIATAN ------------------
+if (isset($_GET['hapus_kegiatan'])) {
+    pg_query_params($conn,
+        "DELETE FROM KegiatanProyek WHERE id=$1",
+        array($_GET['hapus_kegiatan'])
+    );
+    header("Location: landingAdmin.php?msg=kegiatan_deleted");
+    exit;
+}
+
+// ------------------ HANDLE HAPUS KULIAH ------------------
+if (isset($_GET['hapus_kuliah'])) {
+    pg_query_params($conn,
+        "DELETE FROM PerkuliahanTerkait WHERE id=$1",
+        array($_GET['hapus_kuliah'])
+    );
+    header("Location: landingAdmin.php?msg=kuliah_deleted");
     exit;
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="id">
+<html lang="id"> 
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard Admin</title>
 
   <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="LandingAdmin.css">
+  <link rel="stylesheet" href="landingAdmin.css">
 
-  <!-- Tambahan CSS Responsif -->
-  <style>
-    /* Memperkecil font tabel dan tombol di mobile */
-    @media (max-width: 768px) {
-        .table th, .table td {
-            font-size: 12px;
-            padding: 0.25rem;
-        }
-        .btn {
-            font-size: 12px;
-            padding: 0.25rem 0.5rem;
-        }
-        .navbar .d-flex {
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-        /* Teks tabel yang panjang dipotong */
-        .text-truncate {
-            max-width: 120px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-    }
-
-    /* Gambar kecil agar pas di mobile */
-    @media (max-width: 576px) {
-        img.rounded {
-            width: 40px !important;
-            height: 40px !important;
-        }
-    }
-  </style>
 </head>
 <body>
 
@@ -80,11 +120,14 @@ if (isset($_GET['hapus_dosen'])) {
         <a href="landing.php" class="btn btn-outline-primary fw-semibold">
           <i class="bi bi-house-door-fill me-1"></i> HOME
         </a>
-        <a href="reqkruitmen.php" target="_blank" class="btn btn-outline-success fw-semibold">
+        <a href="reqkruitmen.php" class="btn btn-outline-success fw-semibold">
           <i class="bi bi-globe me-1"></i> Daftar Rekruitmen
         </a>
         <a href="permohonan.php" class="btn btn-outline-secondary fw-semibold">
           <i class="bi bi-list-ul me-1"></i> Daftar Permohonan
+        </a>
+        <a href="login.php" class="btn btn-outline-secondary fw-semibold">
+          <i class="bi bi-list-ul me-1"></i> Logout
         </a>
       </div>
     </div>
@@ -151,7 +194,7 @@ if (isset($_GET['hapus_dosen'])) {
                             Edit
                           </a>
 
-                          <a href='LandingAdmin.php?hapus_publikasi=" . $row['id_publikasi'] . "'
+                          <a href='landingAdmin.php?hapus_publikasi=" . $row['id_publikasi'] . "'
                             class='btn btn-sm btn-outline-danger mb-1 mb-md-0'
                             onclick='return confirm(\"Hapus publikasi ini?\")'>
                             Hapus
@@ -183,7 +226,6 @@ if (isset($_GET['hapus_dosen'])) {
                     <th>NIDN</th>
                     <th>Jabatan</th>
                     <th>Email</th>
-                    <th>Foto</th>
                     <th>Alamat Kantor</th>
                     <th>Mata Kuliah Ganjil</th>
                     <th>Mata Kuliah Genap</th>
@@ -193,14 +235,24 @@ if (isset($_GET['hapus_dosen'])) {
                 <tbody>
                   <?php
                   $query = pg_query($conn, "
-                    SELECT d.*, 
-                          STRING_AGG(CASE WHEN mk.semester='Ganjil' THEN mk.nama_mk END, ', ') AS mk_ganjil,
-                          STRING_AGG(CASE WHEN mk.semester='Genap' THEN mk.nama_mk END, ', ') AS mk_genap
-                    FROM dosen d
-                    LEFT JOIN mata_kuliah mk ON d.id_dosen = mk.id_dosen
-                    GROUP BY d.id_dosen
-                    ORDER BY d.nama ASC
-                  ");
+                  SELECT 
+                    d.id_dosen,
+                    d.nip,
+                    d.nama,
+                    d.program_studi,
+                    d.nidn,
+                    d.jabatan,
+                    d.email,
+                    d.alamat_kantor,
+                    STRING_AGG(CASE WHEN mk.semester='Ganjil' THEN mk.nama_mk END, ', ') AS mk_ganjil,
+                    STRING_AGG(CASE WHEN mk.semester='Genap' THEN mk.nama_mk END, ', ') AS mk_genap
+                  FROM dosen d
+                  LEFT JOIN mata_kuliah mk ON d.id_dosen = mk.id_dosen
+                  GROUP BY 
+                    d.id_dosen, d.nip, d.nama, d.program_studi, d.nidn, d.jabatan, 
+                    d.email, d.alamat_kantor
+                  ORDER BY d.nama ASC
+                ");
 
                   while ($row = pg_fetch_assoc($query)):
                   ?>
@@ -211,13 +263,6 @@ if (isset($_GET['hapus_dosen'])) {
                     <td class="text-truncate"><?= $row['nidn'] ?></td>
                     <td class="text-truncate"><?= $row['jabatan'] ?></td>
                     <td class="text-truncate"><?= $row['email'] ?></td>
-                    <td>
-                      <?php if($row['foto']): ?>
-                        <img src="uploads/<?= $row['foto'] ?>" alt="Foto" class="rounded img-fluid">
-                      <?php else: ?>
-                        -
-                      <?php endif; ?>
-                    </td>
                     <td class="text-truncate"><?= $row['alamat_kantor'] ?></td>
                     <td class="text-truncate"><?= $row['mk_ganjil'] ? $row['mk_ganjil'] : '-' ?></td>
                     <td class="text-truncate"><?= $row['mk_genap'] ? $row['mk_genap'] : '-' ?></td>
@@ -228,7 +273,7 @@ if (isset($_GET['hapus_dosen'])) {
                         Edit
                       </a>
 
-                      <a href="LandingAdmin.php?hapus_dosen=<?= $row['id_dosen'] ?>"
+                      <a href="landingAdmin.php?hapus_dosen=<?= $row['id_dosen'] ?>"
                         class="btn btn-sm btn-outline-danger"
                         onclick="return confirm('Hapus data dosen ini?')">
                         Hapus
@@ -260,15 +305,16 @@ if (isset($_GET['hapus_dosen'])) {
           <div class="tab-pane fade show active" id="profileLab">
             <h5 class="text-primary fw-bold">Profile Laboratorium</h5>
             <?php $qProfile = pg_query($conn, "SELECT * FROM ProfileLab LIMIT 1"); $profile = pg_fetch_assoc($qProfile); ?>
-            <form method="POST" action="updateProfileLab.php">
+            <form method="POST" action="landingAdmin.php">
               <input type="hidden" name="id" value="<?= $profile['id']; ?>">
+              <input type="hidden" name="update_profilelab" value="1">
                 <div class="mb-3">
-                    <label class="form-label fw-semibold">Judul</label>
-                   <input type="text" name="judul" class="form-control" value="<?= $profile['judul']; ?>">
+                  <label class="form-label fw-semibold">Judul</label>
+                  <input type="text" name="judul" class="form-control" value="<?= $profile['judul']; ?>">
                 </div>
                 <div class="mb-3">
                   <label class="form-label fw-semibold">Deskripsi</label>
-                  <textarea name="deskripsi" class="form-control" rows="4"><?= $profile['deskripsi']; ?></textarea>
+                  <textarea name="deskripsi" id="deskripsi" class="form-control summernote" rows="4"><?= $profile['deskripsi']; ?></textarea>
                 </div>
               <button class="btn btn-primary">Simpan</button>
             </form>
@@ -278,17 +324,18 @@ if (isset($_GET['hapus_dosen'])) {
           <div class="tab-pane fade" id="visiMisi">
             <h5 class="text-primary fw-bold">Visi & Misi</h5>
             <?php $qVM = pg_query($conn, "SELECT * FROM visi_misi LIMIT 1"); $vm = pg_fetch_assoc($qVM); ?>
-            <form method="POST" action="updateVisiMisi.php">
+            <form method="POST" action="landingAdmin.php">
               <input type="hidden" name="id" value="<?= $vm['id']; ?>">
+              <input type="hidden" name="update_visimisi" value="1">
                 <div class="mb-3">
                   <label class="form-label fw-semibold">Visi</label>
-                  <textarea name="visi" class="form-control" rows="3"><?= $vm['visi']; ?></textarea>
+                  <textarea name="visi" class="form-control summernote"><?= $vm['visi']; ?></textarea>
                 </div>
                 <div class="mb-3">
                   <label class="form-label fw-semibold">Misi</label>
-                  <textarea name="misi" class="form-control" rows="6"><?= $vm['misi']; ?></textarea>
-              </div>
-             <button class="btn btn-primary">Simpan</button>
+                  <textarea name="misi" class="form-control summernote"><?= $vm['misi']; ?></textarea>
+                </div>
+              <button class="btn btn-primary">Simpan</button>
             </form>
           </div>
 
@@ -299,6 +346,7 @@ if (isset($_GET['hapus_dosen'])) {
             <a href="TambahRiset.php" class="btn btn-warning btn-sm fw-bold text-dark">+ Tambah Riset</a>
           </div>
 
+          <div class="table-responsive mt-3">
           <table class="table table-bordered mt-3 text-center">
             <thead class="table-primary">
               <tr>
@@ -318,7 +366,9 @@ if (isset($_GET['hapus_dosen'])) {
                       <td>{$r['deskripsi']}</td>
                         <td>
                           <a href='editRiset.php?id={$r['id']}' class='btn btn-sm btn-outline-primary'>Edit</a>
-                          <a href='hapusRiset.php?id={$r['id']}' class='btn btn-sm btn-outline-danger'>Hapus</a>
+                          <a href='landingAdmin.php?hapus_riset={$r['id']}'
+                            class='btn btn-sm btn-outline-danger'
+                            onclick=\'return confirm('Hapus riset ini?')\">Hapus</a>
                         </td>
                       </tr>";
                     $no++;
@@ -326,6 +376,7 @@ if (isset($_GET['hapus_dosen'])) {
                 ?>
               </tbody>
             </table>
+            </div>
           </div>
 
           <!-- ---------------- FASILITAS ---------------- -->
@@ -335,6 +386,7 @@ if (isset($_GET['hapus_dosen'])) {
               <a href="TambahFasilitas.php" class="btn btn-warning btn-sm fw-bold text-dark">+ Tambah Fasilitas</a>
             </div>
 
+            <div class="table-responsive mt-3">
             <table class="table table-bordered mt-3 text-center">
               <thead class="table-primary">
                 <tr>
@@ -356,7 +408,9 @@ if (isset($_GET['hapus_dosen'])) {
                         <td>{$f['deskripsi']}</td>
                       <td>
                           <a href='editFasilitas.php?id={$f['id']}' class='btn btn-sm btn-outline-primary'>Edit</a>
-                          <a href='hapusFasilitas.php?id={$f['id']}' class='btn btn-sm btn-outline-danger'>Hapus</a>
+                          <a href='landingAdmin.php?hapus_fasilitas={$f['id']}'
+                            class='btn btn-sm btn-outline-danger'
+                            onclick=\"return confirm('Hapus fasilitas ini?')\">Hapus</a>
                         </td>
                       </tr>";
                     $no++;
@@ -364,6 +418,7 @@ if (isset($_GET['hapus_dosen'])) {
                 ?>
               </tbody>
             </table>
+            </div>
           </div>
 
           <!-- ---------------- KEGIATAN ---------------- -->
@@ -373,6 +428,7 @@ if (isset($_GET['hapus_dosen'])) {
               <a href="TambahKegiatan.php" class="btn btn-warning btn-sm fw-bold text-dark">+ Tambah Kegiatan</a>
             </div>
 
+            <div class="table-responsive mt-3">
             <table class="table table-bordered mt-3 text-center">
               <thead class="table-primary">
                 <tr>
@@ -394,7 +450,9 @@ if (isset($_GET['hapus_dosen'])) {
                         <td>{$k['deskripsi']}</td>
                         <td>
                           <a href='editKegiatan.php?id={$k['id']}' class='btn btn-sm btn-outline-primary'>Edit</a>
-                          <a href='hapusKegiatan.php?id={$k['id']}' class='btn btn-sm btn-outline-danger'>Hapus</a>
+                          <a href='landingAdmin.php?hapus_kegiatan={$k['id']}'
+                            class='btn btn-sm btn-outline-danger'
+                            onclick=\"return confirm('Hapus kegiatan ini?')\">Hapus</a>
                         </td>
                       </tr>";
                     $no++;
@@ -402,6 +460,7 @@ if (isset($_GET['hapus_dosen'])) {
                 ?>
               </tbody>
             </table>
+            </div>
           </div>
 
           <!-- ---------------- KULIAH ---------------- -->
@@ -411,6 +470,7 @@ if (isset($_GET['hapus_dosen'])) {
               <a href="TambahKuliah.php" class="btn btn-warning btn-sm fw-bold text-dark">+ Tambah Kuliah</a>
             </div>
 
+            <div class="table-responsive mt-3">
             <table class="table table-bordered mt-3 text-center">
               <thead class="table-primary">
                 <tr>
@@ -432,7 +492,9 @@ if (isset($_GET['hapus_dosen'])) {
                         <td>{$p['deskripsi']}</td>
                         <td>
                           <a href='editKuliah.php?id={$p['id']}' class='btn btn-sm btn-outline-primary'>Edit</a>
-                          <a href='hapusKuliah.php?id={$p['id']}' class='btn btn-sm btn-outline-danger'>Hapus</a>
+                          <a href='landingAdmin.php?hapus_kuliah={$p['id']}'
+                            class='btn btn-sm btn-outline-danger'
+                            onclick=\"return confirm('Hapus kuliah ini?')\">Hapus</a>
                         </td>
                       </tr>";
                     $no++;
@@ -440,11 +502,42 @@ if (isset($_GET['hapus_dosen'])) {
                 ?>
               </tbody>
             </table>
+            </div>
           </div>
         </div>
       </div>
 
+  <!-- jQuery WAJIB paling atas -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Summernote CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css">
+
+  <!-- Summernote JS -->
+  <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js"></script>
+
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+  <script>
+  document.addEventListener("DOMContentLoaded", function() {
+    $('.summernote').summernote({
+        placeholder: 'Tulis konten di sini...',
+        tabsize: 2,
+        height: 200,  
+        toolbar: [
+          ['style', ['style']],
+          ['font', ['bold', 'italic', 'underline', 'clear']],
+          ['fontname', ['fontname']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['insert', ['link', 'picture', 'video']],
+          ['view', ['fullscreen', 'codeview']]
+        ]
+    });
+  });
+</script>
+
 </body>
 </html>

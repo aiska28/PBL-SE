@@ -184,3 +184,20 @@ button, a, .nav-link {
     padding: 10px;
   }
 }
+
+/* Agar tab dalam bisa discroll di HP */
+#innerTab {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+/* Summernote biar tidak melebar */
+.note-editor {
+  width: 100% !important;
+}
+
+/* Elemen yang terlalu panjang otomatis wrap */
+.text-truncate {
+  max-width: 150px;
+  white-space: normal;
+}

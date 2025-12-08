@@ -1,0 +1,183 @@
+/* berita.css - styling full untuk mengembalikan tampilan seperti screenshot */
+
+/* ---------- GENERAL ---------- */
+body {
+    font-family: "Inter", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    color: #222;
+    background: #fff;
+}
+
+/* PAGE TITLE */
+.page-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: #123264;
+    margin-top: 10px;
+}
+.page-title + p.lead {
+    color: #555;
+    margin-bottom: 18px;
+}
+
+/* ---------- PENGUMUMAN / AGENDA SUBTITLES (ORANGE LINE) ---------- */
+.section-subtitle {
+    font-size: 20px;
+    font-weight: 700;
+    color: #123264;
+    margin-bottom: 10px;
+    position: relative;
+    display: inline-block;
+}
+.section-subtitle::after {
+    content:"";
+    width: 120px;
+    height: 4px;
+    background: #f39c12; /* orange */
+    display: block;
+    margin-top: 8px;
+    border-radius: 3px;
+}
+
+/* ---------- BERITA SECTION TITLE (CENTER) ---------- */
+.section-title {
+    position: relative;
+    display: inline-block; /* wajib agar width mengikuti panjang teks */
+    padding-bottom: 8px;
+}
+
+.section-title::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 4px;
+    width: 100%;      /* ← mengikuti panjang teks judul */
+    background-color: #f5a623;
+    border-radius: 3px;
+}
+
+
+/* ---------- CARD (BERITA) ---------- */
+.card {
+    border-radius: 12px;
+    overflow: hidden;
+    border: none;
+    transition: transform .22s ease, box-shadow .22s ease;
+    box-shadow: 0 6px 18px rgba(16,24,40,0.06);
+    background: #fff;
+}
+.card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 10px 28px rgba(16,24,40,0.10);
+}
+
+.card-img-top {
+    width: 100%;
+    height: auto;
+    max-height: 250px;    /* bebas ubah tinggi maksimal */
+    object-fit: contain;  /* foto tidak akan dipotong */
+    background-color: #f8f8f8; /* supaya ada ruang kosong yang rapi */
+    padding: 8px;         /* opsional, biar gambar tidak mepet */
+}
+
+/* card body */
+.card-body {
+    padding: 16px;
+}
+.card-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    padding-left: 14px;
+    position: relative;
+}
+
+.card-title::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 4px;
+    width: 5px;        /* ketebalan garis */
+    height: 18px;      /* tinggi garis */
+    background-color: #ff7b00;  /* oranye */
+    border-radius: 3px;
+}
+
+.card-text {
+    font-size: 14px;
+    color: #4b5563;
+    line-height: 1.45;
+    height: 44px; /* jaga konsisten baris teks */
+    overflow: hidden;
+}
+
+/* tanggal kecil */
+.text-muted {
+    font-size: 13px;
+    color: #6b7280;
+}
+
+/* footer card */
+.card-footer {
+    background: transparent;
+    border-top: none;
+    padding: 10px 16px 18px;
+}
+
+/* tombol */
+.btn-outline-primary {
+    border-radius: 8px;
+    padding: 6px 12px;
+}
+
+/* ---------- SEARCH & FILTER ---------- */
+#searchBerita, #filterTahun {
+    height: 42px;
+    border-radius: 10px;
+    box-shadow: none;
+}
+
+/* ---------- PENGUMUMAN & AGENDA LIST ---------- */
+.list-group .list-group-item {
+    border-radius: 8px;
+    border: none;
+    background: #fff;
+}
+.list-group .list-group-item .fw-bold {
+    color: #0f2a4a;
+    font-weight: 700;
+}
+
+/* ---------- FOOTER (FULL WIDTH) ---------- */
+.footer-custom {
+    width: 100%;
+    background-color: #1d2c8a; /* biru tua */
+    color: #fff;
+    margin-top: 60px;
+}
+.footer-custom .footer-subtitle {
+    color: #e6eefc;
+    font-size: 13px;
+}
+.footer-custom .footer-subtitle-bold { color: #fff; font-weight:700; font-size:16px; }
+.footer-custom .footer-address { color: #e6eefc; font-size:13px; }
+.footer-line {
+    border-top: 1px solid rgba(255,255,255,0.12);
+    width: 60%;
+    margin-left: 0;
+}
+
+/* responsif kecil */
+@media (max-width: 768px){
+    .card-img-top { height: 180px; }
+    .section-subtitle::after { width: 90px; }
+    .section-title::after { width: 50px; }
+}
+
+/* mobile tweaks */
+@media (max-width: 576px){
+    .page-title { font-size: 20px; }
+    .card-img-top { height: 160px; }
+    .footer-custom .row { text-align: center; }
+    .footer-custom .col-md-2, .footer-custom .col-md-4, .footer-custom .col-md-3 { margin-bottom: 12px; }
+}

@@ -5,6 +5,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     // Ambil data input
     $fullname = $_POST['fullname'];
+    $nim = $_POST['nim'];
     $email    = $_POST['email'];
     $phone    = $_POST['phone'];
 
@@ -43,14 +44,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     //  Insert ke Database
     $query = "
         INSERT INTO open_recruitment
-        (full_name, email_kampus, phone_number, file_cv, file_ktm)
-        VALUES ($1, $2, $3, $4, $5)
+        (full_name, nim, email_kampus, phone_number, file_cv, file_ktm)
+        VALUES ($1, $2, $3, $4, $5, $6)
     ";
 
     $result = pg_query_params(
         $conn,
         $query,
-        array($fullname, $email, $phone, $cvFile, $ktmFile)
+        array($fullname, $nim, $email, $phone, $cvFile, $ktmFile)
     );
 
     if ($result) {
@@ -106,27 +107,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
       <ul class="navbar-nav">
 
         <li class="nav-item mx-3">
-          <a class="nav-link text-white fw-semibold" href="#">Beranda</a>
+          <a class="nav-link text-white fw-semibold" href="landing.php">Beranda</a>
         </li>
 
         <!-- Dropdown Tentang Kami -->
         <li class="nav-item dropdown mx-3">
-          <a class="nav-link dropdown-toggle text-white fw-semibold" href="#" id="tentangDropdown"
+          <a class="nav-link dropdown-toggle text-white fw-semibold" href="tentangKami.php" id="tentangDropdown"
              role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Tentang Kami
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Sejarah</a></li>
-            <li><a class="dropdown-item" href="#">Visi, Misi dan Tujuan</a></li>
-            <li><a class="dropdown-item" href="#">Struktur Organisasi</a></li>
-            <li><a class="dropdown-item" href="#">Tenaga Pengajar</a></li>
-            <li><a class="dropdown-item" href="#">Tenaga Kependidikan</a></li>
-            <li><a class="dropdown-item" href="#">Sarana dan Prasarana</a></li>
+            <li><a class="dropdown-item" href="tentangKami.php">Sejarah</a></li>
+            <li><a class="dropdown-item" href="tentangKami.php">Visi, Misi dan Tujuan</a></li>
+            <li><a class="dropdown-item" href="tentangKami.php">Struktur Organisasi</a></li>
+            <li><a class="dropdown-item" href="tentangKami.php">Tenaga Pengajar</a></li>
+            <li><a class="dropdown-item" href="tentangKami.php">Tenaga Kependidikan</a></li>
+            <li><a class="dropdown-item" href="tentangKami.php">Sarana dan Prasarana</a></li>
           </ul>
         </li>
 
         <li class="nav-item mx-3">
-          <a class="nav-link text-white fw-semibold" href="#">Berita & Pengumuman</a>
+          <a class="nav-link text-white fw-semibold" href="berita.php">Berita & Pengumuman</a>
         </li>
       </ul>
     </div>
@@ -146,6 +147,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <label class="form-label">Full Name :</label>
             <input type="text" name="fullname" class="form-control" placeholder="Enter Your Full Name" required>
           </div>
+
+          <div class="mb-3">
+            <label class="form-label">NIM :</label>
+            <input type="text" name="nim" class="form-control" placeholder="Enter Your Student ID" required>
+          </div>
+
 
           <div class="mb-3">
             <label class="form-label">Email Kampus :</label>

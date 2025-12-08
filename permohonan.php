@@ -41,6 +41,7 @@ $result = pg_query($conn, "
         l.phone_number AS phone,
         l.email,
         l.tanggal,
+        l.jam_pelaksanaan AS jam,
         l.file_surat AS surat,
         l.status,
         jl.nama_layanan AS jenis_layanan
@@ -137,6 +138,7 @@ $result = pg_query($conn, "
         <th>Email</th>
         <th>No HP</th>
         <th>Layanan</th>
+        <th>Jam</th>
         <th>Tanggal</th>
         <th>Surat</th>
         <th>Status</th>
@@ -151,6 +153,7 @@ $result = pg_query($conn, "
         <td><?= htmlspecialchars($row['email']) ?></td>
         <td><?= htmlspecialchars($row['phone']) ?></td>
         <td><?= htmlspecialchars($row['jenis_layanan']) ?></td>
+        <td><?= htmlspecialchars($row['jam']) ?></td>
         <td><?= htmlspecialchars($row['tanggal']) ?></td>
         <td>
           <?php if(!empty($row['surat']) && file_exists('uploads/' . $row['surat'])): ?>
@@ -229,7 +232,7 @@ $(function () {
             email: { title: "Email", width: "15%" },
             phone: { title: "No HP", width: "12%" },
             jenis_layanan: { title: "Layanan", width: "12%" },
-            tempat: { title: "Tempat", width: "10%" },
+            jam: { title: "Jam", width: "10%" },
             tanggal: { title: "Tanggal", width: "10%" },
             surat: { title: "Surat", width: "10%" },
             status: { title: "Status", width: "8%" },
@@ -247,7 +250,7 @@ $(function () {
                 email: tds.eq(2).html(),
                 phone: tds.eq(3).html(),
                 jenis_layanan: tds.eq(4).html(),
-                tempat: tds.eq(5).html(),
+                jam: tds.eq(5).html(),
                 tanggal: tds.eq(6).html(),
                 surat: tds.eq(7).html(),
                 status: tds.eq(8).html(),

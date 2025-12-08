@@ -1,0 +1,170 @@
+/* -------------------------------------------------- */
+/* GLOBAL */
+/* -------------------------------------------------- */
+
+body {
+    background-color: #ecf0f1;
+    font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
+}
+
+.section {
+    display: none;
+    animation: fadeIn 0.4s ease-in-out;
+}
+
+.section.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* -------------------------------------------------- */
+/* NAVBAR */
+/* -------------------------------------------------- */
+
+.navbar {
+    padding: 15px 0;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.15);
+}
+
+.navbar-nav .nav-link {
+    font-size: 16px;
+    transition: 0.3s ease-in-out;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #ffd700 !important;
+    transform: translateY(-1px);
+}
+
+.dropdown-menu {
+    border-radius: 12px;
+    padding: 10px 0;
+}
+
+.dropdown-item {
+    padding: 10px 20px;
+}
+
+.dropdown-item:hover {
+    background-color: #ececec;
+}
+
+/* -------------------------------------------------- */
+/* CONTENT */
+/* -------------------------------------------------- */
+
+.container h2 {
+    color: #1d2c8a;
+    font-weight: 700;
+    margin-bottom: 15px;
+    border-left: 6px solid #1d2c8a;
+    padding-left: 12px;
+}
+
+.container h3 {
+    color: #333;
+    font-weight: 600;
+    margin-top: 25px;
+}
+
+.container p, 
+.container ul {
+    font-size: 15px;
+    line-height: 1.7;
+    color: #444;
+}
+
+.container ul li {
+    margin-bottom: 6px;
+}
+
+/* Optional: Card look for every section */
+.section {
+    background: white;
+    padding: 25px 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    margin-top: 20px;
+}
+
+/* -------------------------------------------------- */
+/* FOOTER */
+/* -------------------------------------------------- */
+
+.footer-custom {
+    background-color: #1d2c8a;
+    color: white;
+    padding-top: 35px;
+    padding-bottom: 35px;
+    margin-top: 60px;
+}
+
+.footer-subtitle {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.footer-subtitle-bold {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.footer-title {
+    font-size: 17px;
+    font-weight: 700;
+}
+
+.footer-line {
+    border: 0;
+    height: 2px;
+    background-color: #ffffff;
+    width: 60%;
+    margin: 5px 0 10px;
+}
+
+.footer-link {
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+}
+
+.footer-link:hover {
+    text-decoration: underline;
+    opacity: 0.9;
+}
+
+.footer-address {
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+.social-link img {
+    transition: 0.25s ease;
+}
+
+.social-link img:hover {
+    transform: scale(1.15);
+}
+
+/* -------------------------------------------------- */
+/* RESPONSIVE */
+/* -------------------------------------------------- */
+
+@media (max-width: 768px) {
+    .navbar-brand img {
+        height: 50px;
+    }
+
+    .section {
+        padding: 20px;
+    }
+
+    .container h2 {
+        font-size: 22px;
+    }
+}
