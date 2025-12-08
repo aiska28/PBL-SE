@@ -58,20 +58,19 @@ $link_sosial = json_decode($dosen['link_sosial'], true);
       <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item mx-3">
-            <a class="nav-link text-white fw-semibold" href="#">Beranda</a>
+            <a class="nav-link text-white fw-semibold" href="landing.php">Beranda</a>
           </li>
           <li class="nav-item dropdown mx-3">
-            <a class="nav-link dropdown-toggle text-white fw-semibold" href="#" id="tentangDropdown"
-               role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <a class="nav-link dropdown-toggle text-white fw-semibold" href="tentangKami.php" id="tentangDropdown"role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Tentang Kami
             </a>
             <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Sejarah</a></li>
-              <li><a class="dropdown-item" href="#">Visi, Misi dan Tujuan</a></li>
-              <li><a class="dropdown-item" href="#">Struktur Organisasi</a></li>
-              <li><a class="dropdown-item" href="#">Tenaga Pengajar</a></li>
-              <li><a class="dropdown-item" href="#">Tenaga Kependidikan</a></li>
-              <li><a class="dropdown-item" href="#">Sarana dan Prasarana</a></li>
+              <li><a class="dropdown-item" href="tentangKami.php">Sejarah</a></li>
+              <li><a class="dropdown-item" href="tentangKami.php">Visi, Misi dan Tujuan</a></li>
+              <li><a class="dropdown-item" href="tentangKami.php">Struktur Organisasi</a></li>
+              <li><a class="dropdown-item" href="tentangKami.php">Tenaga Pengajar</a></li>
+              <li><a class="dropdown-item" href="tentangKami.php">Tenaga Kependidikan</a></li>
+              <li><a class="dropdown-item" href="tentangKami.php">Sarana dan Prasarana</a></li>
             </ul>
           </li>
           <li class="nav-item mx-3">

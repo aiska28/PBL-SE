@@ -120,7 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <!-- NAVBAR -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-primary shadow-sm">
     <div class="container-fluid px-4">
-      <a class="navbar-brand fw-bold" href="#">Tambah Anggota Lab</a>
+      <a class="navbar-brand fw-bold">Tambah Anggota Lab</a>
     </div>
   </nav>
 

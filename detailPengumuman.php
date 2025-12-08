@@ -72,7 +72,7 @@ if ($qGambar) {
     </button>
     <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item mx-3"><a class="nav-link text-white fw-semibold" href="index.php">Beranda</a></li>
+        <li class="nav-item mx-3"><a class="nav-link text-white fw-semibold" href="landing.php">Beranda</a></li>
         <li class="nav-item mx-3"><a class="nav-link text-white fw-semibold" href="berita.php">Berita</a></li>
         <li class="nav-item mx-3"><a class="nav-link text-white fw-semibold active" href="pengumuman.php">Pengumuman</a></li>
       </ul>
