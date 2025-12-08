@@ -33,7 +33,7 @@ include 'konekDB.php';
         <li class="nav-item dropdown mx-3">
           <a class="nav-link dropdown-toggle text-white fw-semibold" href="#" id="tentangDropdown" data-bs-toggle="dropdown">Tentang Kami</a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Sejarah</a></li>
+            <li><a class="dropdown-item" href="tentangKami.php">Sejarah</a></li>
             <li><a class="dropdown-item" href="#">Visi, Misi dan Tujuan</a></li>
             <li><a class="dropdown-item" href="#">Struktur Organisasi</a></li>
             <li><a class="dropdown-item" href="#">Tenaga Pengajar</a></li>
