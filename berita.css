@@ -40,21 +40,26 @@ body {
 
 /* ---------- BERITA SECTION TITLE (CENTER) ---------- */
 .section-title {
+    display: inline-block !important;   /* Paksa elemen sekecil teks */
+    width: auto !important;             /* WAJIB → biar tidak ikut lebar card */
     position: relative;
-    display: inline-block; /* wajib agar width mengikuti panjang teks */
-    padding-bottom: 8px;
+    padding-bottom: 6px;
+    font-weight: 800;
+    font-size: 22px;
 }
 
 .section-title::after {
     content: "";
     position: absolute;
-    left: 0;
     bottom: 0;
+    left: 0;
     height: 4px;
-    width: 100%;      /* ← mengikuti panjang teks judul */
-    background-color: #f5a623;
+    background: #f5a623;
+    width: 100%;                         /* mengikuti panjang teks */
     border-radius: 3px;
 }
+
+
 
 
 /* ---------- CARD (BERITA) ---------- */

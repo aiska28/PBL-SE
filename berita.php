@@ -139,7 +139,7 @@ if(isset($_GET['ajax'])) {
 
 <!-- HEADER -->
 <section class="container mt-4 text-center">
-  <h3 class="page-title">Berita & Pengumuman</h3>
+   <h1 class="section-title">BERITA & PENGUMUMAN</h1>
   <p class="lead">SELAMAT DATANG DI LABORATORIUM SOFTWARE ENGINEERING</p>
 </section>
 
@@ -149,7 +149,7 @@ if(isset($_GET['ajax'])) {
     <!-- Pengumuman -->
     <div class="col-lg-6 col-md-12">
       <div class="card h-100 shadow-sm p-3">
-        <h4 class="section-subtitle mb-3">Pengumuman</h4>
+         <h4 class="section-title">PENGUMUMAN</h4>
         <div class="list-group">
           <?php
           $qPengumuman = pg_query($conn, "SELECT * FROM view_pengumuman ORDER BY tanggal DESC LIMIT 5");
@@ -170,7 +170,7 @@ if(isset($_GET['ajax'])) {
     <!-- Agenda -->
     <div class="col-lg-6 col-md-12">
       <div class="card h-100 shadow-sm p-3">
-        <h4 class="section-subtitle mb-3">Agenda Kegiatan</h4>
+         <h4 class="section-title">AGENDA</h4>
         <div class="list-group">
         <?php
         $qAgenda = pg_query($conn, "SELECT * FROM view_agenda ORDER BY tanggal DESC LIMIT 1");
@@ -197,12 +197,12 @@ if(isset($_GET['ajax'])) {
 
 <!-- BERITA -->
 <section class="container my-4">
-  <h4 class="section-title">Berita Terbaru</h4>
+  <h4 class="section-title">BERITA</h4>
 
   <!-- SEARCH & FILTER -->
   <div class="d-flex justify-content-center gap-2 mb-4">
-      <input type="text" id="searchBerita" class="form-control" placeholder="Cari berita..." style="max-width:360px;">
-      <select id="filterTahun" class="form-select" style="width:140px;">
+      <input type="text" id="searchBerita" class="form-control" placeholder="Cari Berita..." style="max-width:360px;">
+      <select id="filterTahun" class="form-select" style="width:160px;">
           <option value="0">Semua Tahun</option>
           <?php foreach($daftarTahun as $t): ?>
               <option value="<?= intval($t) ?>"><?= intval($t) ?></option>
