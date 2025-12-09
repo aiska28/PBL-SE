@@ -509,7 +509,7 @@ if (isset($_GET['hapus_kuliah'])) {
           </div>
 
           <!-- TAB TAMPILAN BERITA -->
-<div class="tab-pane fade" id="tampilanBerita" role="tabpanel">
+  <div class="tab-pane fade" id="tampilanBerita">
 
   <!-- NAVIGASI TAB DALAM -->
   <ul class="nav nav-pills mb-3" id="innerBeritaTab" role="tablist">
