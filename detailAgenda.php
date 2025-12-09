@@ -36,7 +36,6 @@ if($data) {
     echo "<p class='deskripsi'>".nl2br(htmlspecialchars($data['deskripsi']))."</p>";
 }
 
-
 // ambil semua data tabel (nama_kegiatan, waktu, tanggal)
 $query_table = "SELECT nama_kegiatan, waktu, tanggal FROM agenda ORDER BY tanggal ASC";
 $result_table = pg_query($conn, $query_table);

@@ -149,6 +149,9 @@ if (isset($_GET['hapus_kuliah'])) {
           <li class="nav-item" role="presentation">
             <button class="nav-link fw-semibold" id="tampilan-tab" data-bs-toggle="tab" data-bs-target="#tampilan" type="button" role="tab">📘 Tampilan Lab</button>
           </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link fw-semibold" id="tampilanBerita-tab" data-bs-toggle="tab" data-bs-target="#tampilanBerita" type="button" role="tab">📘 Tampilan Berita</button>
+          </li>
         </ul>
 
         <div class="tab-content" id="adminTabContent">
@@ -504,6 +507,145 @@ if (isset($_GET['hapus_kuliah'])) {
             </table>
             </div>
           </div>
+
+          <!-- TAB TAMPILAN BERITA -->
+<div class="tab-pane fade" id="tampilanBerita" role="tabpanel">
+
+  <!-- NAVIGASI TAB DALAM -->
+  <ul class="nav nav-pills mb-3" id="innerBeritaTab" role="tablist">
+    <li class="nav-item">
+      <button class="nav-link active" id="agenda-inner-tab" data-bs-toggle="tab" data-bs-target="#tabAgenda" type="button">
+        📅 Agenda
+      </button>
+    </li>
+
+    <li class="nav-item">
+      <button class="nav-link" id="berita-inner-tab" data-bs-toggle="tab" data-bs-target="#tabBerita" type="button">
+        📰 Berita
+      </button>
+    </li>
+
+    <li class="nav-item">
+      <button class="nav-link" id="pengumuman-inner-tab" data-bs-toggle="tab" data-bs-target="#tabPengumuman" type="button">
+        📢 Pengumuman
+      </button>
+    </li>
+  </ul>
+
+  <!-- ISI TAB DALAM -->
+  <div class="tab-content" id="innerBeritaContent">
+
+    <!-- TAB AGENDA -->
+    <div class="tab-pane fade show active" id="tabAgenda" role="tabpanel">
+
+      <div class="card border-primary shadow-sm p-3">
+        <h5 class="fw-bold mb-3">Daftar Agenda</h5>
+
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Judul Agenda</th>
+              <th>Tanggal</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+              $no=1;
+              $agenda = pg_query($conn,"SELECT * FROM agenda ORDER BY tanggal DESC");
+              while($row = pg_fetch_assoc($agenda)){
+            ?>
+            <tr>
+              <td><?= $no++ ?></td>
+              <td><?= $row['judul'] ?></td>
+              <td><?= $row['tanggal'] ?></td>
+              <td>
+                <a href="editAgenda.php?id=<?= $row['id'] ?>" class="btn btn-warning btn-sm">Edit</a>
+                <a href="hapusAgenda.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm">Hapus</a>
+              </td>
+            </tr>
+            <?php } ?>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+
+    <!-- TAB BERITA -->
+    <div class="tab-pane fade" id="tabBerita" role="tabpanel">
+      <div class="card border-primary shadow-sm p-3">
+        <h5 class="fw-bold mb-3">Daftar Berita</h5>
+
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Judul</th>
+              <th>Tanggal</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+              $no=1;
+              $berita = pg_query($conn,"SELECT * FROM berita ORDER BY tanggal DESC");
+              while($row = pg_fetch_assoc($berita)){
+            ?>
+            <tr>
+              <td><?= $no++ ?></td>
+              <td><?= $row['judul'] ?></td>
+              <td><?= $row['tanggal'] ?></td>
+              <td>
+                <a href="editBerita.php?id=<?= $row['id'] ?>" class="btn btn-warning btn-sm">Edit</a>
+                <a href="hapusBerita.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm">Hapus</a>
+              </td>
+            </tr>
+            <?php } ?>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB PENGUMUMAN -->
+    <div class="tab-pane fade" id="tabPengumuman" role="tabpanel">
+      <div class="card border-primary shadow-sm p-3">
+        <h5 class="fw-bold mb-3">Daftar Pengumuman</h5>
+
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Judul</th>
+              <th>Tanggal</th>
+              <th>Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+              $no=1;
+              $pengumuman = pg_query($conn,"SELECT * FROM pengumuman ORDER BY tanggal DESC");
+              while($row = pg_fetch_assoc($pengumuman)){
+            ?>
+            <tr>
+              <td><?= $no++ ?></td>
+              <td><?= $row['judul'] ?></td>
+              <td><?= $row['tanggal'] ?></td>
+              <td>
+                <a href="editPengumuman.php?id=<?= $row['id'] ?>" class="btn btn-warning btn-sm">Edit</a>
+                <a href="hapusPengumuman.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm">Hapus</a>
+              </td>
+            </tr>
+            <?php } ?>
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
         </div>
       </div>
 
