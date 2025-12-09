@@ -1,3 +1,29 @@
+<?php 
+include 'konekDB.php';
+
+// ================== SEJARAH ===================
+$q_sejarah = pg_query($conn, "SELECT * FROM sejarah ORDER BY id DESC LIMIT 1");
+$sejarah = pg_fetch_assoc($q_sejarah);
+
+// ================== VISI MISI TUJUAN ===================
+$q_visi = pg_query($conn, "SELECT * FROM visi_misi_tujuan ORDER BY id DESC LIMIT 1");
+$vt = pg_fetch_assoc($q_visi);
+
+// ================== STRUKTUR ORGANISASI ===================
+$q_struktur = pg_query($conn, "SELECT * FROM struktur_organisasi ORDER BY id ASC");
+
+// ================== TENAGA PENGAJAR ===================
+$q_pengajar = pg_query($conn, "SELECT * FROM tenaga_pengajar ORDER BY id ASC");
+
+// ================== TENAGA KEPENDIDIKAN ===================
+$q_kependidikan = pg_query($conn, "SELECT * FROM tenaga_kependidikan ORDER BY id ASC");
+
+// ================== SARANA & PRASARANA ===================
+$q_sapras = pg_query($conn, "SELECT * FROM sarana_prasarana ORDER BY id ASC");
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -47,6 +73,7 @@
             <li><a class="dropdown-item" href="#" onclick="showSection('struktur')">Struktur Organisasi</a></li>
             <li><a class="dropdown-item" href="#" onclick="showSection('pengajar')">Tenaga Pengajar</a></li>
             <li><a class="dropdown-item" href="#" onclick="showSection('kependidikan')">Tenaga Kependidikan</a></li>
+            <li><a class="dropdown-item" href="#" onclick="showSection('Sarana')">Sarana dan Prasarana</a></li>
           </ul>
         </li>
 
@@ -63,44 +90,100 @@
 <div class="container py-4">
 
     <div id="sejarah" class="section active">
-        <h2>Sejarah</h2>
-        <p>Ini adalah konten Sejarah sekolah.</p>
+        <h2><?= $sejarah['judul']; ?></h2>
+        <p><?= nl2br($sejarah['deskripsi']); ?></p>
     </div>
 
     <div id="visi" class="section">
         <h2>Visi, Misi dan Tujuan</h2>
+
         <h3>Visi</h3>
-        <p>Menjadi lembaga pendidikan unggulan yang menghasilkan lulusan berkualitas.</p>
+        <p><?= nl2br($vt['visi']); ?></p>
 
         <h3>Misi</h3>
-        <ul>
-            <li>Pendidikan berkualitas.</li>
-            <li>Pembentukan karakter siswa.</li>
-            <li>Penyediaan fasilitas belajar.</li>
-            <li>Peningkatan kompetensi pengajar.</li>
-        </ul>
+        <p><?= nl2br($vt['misi']); ?></p>
 
         <h3>Tujuan</h3>
-        <ul>
-            <li>Meningkatkan prestasi akademik.</li>
-            <li>Disiplin dan tanggung jawab.</li>
-            <li>Mempersiapkan lulusan siap kerja.</li>
-        </ul>
+        <p><?= nl2br($vt['tujuan']); ?></p>
     </div>
 
     <div id="struktur" class="section">
-        <h2>Struktur Organisasi</h2>
-        <p>Tambahkan diagram struktur organisasi di sini.</p>
+        <h2 class="text-center mb-4">Struktur Organisasi</h2>
+
+        <!-- Gambar struktur -->
+        <div class="text-center mb-4">
+            <img src="uploads/struktur.jpg" style="max-width:100%; height:auto;">
+        </div>
+
+        <div class="container">
+            <?php while($st = pg_fetch_assoc($q_struktur)) { ?>
+                <div class="mb-3">
+                    <p>
+                        <strong><?= $st['jabatan']; ?>:</strong><br>
+                        <?= $st['nama']; ?>
+                    </p>
+                </div>
+            <?php } ?>
+        </div>
     </div>
 
     <div id="pengajar" class="section">
         <h2>Tenaga Pengajar</h2>
-        <p>Daftar tenaga pengajar.</p>
+        
+        <div class="row">
+            <?php while($pg = pg_fetch_assoc($q_pengajar)) { ?>
+                <div class="col-md-4 mb-3">
+                    <div class="card p-2 shadow">
+                        <img src="uploads/<?= $pg['foto_url']; ?>" class="card-img-top mb-2"
+                             style="height:200px; object-fit:cover;">
+                        <h5 class="text-center"><?= $pg['nama_dosen']; ?></h5>
+                        <p class="text-center"><?= $pg['jabatan']; ?></p>
+                        <p class="text-center text-muted">NIDN: <?= $pg['nidn']; ?></p>
+                    </div>
+                </div>
+            <?php } ?>
+        </div>
     </div>
 
     <div id="kependidikan" class="section">
         <h2>Tenaga Kependidikan</h2>
-        <p>Daftar tenaga kependidikan.</p>
+        
+        <div class="row">
+            <?php while($kp = pg_fetch_assoc($q_kependidikan)) { ?>
+                <div class="col-md-4 mb-3">
+                    <div class="card shadow p-3">
+                        <h5 class="text-center"><?= $kp['nama_pegawai']; ?></h5>
+                        <p class="text-center text-muted"><?= $kp['jabatan']; ?></p>
+                        <p><?= nl2br($kp['deskripsi']); ?></p>
+                    </div>
+                </div>
+            <?php } ?>
+        </div>
+    </div>
+
+    <div id="Sarana" class="section">
+        <h2>Sarana dan Prasarana</h2>
+        
+        <div class="row">
+            <?php while($sp = pg_fetch_assoc($q_sapras)) { ?>
+                <div class="col-md-4 mb-3">
+                    <div class="card shadow p-2">
+
+                        <?php if (!empty($sp['foto_url'])) { ?>
+                            <img src="uploads/<?= $sp['foto_url']; ?>" 
+                                class="card-img-top mb-2"
+                                style="height:220px; object-fit:cover;">
+                        <?php } ?>
+
+                        <div class="card-body">
+                            <h5><?= $sp['nama_ruangan']; ?></h5>
+                            <p><?= nl2br($sp['deskripsi']); ?></p>
+                        </div>
+
+                    </div>
+                </div>
+            <?php } ?>
+        </div>
     </div>
 
 </div>

@@ -29,7 +29,7 @@ include 'konekDB.php';
     </button>
     <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item mx-3"><a class="nav-link text-white fw-semibold" href="#">Beranda</a></li>
+        <li class="nav-item mx-3"><a class="nav-link text-white fw-semibold" href="landing.php">Beranda</a></li>
         <li class="nav-item dropdown mx-3">
           <a class="nav-link dropdown-toggle text-white fw-semibold" href="tentangKami.php" id="tentangDropdown" data-bs-toggle="dropdown">Tentang Kami</a>
           <ul class="dropdown-menu">
