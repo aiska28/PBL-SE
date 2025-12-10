@@ -111,25 +111,36 @@ if ($tanggal_raw && $tanggal_raw !== '') {
 
     <!-- gambar (jika ada) -->
     <?php if (!empty($gambar)): ?>
-        <div class="mb-1">
-            <img src="<?= htmlspecialchars($gambar) ?>" alt="<?= htmlspecialchars($judul) ?>" style="max-width:50%;border-radius:8px;">
+        <div class="text-center mb-4">
+          <img src="<?= htmlspecialchars($gambar) ?>" alt="<?= htmlspecialchars($judul) ?>" class="img-fluid" style="max-width:60%;border-radius:12px;">
         </div>
+
     <?php endif; ?>
 
     <div class="detail-content">
-      <?php 
+      <?php
         $konten_bersih = htmlspecialchars($konten);
-        $konten_format = preg_replace("/\n{2,}/", "</p><p>", $konten_bersih); 
-        echo "<p>$konten_format</p>";
+
+        // pecah berdasarkan enter atau \n
+        $paragraf_array = preg_split("/\r\n|\n|\r/", $konten_bersih);
+
+        foreach ($paragraf_array as $par) {
+            if(trim($par) !== "") {
+                echo "<p style='text-align:justify;'>$par</p>";
+            }
+        }
       ?>
+
+
 
     </div>
 
-    <a href="berita.php" class="back-btn">← Kembali</a>
+    <a href="berita.php" class="back-btn"><b>Kembali</b></a>
   </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
 

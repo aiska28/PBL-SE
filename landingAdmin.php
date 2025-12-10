@@ -732,8 +732,13 @@ if (isset($_POST['update_pengumuman'])) {
         </div> 
       </div>
 
+<<<<<<< HEAD
         <!-- TAB TAMPILAN LAB -->
           <div class="tab-pane fade" id="tentangKami" role="tabpanel">
+=======
+          <!-- TAB TAMPILAN BERITA -->
+  <div class="tab-pane fade" id="tampilanBerita">
+>>>>>>> 1a1209d70ca3a1f2d828dac73486190fc54dbc38
 
           <!-- NAVIGASI TAB DALAM -->
           <ul class="nav nav-pills mb-3" id="innerTabTentang" role="tablist">

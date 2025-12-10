@@ -40,16 +40,34 @@ body {
 =============================== */
 .detail-content {
     font-size: 17px;
-    line-height: 1.5;        /* lebih rapat */
+    line-height: 1.5;   
     color: #333;
     text-align: justify;
-    white-space: normal;     /* ENTER ganda tidak dibaca berlebihan */
+    white-space: normal;
 }
 
 .detail-content p {
-    margin-bottom: 12px;     /* rapikan jarak antar paragraf */
+    text-indent: 40px;   /* paragraf masuk 40px ke kanan */
+    margin-bottom: 14px;
 }
 
+/* ============================
+   IMAGE CENTER (TAMBAHAN BARU)
+=============================== */
+.image-center{
+    display:block;
+    margin: 25px auto;
+    border-radius: 10px;
+    max-width: 100%;
+}
+
+/* paragraf rapi */
+.text-paragraph{
+    text-align: justify;
+    margin-top: 15px;
+    font-size: 18px;
+    line-height: 1.7;
+}
 
 /* ============================
    IMAGES (2 columns styling)
@@ -80,8 +98,8 @@ body {
     display: inline-block;
     margin-top: 35px;
     padding: 12px 20px;
-    background: #1d2c8a;
-    color: white;
+    background: #ffc107;
+    color: black;
     text-decoration: none;
     border-radius: 8px;
     font-weight: 500;
@@ -89,7 +107,7 @@ body {
 }
 
 .back-btn:hover {
-    background: #15206b;
+    background: #f4c73e;
 }
 
 /* ============================
