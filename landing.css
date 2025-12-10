@@ -334,24 +334,38 @@ body {
     font-size: 15px;
 }
 
-/* RESPONSIVE TIMELINE */
+/* ==========================
+   RESPONSIVE NAVBAR FIX
+   ========================== */
 @media (max-width: 768px) {
 
-    .timeline-container {
-        width: 100%;
-        padding-left: 70px;
-        padding-right: 25px;
-    }
+  nav {
+    display: flex;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+    width: 100%;
+  }
 
-    .timeline-container.right {
-        left: 0;
-    }
+  nav .left-menu,
+  nav .right-menu {
+    width: 100%;
+    display: flex;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+    margin-bottom: 10px;
+  }
 
-    .timeline::after {
-        left: 30px;
-    }
+  nav a {
+    margin: 8px 12px;
+    display: inline-block;
+  }
 
-    .timeline-container::before {
-        left: 22px;
-    }
+  /* Fix area kanan yang kadang jadi putih */
+  nav .right-menu {
+    background: transparent !important;
+  }
 }
+

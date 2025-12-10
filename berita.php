@@ -157,7 +157,7 @@ if(isset($_GET['ajax'])) {
               echo '<a href="detailPengumuman.php?id='.intval($p['id']).'" class="list-group-item list-group-item-action d-flex justify-content-between align-items-start mb-2 shadow-sm">
                       <div class="ms-2 me-auto text-wrap">
                         <div class="fw-bold">'.htmlspecialchars($p['judul']).'</div>
-                        '.htmlspecialchars(substr($p['konten'],0,80)).'...
+                        '.htmlspecialchars(substr($p['konten'],0,150)).'...
                       </div>
                       <span class="badge bg-primary rounded-pill">'.date('d M Y',strtotime($p['tanggal'])).'</span>
                     </a>';
@@ -220,7 +220,7 @@ if(isset($_GET['ajax'])) {
         if($berita['gambar']) echo '<img src="'.htmlspecialchars($berita['gambar']).'" class="card-img-top" alt="'.htmlspecialchars($berita['judul']).'">';
         echo '<div class="card-body">
                 <h5 class="card-title">'.htmlspecialchars($berita['judul']).'</h5>
-                <p class="card-text">'.htmlspecialchars(substr($berita['konten'],0,100)).'...</p>
+                <p class="card-text">'.htmlspecialchars(substr($berita['konten'],0,200)).'...</p>
                 <small class="text-muted"> '.date('d M Y',strtotime($berita['tanggal'])).'</small>
               </div>
               <div class="card-footer text-end">

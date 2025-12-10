@@ -62,6 +62,7 @@ $result_table = pg_query($conn, $query_table);
     ?>
     </tbody>
 </table>
+<a href="berita.php" class="back-btn"><b>Kembali</b></a>
 </div>
 
 <!-- JS Bootstrap -->

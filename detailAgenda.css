@@ -28,3 +28,19 @@ table.dataTable thead {
 table.dataTable tbody tr:nth-child(even) {
     background-color: #f2f2f2;
 }
+
+.back-btn {
+    display: inline-block;
+    margin-top: 35px;
+    padding: 12px 20px;
+    background: #ffc107;
+    color: black;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: 0.2s ease;
+}
+
+.back-btn:hover {
+    background: #f4c73e;
+}

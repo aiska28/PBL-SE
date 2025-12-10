@@ -63,16 +63,21 @@ body {
     .dokumen-wrapper img { width: 100%; }
 }
 
-/* back button */
 .back-btn {
     display: inline-block;
-    padding: 10px 16px;
-    background: #1d2c8a;
-    color: #fff;
+    margin-top: 35px;
+    padding: 12px 20px;
+    background: #ffc107;
+    color: black;
     text-decoration: none;
-    border-radius: 6px;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: 0.2s ease;
 }
-.back-btn:hover { background: #142153; }
+
+.back-btn:hover {
+    background: #f4c73e;
+}
 
 /* small screens adjustments */
 @media (max-width: 480px){

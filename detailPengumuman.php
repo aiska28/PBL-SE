@@ -104,7 +104,7 @@ if ($qGambar) {
     <?php endif; ?>
     <!-- =============================================================== -->
 
-    <a href="berita.php" class="back-btn">← Kembali</a>
+     <a href="berita.php" class="back-btn"><b>Kembali</b></a>
   </div>
 </main>
 
