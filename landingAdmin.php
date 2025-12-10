@@ -36,7 +36,7 @@ if (isset($_POST['update_profilelab'])) {
 }
 
 // ------------------ HANDLE UPDATE VISI MISI ------------------
-if (isset($_POST['update_visimisi'])) {
+if (isset($_POST['update_visi_misi'])) {
 
     $id = $_POST['id'];
     $visi = $_POST['visi'];
@@ -89,6 +89,225 @@ if (isset($_GET['hapus_kuliah'])) {
         array($_GET['hapus_kuliah'])
     );
     header("Location: landingAdmin.php?msg=kuliah_deleted");
+    exit;
+}
+
+// ------------------ UPDATE SEJARAH ------------------
+if (isset($_POST['update_sejarah'])) {
+
+    $id = $_POST['id'];
+    $judul = $_POST['judul'];
+    $deskripsi = $_POST['deskripsi'];
+
+    pg_query_params($conn,
+        "UPDATE sejarah SET judul=$1, deskripsi=$2 WHERE id=$3",
+        array($judul, $deskripsi, $id)
+    );
+
+    header("Location: landingAdmin.php?msg=sejarah_updated");
+    exit;
+}
+
+// ------------------ UPDATE VISI MISI TUJUAN ------------------
+if (isset($_POST['update_vmt'])) {
+
+    $id = $_POST['id'];
+    $visi = $_POST['visi'];
+    $misi = $_POST['misi'];
+    $tujuan = $_POST['tujuan'];
+
+    pg_query_params($conn,
+        "UPDATE visi_misi_tujuan SET visi=$1, misi=$2, tujuan=$3 WHERE id=$4",
+        array($visi, $misi, $tujuan, $id)
+    );
+
+    header("Location: landingAdmin.php?msg=vmt_updated");
+    exit;
+}
+
+// ------------------ UPDATE STRUKTUR ORGANISASI ------------------
+if (isset($_POST['update_organisasi'])) {
+
+    $id      = $_POST['id'];
+    $jabatan = $_POST['jabatan'];
+    $nama    = $_POST['nama'];
+
+    // Validasi sederhana
+    if ($id == "" || $jabatan == "" || $nama == "") {
+        die("Data tidak boleh kosong");
+    }
+
+    // Query update
+    $query = "UPDATE struktur_organisasi 
+              SET jabatan = $1, nama = $2
+              WHERE id = $3";
+
+    $result = pg_query_params($conn, $query, array($jabatan, $nama, $id));
+
+    if ($result) {
+        header("Location: landingAdmin.php?msg=updated");
+        exit;
+    } else {
+        die("GAGAL UPDATE: " . pg_last_error($conn));
+    }
+}
+
+// ------------------ HAPUS TENAGA PENGAJAR ------------------
+if (isset($_GET['hapus_struktur'])) {
+
+  pg_query_params($conn,
+    "DELETE FROM struktur_organisasi WHERE id=$1",
+    array($_GET['hapus_struktur'])
+  );
+
+  header("Location: landingAdmin.php?msg=struktur_deleted");
+  exit;
+}
+
+// ------------------ TAMBAH TENAGA PENGAJAR ------------------
+if (isset($_POST['add_pengajar'])) {
+
+  pg_query_params($conn,
+    "INSERT INTO tenaga_pengajar (nama, jabatan, deskripsi) VALUES ($1, $2, $3)",
+       array($_POST['nama'], $_POST['jabatan'], $_POST['deskripsi'])
+    );
+
+  header("Location: landingAdmin.php?msg=pengajar_added");
+  exit;
+}
+
+// ------------------ HAPUS TENAGA PENGAJAR ------------------
+if (isset($_GET['hapus_pengajar'])) {
+
+    pg_query_params($conn,
+        "DELETE FROM tenaga_pengajar WHERE id=$1",
+        array($_GET['hapus_pengajar'])
+    );
+
+    header("Location: landingAdmin.php?msg=pengajar_deleted");
+    exit;
+}
+
+// ------------------ TAMBAH TENAGA KEPENDIDIKAN ------------------
+if (isset($_POST['add_kependidikan'])) {
+
+    pg_query_params($conn,
+        "INSERT INTO tenaga_kependidikan (nama, jabatan, deskripsi) VALUES ($1, $2, $3)",
+        array($_POST['nama'], $_POST['jabatan'], $_POST['deskripsi'])
+    );
+
+    header("Location: landingAdmin.php?msg=kependidikan_added");
+    exit;
+}
+
+// ------------------ HAPUS TENAGA KEPENDIDIKAN ------------------
+if (isset($_GET['hapus_kependidikan'])) {
+
+    pg_query_params($conn,
+        "DELETE FROM tenaga_kependidikan WHERE id=$1",
+        array($_GET['hapus_kependidikan'])
+    );
+
+    header("Location: landingAdmin.php?msg=kependidikan_deleted");
+    exit;
+}
+
+// ------------------ UPDATE SARANA PRASARANA (SAPRAS) ------------------
+if (isset($_POST['update_sarpras'])) {
+
+    $id = $_POST['id'];
+    $judul = $_POST['judul'];
+    $deskripsi = $_POST['deskripsi'];
+
+    pg_query_params($conn,
+        "UPDATE sarpras SET judul=$1, deskripsi=$2 WHERE id=$3",
+        array($judul, $deskripsi, $id)
+    );
+
+    header("Location: landingAdmin.php?msg=sarpras_updated");
+    exit;
+}
+
+/* ------------------ HAPUS AGENDA ------------------ */
+if (isset($_GET['hapus_agenda'])) {
+    $id = $_GET['hapus_agenda'];
+    pg_query_params($conn, "DELETE FROM agenda WHERE id = $1", array($id));
+    header("Location: landingAdmin.php?msg=agenda_deleted");
+    exit;
+}
+
+/* ------------------ HAPUS BERITA ------------------= */
+if (isset($_GET['hapus_berita'])) {
+    $id = $_GET['hapus_berita'];
+    pg_query_params($conn, "DELETE FROM berita WHERE id = $1", array($id));
+    header("Location: landingAdmin.php?msg=berita_deleted");
+    exit;
+}
+
+/* ------------------ HAPUS PENGUMUMAN ------------------ */
+if (isset($_GET['hapus_pengumuman'])) {
+    $id = $_GET['hapus_pengumuman'];
+    pg_query_params($conn, "DELETE FROM pengumuman WHERE id = $1", array($id));
+    header("Location: landingAdmin.php?msg=pengumuman_deleted");
+    exit;
+}
+
+/* ------------------ Update AGENDA ------------------ */
+if (isset($_POST['update_agenda'])) {
+
+    $id       = $_POST['id'];
+    $judul    = $_POST['judul'];
+    $deskripsi = $_POST['deskripsi'];
+    $tanggal  = $_POST['tanggal'];
+
+    $query = "
+        UPDATE agenda 
+        SET judul = $1, deskripsi = $2, tanggal = $3
+        WHERE id = $4
+    ";
+
+    pg_query_params($conn, $query, array($judul, $deskripsi, $tanggal, $id));
+
+    header("Location: landingAdmin.php?msg=agenda_updated");
+    exit;
+}
+
+/* ------------------ Update BERITA ------------------ */
+if (isset($_POST['update_berita'])) {
+
+    $id      = $_POST['id'];
+    $judul   = $_POST['judul'];
+    $konten  = $_POST['konten'];
+    $tanggal = $_POST['tanggal'];
+
+    $query = "
+        UPDATE berita 
+        SET judul = $1, konten = $2, tanggal = $3
+        WHERE id = $4
+    ";
+
+    pg_query_params($conn, $query, array($judul, $konten, $tanggal, $id));
+
+    header("Location: landingAdmin.php?msg=berita_updated");
+    exit;
+}
+/* ------------------ Update PENGUMUMAN ------------------ */
+if (isset($_POST['update_pengumuman'])) {
+
+    $id      = $_POST['id'];
+    $judul   = $_POST['judul'];
+    $konten  = $_POST['konten'];
+    $tanggal = $_POST['tanggal'];
+
+    $query = "
+        UPDATE pengumuman 
+        SET judul = $1, konten = $2, tanggal = $3
+        WHERE id = $4
+    ";
+
+    pg_query_params($conn, $query, array($judul, $konten, $tanggal, $id));
+
+    header("Location: landingAdmin.php?msg=pengumuman_updated");
     exit;
 }
 ?>
@@ -148,6 +367,9 @@ if (isset($_GET['hapus_kuliah'])) {
           </li>
           <li class="nav-item" role="presentation">
             <button class="nav-link fw-semibold" id="tampilan-tab" data-bs-toggle="tab" data-bs-target="#tampilan" type="button" role="tab">📘 Tampilan Lab</button>
+          </li>
+          <li class="nav-item" role="presentation">
+            <button class="nav-link fw-semibold" id="tentangKami-tab" data-bs-toggle="tab" data-bs-target="#tentangKami" type="button" role="tab">📘 Tampilan Tentang Kami</button>
           </li>
           <li class="nav-item" role="presentation">
             <button class="nav-link fw-semibold" id="tampilanBerita-tab" data-bs-toggle="tab" data-bs-target="#tampilanBerita" type="button" role="tab">📘 Tampilan Berita</button>
@@ -507,78 +729,333 @@ if (isset($_GET['hapus_kuliah'])) {
             </table>
             </div>
           </div>
+        </div> 
+      </div>
 
+<<<<<<< HEAD
+        <!-- TAB TAMPILAN LAB -->
+          <div class="tab-pane fade" id="tentangKami" role="tabpanel">
+=======
           <!-- TAB TAMPILAN BERITA -->
   <div class="tab-pane fade" id="tampilanBerita">
+>>>>>>> 1a1209d70ca3a1f2d828dac73486190fc54dbc38
 
-  <!-- NAVIGASI TAB DALAM -->
-  <ul class="nav nav-pills mb-3" id="innerBeritaTab" role="tablist">
-    <li class="nav-item">
-      <button class="nav-link active" id="agenda-inner-tab" data-bs-toggle="tab" data-bs-target="#tabAgenda" type="button">
-        📅 Agenda
-      </button>
-    </li>
+          <!-- NAVIGASI TAB DALAM -->
+          <ul class="nav nav-pills mb-3" id="innerTabTentang" role="tablist">
+            <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#sejarah">Sejarah</button></li>
+            <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#visiMisiTujuan">Visi, Misi dan tujuan</button></li>
+            <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#organisasi">Struktur Organisasi</button></li>
+            <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tenagaPengajar">Tenaga Pengajar</button></li>
+            <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#kependidikan">Tenaga Kependidikan</button></li>
+            <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#sarpras">SAPRAS</button></li>
+          </ul>
 
-    <li class="nav-item">
-      <button class="nav-link" id="berita-inner-tab" data-bs-toggle="tab" data-bs-target="#tabBerita" type="button">
-        📰 Berita
-      </button>
-    </li>
+          <div class="tab-content">
 
-    <li class="nav-item">
-      <button class="nav-link" id="pengumuman-inner-tab" data-bs-toggle="tab" data-bs-target="#tabPengumuman" type="button">
-        📢 Pengumuman
-      </button>
-    </li>
-  </ul>
+            <!-- ---------------- SEJARAH ---------------- -->
+            <div class="tab-pane fade show active" id="sejarah">
+              <h5 class="text-primary fw-bold">Sejarah</h5>
 
-  <!-- ISI TAB DALAM -->
-  <div class="tab-content" id="innerBeritaContent">
+              <?php 
+                $q = pg_query($conn,"SELECT * FROM sejarah ORDER BY id DESC LIMIT 1");
+                $d = pg_fetch_assoc($q);
+              ?>
 
-    <!-- TAB AGENDA -->
-    <div class="tab-pane fade show active" id="tabAgenda" role="tabpanel">
+              <form method="POST" action="landingAdmin.php">
+                <input type="hidden" name="id" value="<?= $d['id']; ?>">
+                <input type="hidden" name="update_sejarah" value="1">
 
-      <div class="card border-primary shadow-sm p-3">
-        <h5 class="fw-bold mb-3">Daftar Agenda</h5>
+                <div class="mb-3">
+                  <label class="form-label fw-semibold">Judul</label>
+                  <input type="text" class="form-control" name="judul" value="<?= $d['judul'] ?? '' ?>">
+                </div>
 
-        <table class="table table-bordered table-striped">
-          <thead>
+                <div class="mb-3">
+                  <label class="form-label fw-semibold">Deskripsi</label>
+                  <textarea class="form-control summernote" name="deskripsi"><?= $d['deskripsi']; ?></textarea>
+                </div>
+
+                <button class="btn btn-primary">Simpan</button>
+              </form>
+            </div>
+
+            <!-- ---------------- VISI MISI TUJUAN ---------------- -->
+            <div class="tab-pane fade" id="visiMisiTujuan">
+              <h5 class="text-primary fw-bold">Visi, Misi & Tujuan</h5>
+
+              <?php 
+                $q = pg_query($conn,"SELECT * FROM visi_misi_tujuan ORDER BY id DESC LIMIT 1");
+                $d = pg_fetch_assoc($q);
+              ?>
+
+              <form method="POST" action="landingAdmin.php">
+                <input type="hidden" name="id" value="<?= $d['id']; ?>">
+                <input type="hidden" name="update_visi_misi" value="1">
+
+                <label class="fw-semibold mt-2">Visi</label>
+                <textarea name="visi" class="form-control summernote"><?= $d['visi']; ?></textarea>
+
+                <label class="fw-semibold mt-3">Misi</label>
+                <textarea name="misi" class="form-control summernote"><?= $d['misi']; ?></textarea>
+
+                <label class="fw-semibold mt-3">Tujuan</label>
+                <textarea name="tujuan" class="form-control summernote"><?= $d['tujuan']; ?></textarea>
+
+                <button class="btn btn-primary mt-3">Simpan</button>
+              </form>
+            </div>
+
+            <!-- ---------------- STRUKTUR ORGANISASI ---------------- -->
+            <div class="tab-pane fade" id="organisasi">
+              <div class="d-flex justify-content-between">
+                <h5 class="text-primary fw-bold">Struktur Organisasi</h5>
+                <a href="TambahStruktur.php" class="btn btn-warning btn-sm text-dark fw-bold">+ Tambah Struktur</a>
+              </div>
+
+              <div class="table-responsive mt-3">
+                <table class="table table-bordered text-center">
+                  <thead class="table-primary">
+                    <tr>
+                      <th>No</th>
+                      <th>Jabatan</th>
+                      <th>Nama</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                      <?php
+                      $q = pg_query($conn,"SELECT * FROM struktur_organisasi ORDER BY id ASC");
+                      $no=1;
+                      while($s = pg_fetch_assoc($q)){
+                        echo "
+                        <tr>
+                          <td>{$no}</td>
+                          <td>{$s['jabatan']}</td>
+                          <td>{$s['nama']}</td>
+                          <td>
+                            <a href='EditStruktur.php?id={$s['id']}' class='btn btn-sm btn-outline-primary'>Edit</a>
+                            <a href='landingAdmin.php?hapus_struktur={$s['id']}' 
+                              class='btn btn-sm btn-outline-danger'
+                              onclick=\"return confirm('Hapus data ini?')\">Hapus</a>
+                          </td>
+                        </tr>";
+                        $no++;
+                      }
+                    ?>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- ---------------- TENAGA PENGAJAR ---------------- -->
+            <div class="tab-pane fade" id="tenagaPengajar">
+              <div class="d-flex justify-content-between">
+                <h5 class="text-primary fw-bold">Tenaga Pengajar</h5>
+                <a href="TambahPengajar.php" class="btn btn-warning btn-sm fw-bold text-dark">+ Tambah Pengajar</a>
+              </div>
+
+              <div class="table-responsive mt-3">
+              <table class="table table-bordered mt-3 text-center">
+                <thead class="table-primary">
+                  <tr>
+                    <th>No</th>
+                    <th>Nama</th>
+                    <th>Jabatan</th>
+                    <th>NIDN</th>
+                    <th>Foto</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <?php 
+                    $q = pg_query($conn,"SELECT * FROM tenaga_pengajar ORDER BY id ASC");
+                    $no = 1;
+                    while ($p = pg_fetch_assoc($q)) {
+                      echo "
+                        <tr>
+                          <td>{$no}</td>
+                          <td>{$p['nama_dosen']}</td>
+                          <td>{$p['jabatan']}</td>
+                          <td>{$p['nidn']}</td>
+                          <td><img src='uploads/{$p['foto_url']}' width='70'></td>
+                          <td>
+                            <a href='EditPengajar.php?id={$p['id']}' class='btn btn-sm btn-outline-primary'>Edit</a>
+                            <a href='landingAdmin.php?hapus_pengajar={$p['id']}'
+                              class='btn btn-sm btn-outline-danger'
+                              onclick=\"return confirm('Hapus pengajar ini?')\">Hapus</a>
+                          </td>
+                      </tr>";
+                      $no++;
+                    }
+                  ?>
+                </tbody>
+              </table>
+            </div>
+            </div>
+
+            <!-- ---------------- TENAGA KEPENDIDIKAN ---------------- -->
+            <div class="tab-pane fade" id="kependidikan">
+              <div class="d-flex justify-content-between">
+                <h5 class="text-primary fw-bold">Tenaga Kependidikan</h5>
+                <a href="TambahKependidikan.php" class="btn btn-warning btn-sm fw-bold text-dark">+ Tambah Pegawai</a>
+              </div>
+
+              <div class="table-responsive mt-3">
+              <table class="table table-bordered mt-3 text-center">
+                <thead class="table-primary">
+                  <tr>
+                    <th>No</th>
+                    <th>Nama</th>
+                    <th>Jabatan</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                <?php
+                  $q = pg_query($conn,"SELECT * FROM tenaga_kependidikan ORDER BY id ASC");
+                  $no = 1;
+                  while($k = pg_fetch_assoc($q)){
+                    echo "
+                    <tr>
+                      <td>{$no}</td>
+                      <td>{$k['nama_pegawai']}</td>
+                      <td>{$k['jabatan']}</td>
+                      <td>
+                        <a href='EditKependidikan.php?id={$k['id']}' class='btn btn-sm btn-outline-primary'>Edit</a>
+                        <a href='landingAdmin.php?hapus_kependidikan={$k['id']}'
+                          class='btn btn-sm btn-outline-danger'
+                          onclick=\"return confirm('Hapus data ini?')\">Hapus</a>
+                      </td>
+                    </tr>";
+                    $no++;
+                  }
+                  ?>
+                </tbody>
+              </table>
+              </div>
+            </div>
+
+
+              <!-- ---------------- SARANA & PRASARANA ---------------- -->
+            <div class="tab-pane fade" id="sarpras">
+              <div class="d-flex justify-content-between">
+                <h5 class="text-primary fw-bold">Sarana & Prasarana</h5>
+                <a href="TambahSarpras.php" class="btn btn-warning btn-sm fw-bold text-dark">+ Tambah Sarpras</a>
+              </div>
+
+              <div class="table-responsive mt-3">
+              <table class="table table-bordered mt-3 text-center">
+                <thead class="table-primary">
+                  <tr>
+                    <th>No</th>
+                    <th>Nama Ruangan</th>
+                    <th>Deskripsi</th>
+                    <th>Foto</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                <?php
+                  $q = pg_query($conn,"SELECT * FROM sarana_prasarana ORDER BY id ASC");
+                  $no = 1;
+                  while($s = pg_fetch_assoc($q)){
+                    echo "
+                    <tr>
+                      <td>{$no}</td>
+                      <td>{$s['nama_ruangan']}</td>
+                      <td>{$s['deskripsi']}</td>
+                      <td><img src='uploads/{$s['foto_url']}' width='80'></td>
+                      <td>
+                        <a href='EditSarpras.php?id={$s['id']}' class='btn btn-sm btn-outline-primary'>Edit</a>
+                        <a href='landingAdmin.php?hapus_sarpras={$s['id']}'
+                          class='btn btn-sm btn-outline-danger'
+                          onclick=\"return confirm('Hapus data ini?')\">Hapus</a>
+                      </td>
+                    </tr>";
+                    $no++;
+                  }
+                ?>
+              </tbody>
+            </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TAB TAMPILAN LAB -->
+      <div class="tab-pane fade" id="tampilanBerita" role="tabpanel">
+
+      <!-- NAVIGASI TAB DALAM -->
+      <ul class="nav nav-pills mb-3" id="innerTabBerita" role="tablist">
+        <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#AgendaTab">Agenda</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#BeritaTab">Berita</button></li>
+        <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#PengumumanTab">Pengumuman</button></li>
+      </ul>
+
+      <div class="tab-content">
+
+      <!-- ======================= TAB AGENDA ======================= -->
+      <div class="tab-pane fade show active" id="AgendaTab">
+      
+      <div class="d-flex justify-content-between">
+        <h5 class="text-primary fw-bold">Agenda</h5>
+        <a href="TambahAgenda.php" class="btn btn-warning btn-sm fw-bold text-dark">+ Tambah Agenda</a>
+      </div>
+
+      <div class="table-responsive mt-3">
+        <table class="table table-bordered text-center">
+          <thead class="table-primary">
             <tr>
               <th>No</th>
-              <th>Judul Agenda</th>
+              <th>Deskripsi</th>
               <th>Tanggal</th>
+              <th>Waktu</th>
+              <th>Nama Kegiatan</th>
               <th>Aksi</th>
             </tr>
           </thead>
           <tbody>
             <?php
-              $no=1;
-              $agenda = pg_query($conn,"SELECT * FROM agenda ORDER BY tanggal DESC");
-              while($row = pg_fetch_assoc($agenda)){
+            $qA = pg_query($conn, "SELECT * FROM view_agenda ORDER BY id DESC");
+            $no = 1;
+
+            while ($a = pg_fetch_assoc($qA)) {
+              echo "
+              <tr>
+                <td>{$no}</td>
+                <td>{$a['deskripsi']}</td>
+                <td>{$a['tanggal']}</td>
+                <td>{$a['waktu']}</td>
+                <td>{$a['nama_kegiatan']}</td>
+                <td>
+                  <a href='editAgenda.php?id={$a['id']}' class='btn btn-sm btn-outline-primary'>Edit</a>
+                  <a href='landingAdmin.php?hapus_agenda={$a['id']}' 
+                    class='btn btn-sm btn-outline-danger'
+                    onclick=\"return confirm('Hapus agenda ini?')\">Hapus</a>
+                </td>
+              </tr>";
+              $no++;
+            }
             ?>
-            <tr>
-              <td><?= $no++ ?></td>
-              <td><?= $row['judul'] ?></td>
-              <td><?= $row['tanggal'] ?></td>
-              <td>
-                <a href="editAgenda.php?id=<?= $row['id'] ?>" class="btn btn-warning btn-sm">Edit</a>
-                <a href="hapusAgenda.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm">Hapus</a>
-              </td>
-            </tr>
-            <?php } ?>
           </tbody>
         </table>
       </div>
-
     </div>
 
-    <!-- TAB BERITA -->
-    <div class="tab-pane fade" id="tabBerita" role="tabpanel">
-      <div class="card border-primary shadow-sm p-3">
-        <h5 class="fw-bold mb-3">Daftar Berita</h5>
+    <!-- ======================= TAB BERITA ======================= -->
+    <div class="tab-pane fade" id="BeritaTab">
+      <div class="d-flex justify-content-between">
+        <h5 class="text-primary fw-bold">Berita</h5>
+        <a href="TambahBerita.php" class="btn btn-warning btn-sm fw-bold text-dark">+ Tambah Berita</a>
+      </div>
 
-        <table class="table table-bordered table-striped">
-          <thead>
+      <div class="table-responsive mt-3">
+        <table class="table table-bordered text-center">
+          <thead class="table-primary">
             <tr>
               <th>No</th>
               <th>Judul</th>
@@ -588,32 +1065,39 @@ if (isset($_GET['hapus_kuliah'])) {
           </thead>
           <tbody>
             <?php
-              $no=1;
-              $berita = pg_query($conn,"SELECT * FROM berita ORDER BY tanggal DESC");
-              while($row = pg_fetch_assoc($berita)){
+            $qB = pg_query($conn, "SELECT * FROM berita ORDER BY id DESC");
+            $no = 1;
+            while ($b = pg_fetch_assoc($qB)) {
+              echo "
+              <tr>
+                <td>{$no}</td>
+                <td>{$b['judul']}</td>
+                <td>{$b['tanggal']}</td>
+                <td>
+                  <a href='editBerita.php?id={$b['id']}' class='btn btn-sm btn-outline-primary'>Edit</a>
+                  <a href='landingAdmin.php?hapus_berita={$b['id']}' 
+                     class='btn btn-sm btn-outline-danger'
+                     onclick=\"return confirm('Hapus berita ini?')\">Hapus</a>
+                </td>
+              </tr>";
+              $no++;
+            }
             ?>
-            <tr>
-              <td><?= $no++ ?></td>
-              <td><?= $row['judul'] ?></td>
-              <td><?= $row['tanggal'] ?></td>
-              <td>
-                <a href="editBerita.php?id=<?= $row['id'] ?>" class="btn btn-warning btn-sm">Edit</a>
-                <a href="hapusBerita.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm">Hapus</a>
-              </td>
-            </tr>
-            <?php } ?>
           </tbody>
         </table>
       </div>
     </div>
 
-    <!-- TAB PENGUMUMAN -->
-    <div class="tab-pane fade" id="tabPengumuman" role="tabpanel">
-      <div class="card border-primary shadow-sm p-3">
-        <h5 class="fw-bold mb-3">Daftar Pengumuman</h5>
+    <!-- ======================= TAB PENGUMUMAN ======================= -->
+    <div class="tab-pane fade" id="PengumumanTab">
+      <div class="d-flex justify-content-between">
+        <h5 class="text-primary fw-bold">Pengumuman</h5>
+        <a href="TambahPengumuman.php" class="btn btn-warning btn-sm fw-bold text-dark">+ Tambah Pengumuman</a>
+      </div>
 
-        <table class="table table-bordered table-striped">
-          <thead>
+      <div class="table-responsive mt-3">
+        <table class="table table-bordered text-center">
+          <thead class="table-primary">
             <tr>
               <th>No</th>
               <th>Judul</th>
@@ -623,31 +1107,35 @@ if (isset($_GET['hapus_kuliah'])) {
           </thead>
           <tbody>
             <?php
-              $no=1;
-              $pengumuman = pg_query($conn,"SELECT * FROM pengumuman ORDER BY tanggal DESC");
-              while($row = pg_fetch_assoc($pengumuman)){
+            $qP = pg_query($conn, "SELECT * FROM pengumuman ORDER BY id DESC");
+            $no = 1;
+            while ($p = pg_fetch_assoc($qP)) {
+              echo "
+              <tr>
+                <td>{$no}</td>
+                <td>{$p['judul']}</td>
+                <td>{$p['tanggal']}</td>
+                <td>
+                  <a href='editPengumuman.php?id={$p['id']}' class='btn btn-sm btn-outline-primary'>Edit</a>
+                  <a href='landingAdmin.php?hapus_pengumuman={$p['id']}' 
+                     class='btn btn-sm btn-outline-danger'
+                     onclick=\"return confirm('Hapus pengumuman ini?')\">Hapus</a>
+                </td>
+              </tr>";
+              $no++;
+            }
             ?>
-            <tr>
-              <td><?= $no++ ?></td>
-              <td><?= $row['judul'] ?></td>
-              <td><?= $row['tanggal'] ?></td>
-              <td>
-                <a href="editPengumuman.php?id=<?= $row['id'] ?>" class="btn btn-warning btn-sm">Edit</a>
-                <a href="hapusPengumuman.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm">Hapus</a>
-              </td>
-            </tr>
-            <?php } ?>
           </tbody>
         </table>
-
       </div>
     </div>
 
   </div>
 </div>
 
+
         </div>
-      </div>
+        </div>
 
   <!-- jQuery WAJIB paling atas -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
