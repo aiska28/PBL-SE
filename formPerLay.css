@@ -18,16 +18,36 @@ body {
   margin: 8px 0 16px;
 }
 
-.btn-custom {
-  background-color: #2a66c3;
-  border: none;
-  color: #fff;
-  padding: 10px 20px;
-  border-radius: 10px;
+.btn-primary {
+    display: inline-block;
+    margin-top: 35px;
+    padding: 12px 20px;
+    background: #0a2d79;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: 0.2s ease;
 }
 
-.btn-custom:hover {
-  background-color: #1f58a4;
+.btn-primary:hover {
+  background-color: #133ea5;
+}
+
+.back-btn {
+    display: inline-block;
+    margin-top: 35px;
+    padding: 12px 20px;
+    background: #ffc107;
+    color: black;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: 0.2s ease;
+}
+
+.back-btn:hover {
+    background: #f4c73e;
 }
 
 .form-label {

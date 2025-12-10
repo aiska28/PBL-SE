@@ -30,13 +30,35 @@ body {
 }
 
 .btn-primary {
-  background-color: #0a2d79;
-  border: none;
-  transition: 0.3s;
+    display: inline-block;
+    margin-top: 35px;
+    padding: 12px 20px;
+    background: #0a2d79;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: 0.2s ease;
 }
 
 .btn-primary:hover {
   background-color: #133ea5;
+}
+
+.back-btn {
+    display: inline-block;
+    margin-top: 35px;
+    padding: 12px 20px;
+    background: #ffc107;
+    color: black;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: 0.2s ease;
+}
+
+.back-btn:hover {
+    background: #f4c73e;
 }
 
 input.form-control {

@@ -213,7 +213,15 @@ endforeach;
         </div>
         <div class="card-body text-center d-flex flex-column justify-content-between">
           <div>
-            <img src="https://cdn-icons-png.flaticon.com/512/456/456212.png" class="rounded-circle mb-3" width="100" alt="Dosen">
+            <img src="img/bapakImam.jpg"
+              style="
+              width:120px;
+              height:120px;
+              object-fit:cover;
+              object-position:top;
+              border-radius:50%;
+              "
+              alt="Dosen">
             <h6>Imam Fahrul Rozi, ST., MT.</h6>
             <p class="mb-3 text-light">Kepala Lab</p>
           </div>

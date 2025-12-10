@@ -144,7 +144,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <form action="" method="POST" enctype="multipart/form-data">
           <div class="mb-3">
-            <label class="form-label">Full Name :</label>
+            <label class="form-label">Nama Lengkap :</label>
             <input type="text" name="fullname" class="form-control" placeholder="Enter Your Full Name" required>
           </div>
 
@@ -160,24 +160,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
           </div>
 
           <div class="mb-3">
-            <label class="form-label">Phone Number :</label>
+            <label class="form-label">Nomer Telepon :</label>
             <input type="tel" name="phone" class="form-control" placeholder="Enter Your Phone Number" required>
           </div>
 
           <div class="row mb-4">
             <div class="col-md-6">
-              <label class="form-label">Upload CV :</label>
-              <input type="file" name="cv" class="form-control" accept=".pdf,.docx" required>
+              <label class="form-label">Kirim CV :</label>
+              <input type="file" name="cv" class="form-control" accept=".pdf,.docx,.png" required>
             </div>
             <div class="col-md-6">
-              <label class="form-label">Upload KTM :</label>
+              <label class="form-label">Kirim KTM :</label>
               <input type="file" name="ktm" class="form-control" accept=".jpg,.png,.pdf" required>
             </div>
           </div>
 
           <div class="d-flex justify-content-between">
-            <a href="landing.php" class="btn btn-secondary px-4">Back</a>
-            <button type="submit" class="btn btn-primary px-4">Submit</button>
+            <a href="landing.php" class="back-btn"><b>Kembali</b></a>
+            <button type="submit" class="btn btn-primary px-4"><b>Kirim</b></button>
           </div>
         </form>
       </div>

@@ -142,12 +142,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                   <div class="row g-3">
 
                       <div class="col-md-6">
-                          <label class="form-label">Full Name :</label>
+                          <label class="form-label">Nama Lengkap :</label>
                           <input type="text" class="form-control" name="fullname" required>
                       </div>
 
                       <div class="col-md-6">
-                          <label class="form-label">Phone Number :</label>
+                          <label class="form-label">Nomer Telepon :</label>
                           <input type="tel" class="form-control" name="phone" required>
                       </div>
 
@@ -183,13 +183,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                       </div>
 
                       <div class="col-12">
-                          <label class="form-label">Upload Surat Layanan:</label>
+                          <label class="form-label">Kirim Surat Layanan:</label>
                           <input type="file" class="form-control" name="surat">
                       </div>
 
                       <div class="d-flex justify-content-between mt-4">
-                          <a href="landing.php" class="btn btn-outline-primary px-4 py-2">BACK</a>
-                          <button type="submit" class="btn btn-custom btn-primary px-4">SUBMIT</button>
+                        <a href="landing.php" class="back-btn"><b>Kembali</b></a>
+                        <button type="submit" class="btn btn-primary px-4"><b>Kirim</b></button>
                       </div>
 
                   </div>
