@@ -16,11 +16,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($user && password_verify($password, $user['password'])) {
 
-        $_SESSION['admin'] = $user['username'];
+        // Set session
+        $_SESSION['username'] = $user['username'];
+        $_SESSION['role']     = $user['role'];   // ← PENTING!
 
-        header("Location: LandingAdmin.php");
-        exit;
-    } else {
+        // Arahkan sesuai role
+        if ($user['role'] == 'admin') {
+
+            header("Location: LandingAdmin.php");
+            exit;
+
+        } elseif ($user['role'] == 'acc permohonan') {
+
+            header("Location: halamanDosen.php");  // ← halaman dosenmu
+            exit;
+
+        } else {
+
+            echo "<script>alert('Role tidak dikenali! Hubungi admin.');</script>";
+        }
+    } 
+    else {
         echo "<script>alert('Username atau password salah!');</script>";
     }
 }

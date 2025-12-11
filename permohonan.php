@@ -5,6 +5,9 @@ if (!$conn) {
     die("Koneksi gagal: " . pg_last_error());
 }
 
+/* TANGKAP ASAL HALAMAN (ADMIN / DOSEN) */
+$from = isset($_GET['from']) ? $_GET['from'] : 'admin';
+
 /* SUBMIT APPROVE */
 if (isset($_POST['approve'])) {
     $id = $_POST['approve'];
@@ -12,6 +15,18 @@ if (isset($_POST['approve'])) {
     pg_query_params($conn, $queryApprove, [$id]);
     echo "<script>
         alert('Data berhasil di-approve!');
+        window.location.href = 'permohonan.php';
+    </script>";
+    exit;
+}
+
+/* SUBMIT TOLAK */
+if (isset($_POST['tolak'])) {
+    $id = $_POST['tolak'];
+    $queryTolak = "UPDATE layanan SET status='ditolak' WHERE id_lay=$1";
+    pg_query_params($conn, $queryTolak, [$id]);
+    echo "<script>
+        alert('Permohonan berhasil ditolak!');
         window.location.href = 'permohonan.php';
     </script>";
     exit;
@@ -31,7 +46,8 @@ if (isset($_POST['delete'])) {
 
 /* HITUNG TOTAL & APPROVED */
 $total = pg_fetch_assoc(pg_query($conn,"SELECT COUNT(*) AS total FROM layanan"))['total'];
-$approved = pg_fetch_assoc(pg_query($conn,"SELECT COUNT(*) AS approve FROM layanan WHERE status='pending'"))['approve'];
+$approved = pg_fetch_assoc(pg_query($conn,"SELECT COUNT(*) AS approve FROM layanan WHERE status='approved'"))['approve'];
+$tolak = pg_fetch_assoc(pg_query($conn,"SELECT COUNT(*) AS tolak FROM layanan WHERE status='ditolak'"))['tolak'];
 
 /* AMBIL DATA LAYANAN */
 $result = pg_query($conn, "
@@ -77,6 +93,7 @@ $result = pg_query($conn, "
 }
 .total-card { background-color: #012970; }
 .approved-card { background-color: #28a745; }
+.tolak-card { background-color: #ffc107}
 .stats-number { font-size: 40px; font-weight: bold; }
 </style>
 </head>
@@ -85,9 +102,14 @@ $result = pg_query($conn, "
 <nav class="navbar navbar-expand-lg shadow-sm" style="background-color:#012970;">
   <div class="container-fluid px-5">
     <a class="navbar-brand text-white fw-bold"><i class="bi bi-people-fill me-2"></i>PERMOHONAN LAYANAN LABORATORIUM SOFTWARE ENGINEERING</a>
-    <a href="landingAdmin.php" class="btn btn-warning fw-bold shadow-sm">
-      <i class="bi bi-arrow-left-circle me-1"></i> Kembali
-    </a>
+      <a 
+          href="<?php echo ($from === 'dosen') ? 'halamanDosen.php' : 'landingAdmin.php'; ?>" 
+          class="btn btn-warning fw-bold shadow-sm"
+      >
+          <i class="bi bi-arrow-left-circle me-1"></i> Kembali
+      </a>
+
+
   </div>
 </nav>
 
@@ -99,20 +121,29 @@ $result = pg_query($conn, "
 </div>
 
 <!-- STATISTIK -->
-<div class="row justify-content-center mt-4">
-  <div class="col-md-3">
+<div class="row justify-content-center mt-4 gx-3 gy-3">
+  <div class="col-12 col-md-3">
     <div class="stats-card total-card shadow">
-      <div class="stats-number"><?= $total ?></div>
+      <div class="stats-number"><?= htmlspecialchars($total) ?></div>
       <div>Total Permohonan</div>
     </div>
   </div>
-  <div class="col-md-3">
+
+  <div class="col-12 col-md-3">
     <div class="stats-card approved-card shadow">
-      <div class="stats-number"><?= $approved ?></div>
+      <div class="stats-number"><?= htmlspecialchars($approved) ?></div>
       <div>Approved</div>
     </div>
   </div>
+
+  <div class="col-12 col-md-3">
+    <div class="stats-card tolak-card shadow">
+      <div class="stats-number"><?= htmlspecialchars($tolak) ?></div>
+      <div>Ditolak</div>
+    </div>
+  </div>
 </div>
+
 
 <!-- SEARCH -->
 <div class="row mt-4 mb-3">
@@ -170,19 +201,34 @@ $result = pg_query($conn, "
           <?php endif; ?>
         </td>
         <td>
-          <div class="d-flex gap-2 justify-content-center">
-            <?php if($row['status']!='approved'): ?>
-            <form method="POST" onsubmit="return confirm('Approve permohonan ini?')">
-              <input type="hidden" name="approve" value="<?= $row['id'] ?>">
-              <button class="btn btn-success btn-sm">Approve</button>
-            </form>
-            <?php endif; ?>
-            <form method="POST" onsubmit="return confirm('Hapus permohonan ini?')">
-              <input type="hidden" name="delete" value="<?= $row['id'] ?>">
-              <button class="btn btn-danger btn-sm">Hapus</button>
-            </form>
-          </div>
-        </td>
+  <div class="d-flex gap-2 justify-content-center">
+
+    <!-- TOMBOL MUNCUL HANYA SAAT STATUS MASIH PENDING -->
+    <?php if($row['status'] == 'pending'): ?>
+
+      <!-- APPROVE (PUNYA MU TETAP!) -->
+      <form method="POST" onsubmit="return confirm('Approve permohonan ini?')">
+        <input type="hidden" name="approve" value="<?= $row['id'] ?>">
+        <button class="btn btn-success btn-sm">Approve</button>
+      </form>
+
+      <!-- TOLAK -->
+      <form method="POST" onsubmit="return confirm('Tolak permohonan ini?')">
+        <input type="hidden" name="tolak" value="<?= $row['id'] ?>">
+        <button class="btn btn-warning text-white btn-sm">Tolak</button>
+      </form>
+
+    <?php endif; ?>
+
+    <!-- HAPUS (TETAP!) -->
+    <form method="POST" onsubmit="return confirm('Hapus permohonan ini?')">
+      <input type="hidden" name="delete" value="<?= $row['id'] ?>">
+      <button class="btn btn-danger btn-sm">Hapus</button>
+    </form>
+
+  </div>
+</td>
+
       </tr>
       <?php endwhile; ?>
     </tbody>

@@ -5,6 +5,9 @@ if (!$conn) {
     die("Koneksi gagal: " . pg_last_error());
 }
 
+/* ➤ TANGKAP ASAL HALAMAN (ADMIN / DOSEN) */
+$from = isset($_GET['from']) ? $_GET['from'] : 'admin';
+
 if (isset($_POST['submit_recruitment'])) {
 
     $full_name = $_POST['full_name'];
@@ -58,6 +61,18 @@ if (isset($_POST['approve'])) {
     exit;
 }
 
+/* SUBMIT TOLAK */
+if (isset($_POST['tolak'])) {
+    $id = $_POST['tolak'];
+    $queryTolak = "UPDATE open_recruitment SET status='ditolak' WHERE id_or=$1";
+    pg_query_params($conn, $queryTolak, [$id]);
+    echo "<script>
+        alert('Recruitment berhasil ditolak!');
+        window.location.href = 'permohonan.php';
+    </script>";
+    exit;
+}
+
 if (isset($_POST['delete'])) {
     $id = $_POST['delete'];
     $queryDelete = "DELETE FROM open_recruitment WHERE id_or=$1";
@@ -71,6 +86,7 @@ if (isset($_POST['delete'])) {
 
 $total = pg_fetch_assoc(pg_query($conn,"SELECT COUNT(*) AS total FROM open_recruitment"))['total'];
 $approved = pg_fetch_assoc(pg_query($conn,"SELECT COUNT(*) AS approve FROM open_recruitment WHERE status='approved'"))['approve'];
+$tolak = pg_fetch_assoc(pg_query($conn,"SELECT COUNT(*) AS tolak FROM open_recruitment WHERE status='ditolak'"))['tolak'];
 
 $result = pg_query($conn, "SELECT * FROM open_recruitment ORDER BY created_at DESC");
 
@@ -91,15 +107,32 @@ $result = pg_query($conn, "SELECT * FROM open_recruitment ORDER BY created_at DE
 <script src="https://cdn.jsdelivr.net/npm/jtable@2.6.0/lib/jquery.jtable.min.js"></script>
 <!-- JTABLE END -->
 <link rel="stylesheet" href="reqkruitmen.css">
+<style>
+.stats-card {
+    border-radius: 15px;
+    padding: 25px;
+    font-weight: bold;
+}
+.total-card { background-color: #012970; }
+.approved-card { background-color: #28a745; }
+.tolak-card { background-color: #ffc107; }
+.stats-number {
+    font-size: 40px;
+    font-weight: bold;
+}
+</style>
 </head>
 <body>
 
 <nav class="navbar navbar-expand-lg shadow-sm" style="background-color:#012970;">
   <div class="container-fluid px-5">
     <a class="navbar-brand text-white fw-bold"><i class="bi bi-person-fill me-2"></i> RECRUITMENT ANGGOTA LABORATORIUM SOFTWARE ENGINEERING</a>
-    <a href="landingAdmin.php" class="btn btn-warning fw-bold shadow-sm">
-      <i class="bi bi-arrow-left-circle me-1"></i> Kembali
-    </a>
+     <a 
+          href="<?php echo ($from === 'dosen') ? 'halamanDosen.php' : 'landingAdmin.php'; ?>" 
+          class="btn btn-warning fw-bold shadow-sm"
+      >
+          <i class="bi bi-arrow-left-circle me-1"></i> Kembali
+      </a>
   </div>
 </nav>
 
@@ -111,19 +144,29 @@ $result = pg_query($conn, "SELECT * FROM open_recruitment ORDER BY created_at DE
 </div>
 
 <!-- STATISTIK -->
-<div class="row justify-content-center mt-4">
+<div class="row justify-content-center mt-4 g-3">
+
   <div class="col-md-3">
-    <div class="stats-card total-card shadow">
+    <div class="stats-card total-card shadow text-white text-center">
       <div class="stats-number"><?= $total ?></div>
       <div>Total Pendaftar</div>
     </div>
   </div>
+
   <div class="col-md-3">
-    <div class="stats-card approved-card shadow">
+    <div class="stats-card approved-card shadow text-white text-center">
       <div class="stats-number"><?= $approved ?></div>
       <div>Approved</div>
     </div>
   </div>
+
+ <div class="col-md-3">
+    <div class="stats-card tolak-card shadow text-white text-center">
+      <div class="stats-number"><?= $tolak ?></div>
+      <div>Ditolak</div>
+    </div>
+  </div>
+
 </div>
 
 <!-- SEARCH -->
@@ -188,8 +231,12 @@ $result = pg_query($conn, "SELECT * FROM open_recruitment ORDER BY created_at DE
             </td>
 
             <td>
-              <?php if ($row['status']=='approved'): ?>
+              <?php if ($row['status'] == 'approved'): ?>
                 <span class="badge bg-success">Approved</span>
+
+              <?php elseif ($row['status'] == 'ditolak'): ?>
+                <span class="badge text-white" style="background-color:#fd7e14;">Ditolak</span>
+
               <?php else: ?>
                 <span class="badge bg-secondary">Pending</span>
               <?php endif; ?>
@@ -198,21 +245,30 @@ $result = pg_query($conn, "SELECT * FROM open_recruitment ORDER BY created_at DE
             <td>
               <div class="d-flex gap-2 justify-content-center">
 
-                <?php if($row['status'] != 'approved'): ?>
-                <form method="POST" action="" onsubmit="return confirm('Approve pendaftar ini?')">
-                  <input type="hidden" name="approve" value="<?= $row['id_or'] ?>">
-                  <button class="btn btn-success btn-sm">Approve</button>
-                </form>
+                <?php if($row['status'] == 'pending'): ?>
+
+                  <!-- APPROVE -->
+                  <form method="POST" onsubmit="return confirm('Approve pendaftar ini?')">
+                    <input type="hidden" name="approve" value="<?= $row['id_or'] ?>">
+                    <button class="btn btn-success btn-sm text-white">Approve</button>
+                  </form>
+
+                  <!-- TOLAK -->
+                  <form method="POST" onsubmit="return confirm('Tolak pendaftar ini?')">
+                    <input type="hidden" name="tolak" value="<?= $row['id_or'] ?>">
+                    <button class="btn btn-warning text-white btn-sm">Tolak</button>
+                  </form>
+
                 <?php endif; ?>
 
-                <form method="POST" action="" onsubmit="return confirm('Hapus data recruitment ini?')">
+                <!-- HAPUS -->
+                <form method="POST" onsubmit="return confirm('Hapus data ini?')">
                   <input type="hidden" name="delete" value="<?= $row['id_or'] ?>">
                   <button class="btn btn-danger btn-sm">Hapus</button>
                 </form>
 
               </div>
             </td>
-
           </tr>
           <?php endwhile; ?>
         </tbody>
