@@ -102,7 +102,7 @@ include 'konekDB.php';
         <p><?= nl2br($vm['visi']); ?></p>
       </div>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-6" >
       <div class="card p-4 h-100 vm-box text-center">
         <h2>MISI</h2>
         <ul class="text-start">
