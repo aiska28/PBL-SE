@@ -220,11 +220,14 @@ $result = pg_query($conn, "
 
     <?php endif; ?>
 
-    <!-- HAPUS (TETAP!) -->
+   <!-- HAPUS KHUSUS ADMIN -->
+    <?php if ($from === 'admin'): ?>
     <form method="POST" onsubmit="return confirm('Hapus permohonan ini?')">
       <input type="hidden" name="delete" value="<?= $row['id'] ?>">
       <button class="btn btn-danger btn-sm">Hapus</button>
     </form>
+    <?php endif; ?>
+
 
   </div>
 </td>

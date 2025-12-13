@@ -261,11 +261,13 @@ $result = pg_query($conn, "SELECT * FROM open_recruitment ORDER BY created_at DE
 
                 <?php endif; ?>
 
-                <!-- HAPUS -->
+                <!-- HAPUS KHUSUS ADMIN -->
+                <?php if ($from === 'admin'): ?>
                 <form method="POST" onsubmit="return confirm('Hapus data ini?')">
                   <input type="hidden" name="delete" value="<?= $row['id_or'] ?>">
                   <button class="btn btn-danger btn-sm">Hapus</button>
                 </form>
+                <?php endif; ?>
 
               </div>
             </td>
