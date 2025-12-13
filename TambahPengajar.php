@@ -17,9 +17,10 @@ if (isset($_POST['simpan'])) {
           VALUES ($1, $2, $3, $4)";
 
     pg_query_params($conn, $q, array($nama, $jabatan, $nidn, $foto));
+  header("Location: landingAdmin.php?tab=tentangKami&inner=tenagaPengajar&msg=pengajar_added");
+  exit;
 
-    header("Location: landingAdmin.php?msg=pengajar_added");
-    exit;
+
 }
 ?>
 
@@ -53,7 +54,8 @@ if (isset($_POST['simpan'])) {
         <input type="file" name="foto" class="form-control" required>
 
         <button name="simpan" class="btn btn-primary mt-3">Simpan</button>
-        <a href="landingAdmin.php" class="btn btn-secondary mt-3">Kembali</a>
+        <a href="landingAdmin.php?tab=tentangKami&inner=tenagaPengajar"
+        class="btn btn-secondary mt-3">Kembali</a>
 
       </form>
 

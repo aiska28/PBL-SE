@@ -30,22 +30,42 @@ if (!$data) {
     <div class="card-body">
       <h4 class="fw-bold text-primary mb-3">Edit Kegiatan & Proyek</h4>
 
-      <form action="updateKegiatan.php" method="POST">
+      <form action="landingAdmin.php" method="POST">
+
+        <!-- PENTING -->
+        <input type="hidden" name="update_kegiatan" value="1">
         <input type="hidden" name="id" value="<?= $data['id']; ?>">
 
         <div class="mb-3">
           <label class="form-label">Judul</label>
-          <input type="text" class="form-control" name="judul" value="<?= $data['judul']; ?>" required>
+          <input
+            type="text"
+            class="form-control"
+            name="judul"
+            value="<?= htmlspecialchars($data['judul']); ?>"
+            required>
         </div>
 
         <div class="mb-3">
           <label class="form-label">Deskripsi</label>
-          <textarea name="deskripsi" class="form-control" rows="4" required><?= $data['deskripsi']; ?></textarea>
+          <textarea
+            name="deskripsi"
+            class="form-control"
+            rows="4"
+            required><?= htmlspecialchars($data['deskripsi']); ?></textarea>
         </div>
 
-        <button class="btn btn-primary">Simpan Perubahan</button>
-        <a href="LandingAdmin.php#tampilan" class="btn btn-secondary">Kembali</a>
+        <button type="submit" class="btn btn-primary">
+          Simpan Perubahan
+        </button>
+
+        <a href="LandingAdmin.php?tab=tampilan&inner=kegiatan"
+           class="btn btn-secondary">
+          Kembali
+        </a>
+
       </form>
+
     </div>
   </div>
 </div>

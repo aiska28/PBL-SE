@@ -6,18 +6,26 @@ if (isset($_GET['hapus_publikasi'])) {
     $id = $_GET['hapus_publikasi'];
     $query = "DELETE FROM publikasi WHERE id_publikasi = $1";
     pg_query_params($conn, $query, array($id));
-    header("Location: landingAdmin.php?msg=deleted");
+    header("Location: landingAdmin.php?tab=publikasi&msg=deleted");
     exit;
 }
 
 // ------------------ HANDLE HAPUS DOSEN ------------------
 if (isset($_GET['hapus_dosen'])) {
     $id = $_GET['hapus_dosen'];
-    $query = "DELETE FROM dosen WHERE id_dosen = $1";
-    pg_query_params($conn, $query, array($id));
-    header("Location: landingAdmin.php?msg=deleted");
+
+    // Hapus relasi dulu
+    pg_query_params($conn, "DELETE FROM publikasi WHERE id_dosen=$1", [$id]);
+    pg_query_params($conn, "DELETE FROM mata_kuliah WHERE id_dosen=$1", [$id]);
+    pg_query_params($conn, "DELETE FROM pendidikan WHERE id_dosen=$1", [$id]);
+
+    // Baru hapus dosen
+    pg_query_params($conn, "DELETE FROM dosen WHERE id_dosen=$1", [$id]);
+
+    header("Location: landingAdmin.php?tab=anggota&msg=deleted");
     exit;
 }
+
 
 // ------------------ HANDLE UPDATE PROFILE LAB ------------------
 if (isset($_POST['update_profilelab'])) {
@@ -31,7 +39,7 @@ if (isset($_POST['update_profilelab'])) {
         array($judul, $deskripsi, $id)
     );
 
-    header("Location: landingAdmin.php?msg=profile_updated");
+    header("Location: landingAdmin.php?tab=tampilan&inner=profileLab&msg=profile_updated");
     exit;
 }
 
@@ -47,7 +55,39 @@ if (isset($_POST['update_visi_misi'])) {
         array($visi, $misi, $id)
     );
 
-    header("Location: landingAdmin.php?msg=vm_updated");
+    header("Location: landingAdmin.php?tab=tampilan&inner=visiMisi&msg=profile_updated");
+    exit;
+}
+
+// --------- UPDATE RISET ------------
+if (isset($_POST['update_visi_misi'])) {
+
+    $id   = $_POST['id'];
+    $visi = $_POST['visi'];
+    $misi = $_POST['misi'];
+
+    pg_query_params(
+        $conn,
+        "UPDATE visi_misi SET visi=$1, misi=$2 WHERE id=$3",
+        array($visi, $misi, $id)
+    );
+
+    header("Location: landingAdmin.php?tab=tampilan&inner=visiMisi&msg=updated");
+    exit;
+}
+
+if (isset($_POST['update_riset'])) {
+
+    $id        = $_POST['id'];
+    $deskripsi = $_POST['deskripsi'];
+
+    pg_query_params(
+        $conn,
+        "UPDATE FokusRiset SET deskripsi=$1 WHERE id=$2",
+        array($deskripsi, $id)
+    );
+
+    header("Location: landingAdmin.php?tab=tampilan&inner=riset&msg=updated");
     exit;
 }
 
@@ -58,9 +98,27 @@ if (isset($_GET['hapus_riset'])) {
         "DELETE FROM FokusRiset WHERE id=$1",
         array($_GET['hapus_riset'])
     );
-    header("Location: landingAdmin.php?msg=riset_deleted");
+    header("Location: LandingAdmin.php?tab=tampilan&inner=riset&msg=deleted");
     exit;
 }
+
+// ------ UPDATE FAILITAS
+if (isset($_POST['update_fasilitas'])) {
+
+    $id = $_POST['id'];
+    $judul = $_POST['judul'];
+    $deskripsi = $_POST['deskripsi'];
+
+    pg_query_params(
+        $conn,
+        "UPDATE FasilitasPeralatan SET judul=$1, deskripsi=$2 WHERE id=$3",
+        array($judul, $deskripsi, $id)
+    );
+
+    header("Location: LandingAdmin.php?tab=tampilan&inner=fasilitas&msg=updated");
+    exit;
+}
+
 
 // ------------------ HANDLE HAPUS FASILITAS ------------------
 if (isset($_GET['hapus_fasilitas'])) {
@@ -68,7 +126,24 @@ if (isset($_GET['hapus_fasilitas'])) {
         "DELETE FROM FasilitasPeralatan WHERE id=$1",
         array($_GET['hapus_fasilitas'])
     );
-    header("Location: landingAdmin.php?msg=fasilitas_deleted");
+    header("Location: landingAdmin.php?tab=tampilan&inner=fasilitas&msg=deleted");
+    exit;
+}
+
+// ------ UPDATE KEGIATAN / PROYEK
+if (isset($_POST['update_kegiatan'])) {
+
+    $id = $_POST['id'];
+    $judul = $_POST['judul'];
+    $deskripsi = $_POST['deskripsi'];
+
+    pg_query_params(
+        $conn,
+        "UPDATE KegiatanProyek SET judul=$1, deskripsi=$2 WHERE id=$3",
+        array($judul, $deskripsi, $id)
+    );
+
+    header("Location: landingAdmin.php?tab=tampilan&inner=kegiatan&msg=updated");
     exit;
 }
 
@@ -78,7 +153,24 @@ if (isset($_GET['hapus_kegiatan'])) {
         "DELETE FROM KegiatanProyek WHERE id=$1",
         array($_GET['hapus_kegiatan'])
     );
-    header("Location: landingAdmin.php?msg=kegiatan_deleted");
+    header("Location: landingAdmin.php?tab=tampilan&inner=kegiatan&msg=deleted");
+    exit;
+}
+
+// ------ UPDATE PERKULIAHAN TERKAIT
+if (isset($_POST['update_kuliah'])) {
+
+    $id = $_POST['id'];
+    $judul = $_POST['judul'];
+    $deskripsi = $_POST['deskripsi'];
+
+    pg_query_params(
+        $conn,
+        "UPDATE PerkuliahanTerkait SET judul=$1, deskripsi=$2 WHERE id=$3",
+        array($judul, $deskripsi, $id)
+    );
+
+    header("Location: landingAdmin.php?tab=tampilan&inner=kuliah&msg=updated");
     exit;
 }
 
@@ -88,7 +180,7 @@ if (isset($_GET['hapus_kuliah'])) {
         "DELETE FROM PerkuliahanTerkait WHERE id=$1",
         array($_GET['hapus_kuliah'])
     );
-    header("Location: landingAdmin.php?msg=kuliah_deleted");
+    header("Location: landingAdmin.php?tab=tampilan&inner=kuliah&msg=deleted");
     exit;
 }
 
@@ -104,8 +196,7 @@ if (isset($_POST['update_sejarah'])) {
         array($judul, $deskripsi, $id)
     );
 
-    header("Location: landingAdmin.php?msg=sejarah_updated");
-    exit;
+    header("Location: landingAdmin.php?tab=tentangKami&inner=sejarah&msg=updated");
 }
 
 // ------------------ UPDATE VISI MISI TUJUAN ------------------
@@ -121,7 +212,7 @@ if (isset($_POST['update_vmt'])) {
         array($visi, $misi, $tujuan, $id)
     );
 
-    header("Location: landingAdmin.php?msg=vmt_updated");
+     header("Location: landingAdmin.php?tab=tentangKami&inner=vmt&msg=updated");
     exit;
 }
 
@@ -145,23 +236,61 @@ if (isset($_POST['update_organisasi'])) {
     $result = pg_query_params($conn, $query, array($jabatan, $nama, $id));
 
     if ($result) {
-        header("Location: landingAdmin.php?msg=updated");
+         header("Location: landingAdmin.php?tab=tentangKami&inner=organisasi&msg=updated");
         exit;
     } else {
         die("GAGAL UPDATE: " . pg_last_error($conn));
     }
 }
 
-// ------------------ HAPUS TENAGA PENGAJAR ------------------
-if (isset($_GET['hapus_struktur'])) {
+// ------------------ HAPUS STRUKTUR ORGANISASI ------------------
+if (isset($_GET['hapus_organisasi'])) {
 
-  pg_query_params($conn,
-    "DELETE FROM struktur_organisasi WHERE id=$1",
-    array($_GET['hapus_struktur'])
-  );
+    $id = $_GET['hapus_organisasi'];
 
-  header("Location: landingAdmin.php?msg=struktur_deleted");
-  exit;
+    pg_query_params(
+        $conn,
+        "DELETE FROM struktur_organisasi WHERE id = $1",
+        array($id)
+    );
+
+    // KEMBALI KE TAB STRUKTUR ORGANISASI
+    header("Location: landingAdmin.php?tab=tentangKami&inner=organisasi&msg=struktur_deleted");
+    exit;
+}
+
+// ------------------ UPDATE TENAGA PENGAJAR ------------------
+if (isset($_POST['update_pengajar'])) {
+
+    $id     = $_POST['id'];
+    $nama   = $_POST['nama_dosen'];
+    $jabatan= $_POST['jabatan'];
+    $nidn   = $_POST['nidn'];
+
+    // Cek apakah ganti foto
+    if (!empty($_FILES['foto_url']['name'])) {
+        $foto = $_FILES['foto_url']['name'];
+        $tmp  = $_FILES['foto_url']['tmp_name'];
+
+        move_uploaded_file($tmp, "uploads/" . $foto);
+
+        pg_query_params($conn,
+            "UPDATE tenaga_pengajar
+             SET nama_dosen=$1, jabatan=$2, nidn=$3, foto_url=$4
+             WHERE id=$5",
+            array($nama, $jabatan, $nidn, $foto, $id)
+        );
+    } else {
+        pg_query_params($conn,
+            "UPDATE tenaga_pengajar
+             SET nama_dosen=$1, jabatan=$2, nidn=$3
+             WHERE id=$4",
+            array($nama, $jabatan, $nidn, $id)
+        );
+    }
+
+    header("Location: landingAdmin.php?tab=tentangKami&inner=tenagaPengajar&msg=pengajar_updated");
+    exit;
 }
 
 // ------------------ TAMBAH TENAGA PENGAJAR ------------------
@@ -172,7 +301,7 @@ if (isset($_POST['add_pengajar'])) {
        array($_POST['nama'], $_POST['jabatan'], $_POST['deskripsi'])
     );
 
-  header("Location: landingAdmin.php?msg=pengajar_added");
+  header("Location: landingAdmin.php?tab=tentang&inner=tenagaPengajar&msg=added");
   exit;
 }
 
@@ -184,9 +313,29 @@ if (isset($_GET['hapus_pengajar'])) {
         array($_GET['hapus_pengajar'])
     );
 
-    header("Location: landingAdmin.php?msg=pengajar_deleted");
+    header("Location: landingAdmin.php?tab=tentang&inner=tenagaPengajar&msg=deleted");
     exit;
 }
+
+// ------------------ UPDATE TENAGA KEPENDIDIKAN ------------------
+if (isset($_POST['update_kependidikan'])) {
+
+    $id      = $_POST['id'];
+    $nama    = $_POST['nama_pegawai'];
+    $jabatan = $_POST['jabatan'];
+
+    pg_query_params($conn,
+        "UPDATE tenaga_kependidikan
+         SET nama_pegawai=$1, jabatan=$2
+         WHERE id=$3",
+        array($nama, $jabatan, $id)
+    );
+
+    // ⬇️ REDIRECT KE TAB TENAGA KEPENDIDIKAN
+    header("Location: landingAdmin.php?tab=tentangKami&inner=kependidikan&msg=kependidikan_updated");
+    exit;
+}
+
 
 // ------------------ TAMBAH TENAGA KEPENDIDIKAN ------------------
 if (isset($_POST['add_kependidikan'])) {
@@ -196,7 +345,7 @@ if (isset($_POST['add_kependidikan'])) {
         array($_POST['nama'], $_POST['jabatan'], $_POST['deskripsi'])
     );
 
-    header("Location: landingAdmin.php?msg=kependidikan_added");
+     header("Location: landingAdmin.php?tab=tentangKami&inner=kependidikan&msg=added");
     exit;
 }
 
@@ -208,7 +357,7 @@ if (isset($_GET['hapus_kependidikan'])) {
         array($_GET['hapus_kependidikan'])
     );
 
-    header("Location: landingAdmin.php?msg=kependidikan_deleted");
+    header("Location: landingAdmin.php?tab=tentangKami&inner=kependidikan&msg=deleted");
     exit;
 }
 
@@ -224,7 +373,35 @@ if (isset($_POST['update_sarpras'])) {
         array($judul, $deskripsi, $id)
     );
 
-    header("Location: landingAdmin.php?msg=sarpras_updated");
+    header("Location: landingAdmin.php?tab=tentangKami&inner=sarpras&msg=updated");
+    exit;
+}
+
+// ------------------ TAMBAH SARANA PRASARANA (SARPRAS) ------------------
+if (isset($_POST['add_sarpras'])) {
+
+    $judul     = $_POST['judul'];
+    $deskripsi = $_POST['deskripsi'];
+
+    pg_query_params($conn,
+        "INSERT INTO sarpras (judul, deskripsi) VALUES ($1, $2)",
+        array($judul, $deskripsi)
+    );
+
+    header("Location: landingAdmin.php?tab=tentangKami&inner=sarpras&msg=sarpras_added");
+    exit;
+}
+
+// ------------------ HAPUS SARANA PRASARANA ------------------
+if (isset($_GET['hapus_sarpras'])) {
+
+    pg_query_params(
+        $conn,
+        "DELETE FROM sarana_prasarana WHERE id=$1",
+        array($_GET['hapus_sarpras'])
+    );
+
+    header("Location: landingAdmin.php?tab=tentangKami&inner=sarpras&msg=sarpras_deleted");
     exit;
 }
 
@@ -232,23 +409,7 @@ if (isset($_POST['update_sarpras'])) {
 if (isset($_GET['hapus_agenda'])) {
     $id = $_GET['hapus_agenda'];
     pg_query_params($conn, "DELETE FROM agenda WHERE id = $1", array($id));
-    header("Location: landingAdmin.php?msg=agenda_deleted");
-    exit;
-}
-
-/* ------------------ HAPUS BERITA ------------------= */
-if (isset($_GET['hapus_berita'])) {
-    $id = $_GET['hapus_berita'];
-    pg_query_params($conn, "DELETE FROM berita WHERE id = $1", array($id));
-    header("Location: landingAdmin.php?msg=berita_deleted");
-    exit;
-}
-
-/* ------------------ HAPUS PENGUMUMAN ------------------ */
-if (isset($_GET['hapus_pengumuman'])) {
-    $id = $_GET['hapus_pengumuman'];
-    pg_query_params($conn, "DELETE FROM pengumuman WHERE id = $1", array($id));
-    header("Location: landingAdmin.php?msg=pengumuman_deleted");
+    header("Location: landingAdmin.php?tab=tampilanBerita&inner=AgendaTab&msg=agenda_deleted");
     exit;
 }
 
@@ -268,7 +429,34 @@ if (isset($_POST['update_agenda'])) {
 
     pg_query_params($conn, $query, array($judul, $deskripsi, $tanggal, $id));
 
-    header("Location: landingAdmin.php?msg=agenda_updated");
+    header("Location: landingAdmin.php?tab=tampilanBerita&inner=AgendaTab&msg=agenda_updated");
+    exit;
+}
+
+/* ------------------ TAMBAH AGENDA ------------------ */
+if (isset($_POST['add_agenda'])) {
+
+    pg_query_params(
+        $conn,
+        "INSERT INTO agenda (judul, deskripsi, tanggal)
+         VALUES ($1, $2, $3)",
+        array(
+            $_POST['judul'],
+            $_POST['deskripsi'],
+            $_POST['tanggal']
+        )
+    );
+
+    header("Location: landingAdmin.php?tab=tampilanBerita&inner=AgendaTab&msg=agenda_added");
+exit;
+
+}
+
+/* ------------------ HAPUS BERITA ------------------= */
+if (isset($_GET['hapus_berita'])) {
+    $id = $_GET['hapus_berita'];
+    pg_query_params($conn, "DELETE FROM berita WHERE id = $1", array($id));
+    header("Location: landingAdmin.php?tab=tampilanBerita&inner=BeritaTab&msg=berita_deleted");
     exit;
 }
 
@@ -288,9 +476,38 @@ if (isset($_POST['update_berita'])) {
 
     pg_query_params($conn, $query, array($judul, $konten, $tanggal, $id));
 
-    header("Location: landingAdmin.php?msg=berita_updated");
+    header("Location: landingAdmin.php?tab=tampilanBerita&inner=BeritaTab&msg=berita_updated");
+exit;
+
+}
+
+/* ------------------ TAMBAH BERITA ------------------ */
+if (isset($_POST['add_berita'])) {
+
+    pg_query_params(
+        $conn,
+        "INSERT INTO berita (judul, konten, tanggal)
+         VALUES ($1, $2, $3)",
+        array(
+            $_POST['judul'],
+            $_POST['konten'],
+            $_POST['tanggal']
+        )
+    );
+
+    header("Location: landingAdmin.php?tab=tampilanBerita&inner=BeritaTab&msg=berita_added");
+exit;
+
+}
+
+/* ------------------ HAPUS PENGUMUMAN ------------------ */
+if (isset($_GET['hapus_pengumuman'])) {
+    $id = $_GET['hapus_pengumuman'];
+    pg_query_params($conn, "DELETE FROM pengumuman WHERE id = $1", array($id));
+    header("Location: landingAdmin.php?tab=tampilanBerita&inner=PengumumanTab&msg=pengumuman_deleted");
     exit;
 }
+
 /* ------------------ Update PENGUMUMAN ------------------ */
 if (isset($_POST['update_pengumuman'])) {
 
@@ -307,9 +524,28 @@ if (isset($_POST['update_pengumuman'])) {
 
     pg_query_params($conn, $query, array($judul, $konten, $tanggal, $id));
 
-    header("Location: landingAdmin.php?msg=pengumuman_updated");
+    header("Location: landingAdmin.php?tab=tampilanBerita&inner=PengumumanTab&msg=pengumuman_updated");
     exit;
 }
+
+/* ------------------ TAMBAH PENGUMUMAN ------------------ */
+if (isset($_POST['add_pengumuman'])) {
+
+    pg_query_params(
+        $conn,
+        "INSERT INTO pengumuman (judul, konten, tanggal)
+         VALUES ($1, $2, $3)",
+        array(
+            $_POST['judul'],
+            $_POST['konten'],
+            $_POST['tanggal']
+        )
+    );
+
+    header("Location: landingAdmin.php?tab=tampilanBerita&inner=PengumumanTab&msg=pengumuman_added");
+    exit;
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -438,7 +674,9 @@ if (isset($_POST['update_pengumuman'])) {
           <div class="tab-pane fade" id="anggota" role="tabpanel">
             <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
               <h5 class="text-primary fw-bold mb-0">Daftar Anggota Lab</h5>
-              <a href="TambahTim.php" class="btn btn-warning btn-sm fw-bold text-dark">+ Tambah Anggota</a>
+              <a href="TambahTim.php?tab=anggota" 
+              class="btn btn-warning btn-sm fw-bold text-dark">
+              + Tambah Anggota</a>
             </div>
 
             <div class="table-responsive">
@@ -492,17 +730,18 @@ if (isset($_POST['update_pengumuman'])) {
                     <td class="text-truncate"><?= $row['mk_ganjil'] ? $row['mk_ganjil'] : '-' ?></td>
                     <td class="text-truncate"><?= $row['mk_genap'] ? $row['mk_genap'] : '-' ?></td>
                     <td class="d-flex flex-wrap justify-content-center gap-1">
-                      <a href="editAdmin.php?id_dosen=<?= $row['id_dosen'] ?>"
+                      <a href="editAdmin.php?id_dosen=<?= $row['id_dosen'] ?>&tab=anggota"
                         class="btn btn-sm btn-outline-primary"
                         onclick="return confirm('Apakah ingin mengedit data anggota ini?')">
                         Edit
                       </a>
 
-                      <a href="landingAdmin.php?hapus_dosen=<?= $row['id_dosen'] ?>"
-                        class="btn btn-sm btn-outline-danger"
-                        onclick="return confirm('Hapus data dosen ini?')">
+                      <a href="LandingAdmin.php?hapus_dosen=<?= $row['id_dosen'] ?>&tab=anggota"
+                         class="btn btn-outline-danger btn-sm"
+                        onclick="return confirm('Yakin ingin menghapus anggota ini?')">
                         Hapus
                       </a>
+
                     </td>
                   </tr>
                   <?php endwhile; ?>
@@ -551,7 +790,7 @@ if (isset($_POST['update_pengumuman'])) {
             <?php $qVM = pg_query($conn, "SELECT * FROM visi_misi LIMIT 1"); $vm = pg_fetch_assoc($qVM); ?>
             <form method="POST" action="landingAdmin.php">
               <input type="hidden" name="id" value="<?= $vm['id']; ?>">
-              <input type="hidden" name="update_visimisi" value="1">
+              <input type="hidden" name="update_visi_misi" value="1">
                 <div class="mb-3">
                   <label class="form-label fw-semibold">Visi</label>
                   <textarea name="visi" class="form-control summernote"><?= $vm['visi']; ?></textarea>
@@ -632,8 +871,9 @@ if (isset($_POST['update_pengumuman'])) {
                         <td>{$f['judul']}</td>
                         <td>{$f['deskripsi']}</td>
                       <td>
-                          <a href='editFasilitas.php?id={$f['id']}' class='btn btn-sm btn-outline-primary'>Edit</a>
-                          <a href='landingAdmin.php?hapus_fasilitas={$f['id']}'
+                          <a href='editFasilitas.php?id={$f['id']}&tab=tampilan&inner=fasilitas'
+                          class='btn btn-sm btn-outline-primary'>Edit</a>
+                          <a href='landingAdmin.php?hapus_fasilitas={$f['id']}&tab=tampilan&inner=fasilitas'
                             class='btn btn-sm btn-outline-danger'
                             onclick=\"return confirm('Hapus fasilitas ini?')\">Hapus</a>
                         </td>
@@ -775,7 +1015,7 @@ if (isset($_POST['update_pengumuman'])) {
             </div>
 
             <!-- ---------------- VISI MISI TUJUAN ---------------- -->
-            <div class="tab-pane fade" id="visiMisiTujuan">
+            <div class="tab-pane fade" id="vmt">
               <h5 class="text-primary fw-bold">Visi, Misi & Tujuan</h5>
 
               <?php 
@@ -819,26 +1059,33 @@ if (isset($_POST['update_pengumuman'])) {
                   </thead>
 
                   <tbody>
-                      <?php
-                      $q = pg_query($conn,"SELECT * FROM struktur_organisasi ORDER BY id ASC");
-                      $no=1;
-                      while($s = pg_fetch_assoc($q)){
-                        echo "
-                        <tr>
+                  <?php
+                  $q = pg_query($conn, "SELECT * FROM struktur_organisasi ORDER BY id ASC");
+                  $no = 1;
+
+                  while ($s = pg_fetch_assoc($q)) {
+                      echo "
+                      <tr>
                           <td>{$no}</td>
                           <td>{$s['jabatan']}</td>
                           <td>{$s['nama']}</td>
                           <td>
-                            <a href='EditStruktur.php?id={$s['id']}' class='btn btn-sm btn-outline-primary'>Edit</a>
-                            <a href='landingAdmin.php?hapus_struktur={$s['id']}' 
-                              class='btn btn-sm btn-outline-danger'
-                              onclick=\"return confirm('Hapus data ini?')\">Hapus</a>
+                              <a href='EditStruktur.php?id={$s['id']}'
+                                class='btn btn-sm btn-outline-primary'>Edit</a>
+
+                              <a href='landingAdmin.php?hapus_organisasi={$s['id']}&tab=tentangKami&inner=organisasi'
+                                class='btn btn-sm btn-outline-danger'
+                                onclick=\"return confirm('Hapus data ini?')\">
+                                Hapus
+                              </a>
                           </td>
-                        </tr>";
-                        $no++;
-                      }
-                    ?>
+                      </tr>
+                      ";
+                      $no++;
+                  }
+                  ?>
                   </tbody>
+
                 </table>
               </div>
             </div>
@@ -908,27 +1155,36 @@ if (isset($_POST['update_pengumuman'])) {
                   </tr>
                 </thead>
 
-                <tbody>
+               <tbody>
                 <?php
-                  $q = pg_query($conn,"SELECT * FROM tenaga_kependidikan ORDER BY id ASC");
-                  $no = 1;
-                  while($k = pg_fetch_assoc($q)){
+                $q = pg_query($conn, "SELECT * FROM tenaga_kependidikan ORDER BY id ASC");
+                $no = 1;
+
+                while ($k = pg_fetch_assoc($q)) {
                     echo "
                     <tr>
-                      <td>{$no}</td>
-                      <td>{$k['nama_pegawai']}</td>
-                      <td>{$k['jabatan']}</td>
-                      <td>
-                        <a href='EditKependidikan.php?id={$k['id']}' class='btn btn-sm btn-outline-primary'>Edit</a>
-                        <a href='landingAdmin.php?hapus_kependidikan={$k['id']}'
-                          class='btn btn-sm btn-outline-danger'
-                          onclick=\"return confirm('Hapus data ini?')\">Hapus</a>
-                      </td>
-                    </tr>";
+                        <td>{$no}</td>
+                        <td>{$k['nama_pegawai']}</td>
+                        <td>{$k['jabatan']}</td>
+                        <td>
+                            <a href='EditKependidikan.php?id={$k['id']}'
+                              class='btn btn-sm btn-outline-primary'>
+                              Edit
+                            </a>
+
+                            <a href='landingAdmin.php?hapus_kependidikan={$k['id']}&tab=tentangKami&inner=kependidikan'
+                              class='btn btn-sm btn-outline-danger'
+                              onclick=\"return confirm('Hapus data ini?')\">
+                              Hapus
+                            </a>
+                        </td>
+                    </tr>
+                    ";
                     $no++;
-                  }
-                  ?>
+                }
+                ?>
                 </tbody>
+
               </table>
               </div>
             </div>
@@ -966,9 +1222,12 @@ if (isset($_POST['update_pengumuman'])) {
                       <td><img src='uploads/{$s['foto_url']}' width='80'></td>
                       <td>
                         <a href='EditSarpras.php?id={$s['id']}' class='btn btn-sm btn-outline-primary'>Edit</a>
-                        <a href='landingAdmin.php?hapus_sarpras={$s['id']}'
-                          class='btn btn-sm btn-outline-danger'
-                          onclick=\"return confirm('Hapus data ini?')\">Hapus</a>
+                        <a href='landingAdmin.php?hapus_sarpras={$s['id']}&tab=tentangKami&inner=sarpras'
+                        class='btn btn-sm btn-outline-danger'
+                        onclick=\"return confirm('Hapus data ini?')\">
+                        Hapus
+                      </a>
+
                       </td>
                     </tr>";
                     $no++;
@@ -1020,19 +1279,27 @@ if (isset($_POST['update_pengumuman'])) {
 
             while ($a = pg_fetch_assoc($qA)) {
               echo "
-              <tr>
-                <td>{$no}</td>
-                <td>{$a['deskripsi']}</td>
-                <td>{$a['tanggal']}</td>
-                <td>{$a['waktu']}</td>
-                <td>{$a['nama_kegiatan']}</td>
-                <td>
-                  <a href='editAgenda.php?id={$a['id']}' class='btn btn-sm btn-outline-primary'>Edit</a>
-                  <a href='landingAdmin.php?hapus_agenda={$a['id']}' 
-                    class='btn btn-sm btn-outline-danger'
-                    onclick=\"return confirm('Hapus agenda ini?')\">Hapus</a>
-                </td>
-              </tr>";
+            <tr>
+              <td>{$no}</td>
+              <td>{$a['deskripsi']}</td>
+              <td>{$a['tanggal']}</td>
+              <td>{$a['waktu']}</td>
+              <td>{$a['nama_kegiatan']}</td>
+              <td>
+                <a href='editAgenda.php?id={$a['id']}&tab=tampilanBerita&inner=AgendaTab'
+                  class='btn btn-sm btn-outline-primary'>
+                  Edit
+                </a>
+
+                <a href='landingAdmin.php?hapus_agenda={$a['id']}&tab=tampilanBerita&inner=AgendaTab'
+                  class='btn btn-sm btn-outline-danger'
+                  onclick=\"return confirm('Hapus agenda ini?')\">
+                  Hapus
+                </a>
+              </td>
+            </tr>
+            ";
+
               $no++;
             }
             ?>
@@ -1069,12 +1336,17 @@ if (isset($_POST['update_pengumuman'])) {
                 <td>{$b['judul']}</td>
                 <td>{$b['tanggal']}</td>
                 <td>
-                  <a href='editBerita.php?id={$b['id']}' class='btn btn-sm btn-outline-primary'>Edit</a>
-                  <a href='landingAdmin.php?hapus_berita={$b['id']}' 
-                     class='btn btn-sm btn-outline-danger'
-                     onclick=\"return confirm('Hapus berita ini?')\">Hapus</a>
+                  <a href='editBerita.php?id={$b['id']}' 
+                    class='btn btn-sm btn-outline-primary'>Edit</a>
+
+                  <a href='landingAdmin.php?hapus_berita={$b['id']}&tab=tampilanBerita&inner=BeritaTab'
+                    class='btn btn-sm btn-outline-danger'
+                    onclick=\"return confirm('Hapus berita ini?')\">
+                    Hapus
+                  </a>
                 </td>
               </tr>";
+
               $no++;
             }
             ?>
@@ -1111,12 +1383,19 @@ if (isset($_POST['update_pengumuman'])) {
                 <td>{$p['judul']}</td>
                 <td>{$p['tanggal']}</td>
                 <td>
-                  <a href='editPengumuman.php?id={$p['id']}' class='btn btn-sm btn-outline-primary'>Edit</a>
-                  <a href='landingAdmin.php?hapus_pengumuman={$p['id']}' 
-                     class='btn btn-sm btn-outline-danger'
-                     onclick=\"return confirm('Hapus pengumuman ini?')\">Hapus</a>
+                  <a href='editPengumuman.php?id={$p['id']}&tab=tampilanBerita&inner=PengumumanTab'
+                    class='btn btn-sm btn-outline-primary'>
+                    Edit
+                  </a>
+
+                  <a href='landingAdmin.php?hapus_pengumuman={$p['id']}&tab=tampilanBerita&inner=PengumumanTab'
+                    class='btn btn-sm btn-outline-danger'
+                    onclick=\"return confirm('Hapus pengumuman ini?')\">
+                    Hapus
+                  </a>
                 </td>
               </tr>";
+
               $no++;
             }
             ?>
@@ -1144,10 +1423,37 @@ if (isset($_POST['update_pengumuman'])) {
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+  <script>
+document.addEventListener("DOMContentLoaded", function () {
+  const params = new URLSearchParams(window.location.search);
+
+  const tab = params.get("tab");       // TAB UTAMA
+  const inner = params.get("inner");   // TAB DALAM
+
+  if (tab) {
+    const trigger = document.querySelector(
+      `button[data-bs-target="#${tab}"]`
+    );
+    if (trigger) {
+      new bootstrap.Tab(trigger).show();
+    }
+  }
+
+  if (inner) {
+    const innerTrigger = document.querySelector(
+      `button[data-bs-target="#${inner}"]`
+    );
+    if (innerTrigger) {
+      new bootstrap.Tab(innerTrigger).show();
+    }
+  }
+});
+</script>
+
 
 
   <script>
-  document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function() {
     $('.summernote').summernote({
         placeholder: 'Tulis konten di sini...',
         tabsize: 2,

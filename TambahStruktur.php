@@ -9,7 +9,8 @@ if (isset($_POST['simpan'])) {
     $q = "INSERT INTO struktur_organisasi (jabatan, nama) VALUES ($1, $2)";
     pg_query_params($conn, $q, array($jabatan, $nama));
 
-    header("Location: landingAdmin.php?msg=struktur_added");
+    // redirect ke tab Struktur Organisasi
+    header("Location: landingAdmin.php?tab=tentangKami&inner=organisasi&msg=struktur_added");
     exit;
 }
 ?>
@@ -36,7 +37,7 @@ if (isset($_POST['simpan'])) {
         <input type="text" name="nama" class="form-control" required>
 
         <button name="simpan" class="btn btn-primary mt-3">Simpan</button>
-        <a href="landingAdmin.php" class="btn btn-secondary mt-3">Kembali</a>
+        <a href="landingAdmin.php?tab=tentangKami&inner=organisasi" class="btn btn-secondary mt-3">Kembali</a>
       </form>
 
     </div>

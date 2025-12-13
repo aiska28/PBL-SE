@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $query = "INSERT INTO PerkuliahanTerkait (judul, deskripsi) VALUES ($1, $2)";
     pg_query_params($conn, $query, array($judul, $deskripsi));
 
-    header("Location: LandingAdmin.php");
+    header("Location: landingAdmin.php?tab=tampilan&inner=kuliah&msg=updated");
     exit;
 }
 ?>
@@ -37,7 +37,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <button class="btn btn-primary">Simpan</button>
-    <a href="LandingAdmin.php" class="btn btn-secondary">Kembali</a>
+    <a href="LandingAdmin.php?tab=tampilan&inner=kuliah"
+   class="btn btn-secondary">
+   Kembali
+</a>
+
   </form>
 </div>
 

@@ -59,9 +59,10 @@ if (isset($_POST['submit_edit'])) {
         }
     }
 
-    header("Location: LandingAdmin.php?msg=updated");
+    $tab = ($edit_type == 'dosen') ? 'anggota' : 'publikasi';
+    header("Location: LandingAdmin.php?tab=$tab&msg=updated");
     exit;
-}
+  }
 ?>
 
 <!DOCTYPE html>
@@ -107,7 +108,7 @@ if (isset($_POST['submit_edit'])) {
             <input type="url" name="link_publikasi" class="form-control" value="<?=htmlspecialchars($data['link_publikasi'])?>" required>
           </div>
           <button type="submit" name="submit_edit" class="btn btn-primary">Submit</button>
-          <a href="LandingAdmin.php" class="btn btn-secondary">Batal</a>
+          <a href="LandingAdmin.php?tab=publikasi" class="btn btn-secondary">Batal</a>
         </form>
 
       <?php elseif ($edit_type == 'dosen'): ?>
@@ -149,7 +150,8 @@ if (isset($_POST['submit_edit'])) {
             <input type="text" name="alamat" class="form-control" value="<?=htmlspecialchars($data['alamat_kantor'])?>">
           </div>
           <button type="submit" name="submit_edit" class="btn btn-primary">Submit</button>
-          <a href="LandingAdmin.php" class="btn btn-secondary">Batal</a>
+          <a href="LandingAdmin.php?tab=anggota" 
+          class="btn btn-secondary">Batal</a>
         </form>
       <?php endif; ?>
     </div>

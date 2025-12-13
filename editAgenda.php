@@ -1,45 +1,39 @@
 <?php
 include "konekDB.php";
 
-// ================== CEK ID ==================
 if (!isset($_GET['id'])) {
-    header("Location: landingAdmin.php");
+    header("Location: landingAdmin.php?tab=tampilanBerita&inner=AgendaTab");
     exit;
 }
 
 $id = $_GET['id'];
 
-// ================== AMBIL DATA ==================
-$q = pg_query_params($conn, "SELECT * FROM view_agenda WHERE id = $1", array($id));
-$data = pg_fetch_assoc($q);
+$data = pg_fetch_assoc(
+    pg_query_params($conn, "SELECT * FROM agenda WHERE id=$1", [$id])
+);
 
-if (!$data) {
-    echo "Data tidak ditemukan!";
-    exit;
-}
-
-// ================== PROSES UPDATE ==================
+// ===== PROSES UPDATE =====
 if (isset($_POST['update'])) {
 
-    $deskripsi = $_POST['deskripsi'];
-    $tanggal   = $_POST['tanggal'];
-    $waktu     = $_POST['waktu'];
-    $nama      = $_POST['nama_kegiatan'];
+    pg_query_params(
+        $conn,
+        "UPDATE agenda 
+         SET deskripsi=$1, tanggal=$2, waktu=$3, nama_kegiatan=$4
+         WHERE id=$5",
+        [
+            $_POST['deskripsi'],
+            $_POST['tanggal'],
+            $_POST['waktu'],
+            $_POST['nama_kegiatan'],
+            $id
+        ]
+    );
 
-    $query = "UPDATE agenda 
-              SET deskripsi = $1, tanggal = $2, waktu = $3, nama_kegiatan = $4
-              WHERE id = $5";
-
-    $run = pg_query_params($conn, $query, array($deskripsi, $tanggal, $waktu, $nama, $id));
-
-    if ($run) {
-        header("Location: landingAdmin.php?msg=updated");
-        exit;
-    } else {
-        echo "<script>alert('Gagal memperbarui agenda!');</script>";
-    }
+    header("Location: landingAdmin.php?tab=tampilanBerita&inner=AgendaTab&msg=agenda_updated");
+    exit;
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -82,7 +76,9 @@ if (isset($_POST['update'])) {
                 </div>
 
                 <div class="d-flex justify-content-between">
-                    <a href="landingAdmin.php" class="btn btn-secondary">Kembali</a>
+                    <a href="landingAdmin.php?tab=tampilanBerita&inner=AgendaTab" class="btn btn-secondary">
+                        Kembali
+                    </a>
                     <button type="submit" name="update" class="btn btn-primary">Simpan Perubahan</button>
                 </div>
 

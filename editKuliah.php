@@ -7,7 +7,11 @@ if (!isset($_GET['id'])) {
 }
 
 $id = $_GET['id'];
-$q = pg_query_params($conn, "SELECT * FROM PerkuliahanTerkait WHERE id = $1", array($id));
+$q = pg_query_params(
+    $conn,
+    "SELECT * FROM PerkuliahanTerkait WHERE id = $1",
+    array($id)
+);
 $data = pg_fetch_assoc($q);
 
 if (!$data) {
@@ -30,21 +34,40 @@ if (!$data) {
     <div class="card-body">
       <h4 class="fw-bold text-primary mb-3">Edit Perkuliahan Terkait</h4>
 
-      <form action="updateKuliah.php" method="POST">
+      <form action="landingAdmin.php" method="POST">
+
+        <!-- PENANDA UPDATE -->
+        <input type="hidden" name="update_kuliah" value="1">
         <input type="hidden" name="id" value="<?= $data['id']; ?>">
 
         <div class="mb-3">
           <label class="form-label">Judul</label>
-          <input type="text" class="form-control" name="judul" value="<?= $data['judul']; ?>" required>
+          <input
+            type="text"
+            class="form-control"
+            name="judul"
+            value="<?= htmlspecialchars($data['judul']); ?>"
+            required>
         </div>
 
         <div class="mb-3">
           <label class="form-label">Deskripsi</label>
-          <textarea name="deskripsi" class="form-control" rows="4" required><?= $data['deskripsi']; ?></textarea>
+          <textarea
+            name="deskripsi"
+            class="form-control"
+            rows="4"
+            required><?= htmlspecialchars($data['deskripsi']); ?></textarea>
         </div>
 
-        <button class="btn btn-primary">Simpan Perubahan</button>
-        <a href="LandingAdmin.php#tampilan" class="btn btn-secondary">Kembali</a>
+        <button type="submit" class="btn btn-primary">
+          Simpan Perubahan
+        </button>
+
+        <a href="LandingAdmin.php?tab=tampilan&inner=kuliah"
+           class="btn btn-secondary">
+          Kembali
+        </a>
+
       </form>
     </div>
   </div>

@@ -96,7 +96,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 }
               }
 
-            $pesan = "Data dosen & mata kuliah berhasil disimpan!";
+            header("Location: LandingAdmin.php?tab=anggota&msg=added");
+            exit;
         } else {
             $pesan = "Gagal menyimpan data dosen!";
         }
@@ -197,8 +198,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           </div>
 
           <div class="text-center">
-            <button type="submit" class="btn btn-primary px-4 fw-bold">Simpan</button>
-            <a href="LandingAdmin.php" class="btn btn-secondary px-4">Batal</a>
+            <button type="submit" 
+            class="btn btn-primary px-4 fw-bold">Simpan</button>
+            <a href="LandingAdmin.php?tab=anggota" 
+            class="btn btn-secondary px-4">Batal</a>
           </div>
         </form>
       </div>
