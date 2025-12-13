@@ -30,7 +30,8 @@ if (!$data) {
     <div class="card-body">
       <h4 class="fw-bold text-primary mb-3">Edit Fasilitas & Peralatan</h4>
 
-      <form action="LandingAdmin.php" method="POST">
+      <form action="backend/prosesAdmin.php" method="POST">
+
       <input type="hidden" name="update_fasilitas" value="1">
       <input type="hidden" name="id" value="<?= $data['id']; ?>">
 
@@ -45,10 +46,7 @@ if (!$data) {
         </div>
 
         <button class="btn btn-primary">Simpan Perubahan</button>
-      </form><a href="LandingAdmin.php?tab=tampilan&inner=fasilitas"
-        class="btn btn-secondary">
-        Kembali
-      </a>
+      </form><a href="landingAdmin.php?tab=tampilan&inner=fasilitas" class="btn btn-secondary">Kembali</a>
     </div>
   </div>
 </div>

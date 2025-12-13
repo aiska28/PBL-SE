@@ -1,68 +1,57 @@
 <?php
 include 'konekDB.php';
 
-// Tentukan jenis edit
 $edit_type = '';
+$data = null;
+$dosenQuery = null;
+
+/* ===== EDIT PUBLIKASI ===== */
 if (isset($_GET['id_publikasi'])) {
     $edit_type = 'publikasi';
     $id = $_GET['id_publikasi'];
 
-    $res = pg_query_params($conn, "SELECT * FROM publikasi WHERE id_publikasi=$1", array($id));
+    $res = pg_query_params(
+        $conn,
+        "SELECT * FROM publikasi WHERE id_publikasi = $1",
+        [$id]
+    );
+
     if (pg_num_rows($res) == 0) {
-        header("Location: LandingAdmin.php?msg=notfound");
+        header("Location: landingAdmin.php?tab=publikasi&msg=notfound");
         exit;
     }
+
     $data = pg_fetch_assoc($res);
 
-    // Ambil dosen untuk dropdown
-    $dosenQuery = pg_query($conn, "SELECT * FROM dosen ORDER BY nama ASC");
+    // dropdown dosen
+    $dosenQuery = pg_query(
+        $conn,
+        "SELECT id_dosen, nama FROM dosen ORDER BY nama ASC"
+    );
 
+/* ===== EDIT DOSEN ===== */
 } elseif (isset($_GET['id_dosen'])) {
     $edit_type = 'dosen';
     $id = $_GET['id_dosen'];
 
-    $res = pg_query_params($conn, "SELECT * FROM dosen WHERE id_dosen=$1", array($id));
+    $res = pg_query_params(
+        $conn,
+        "SELECT * FROM dosen WHERE id_dosen = $1",
+        [$id]
+    );
+
     if (pg_num_rows($res) == 0) {
-        header("Location: LandingAdmin.php?msg=notfound");
+        header("Location: landingAdmin.php?tab=anggota&msg=notfound");
         exit;
     }
+
     $data = pg_fetch_assoc($res);
 }
 
-// Handle form submit
-if (isset($_POST['submit_edit'])) {
-    if ($edit_type == 'publikasi') {
-        $id_dosen = $_POST['id_dosen'];
-        $jenis = $_POST['jenis_publikasi'];
-        $link = $_POST['link_publikasi'];
-
-        $query = "UPDATE publikasi SET id_dosen=$1, jenis_publikasi=$2, link_publikasi=$3 WHERE id_publikasi=$4";
-        pg_query_params($conn, $query, array($id_dosen, $jenis, $link, $id));
-
-    } elseif ($edit_type == 'dosen') {
-        $nama = $_POST['nama'];
-        $nip = $_POST['nip'];
-        $nidn = $_POST['nidn'];
-        $program_studi = $_POST['program_studi'];
-        $jabatan = $_POST['jabatan'];
-        $email = $_POST['email'];
-        $alamat = $_POST['alamat'];
-
-        if(isset($_FILES['foto']) && $_FILES['foto']['error'] == 0){
-            $filename = time().'_'.basename($_FILES['foto']['name']);
-            move_uploaded_file($_FILES['foto']['tmp_name'], 'uploads/'.$filename);
-            $query = "UPDATE dosen SET nama=$1, nip=$2, nidn=$3, program_studi=$4, jabatan=$5, email=$6, alamat_kantor=$7, foto=$8 WHERE id_dosen=$9";
-            pg_query_params($conn, $query, array($nama,$nip,$nidn,$program_studi,$jabatan,$email,$alamat,$filename,$id));
-        } else {
-            $query = "UPDATE dosen SET nama=$1, nip=$2, nidn=$3, program_studi=$4, jabatan=$5, email=$6, alamat_kantor=$7 WHERE id_dosen=$8";
-            pg_query_params($conn, $query, array($nama,$nip,$nidn,$program_studi,$jabatan,$email,$alamat,$id));
-        }
-    }
-
-    $tab = ($edit_type == 'dosen') ? 'anggota' : 'publikasi';
-    header("Location: LandingAdmin.php?tab=$tab&msg=updated");
+if ($edit_type === '') {
+    header("Location: landingAdmin.php?msg=invalid_request");
     exit;
-  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -86,7 +75,9 @@ if (isset($_POST['submit_edit'])) {
     <div class="card-body">
       <?php if ($edit_type == 'publikasi'): ?>
         <h4>Edit Publikasi</h4>
-        <form method="POST">
+
+        <form method="POST" action="backend/prosesAdmin.php">
+          <input type="hidden" name="update_publikasi" value="<?= $data['id_publikasi'] ?>">
           <div class="mb-3">
             <label for="id_dosen" class="form-label">Nama Dosen</label>
             <select name="id_dosen" id="id_dosen" class="form-select" required>
@@ -107,13 +98,15 @@ if (isset($_POST['submit_edit'])) {
             <label class="form-label">Link Publikasi</label>
             <input type="url" name="link_publikasi" class="form-control" value="<?=htmlspecialchars($data['link_publikasi'])?>" required>
           </div>
-          <button type="submit" name="submit_edit" class="btn btn-primary">Submit</button>
-          <a href="LandingAdmin.php?tab=publikasi" class="btn btn-secondary">Batal</a>
+          <button type="submit" class="btn btn-primary">Kirim</button>
+          <a href="landingAdmin.php?tab=publikasi" class="btn btn-secondary">Batal</a>
         </form>
 
       <?php elseif ($edit_type == 'dosen'): ?>
         <h4>Edit Anggota Dosen</h4>
-        <form method="POST" enctype="multipart/form-data">
+
+        <form method="POST" action="backend/prosesAdmin.php" enctype="multipart/form-data">
+          <input type="hidden" name="update_dosen" value="<?= $data['id_dosen'] ?>">
           <div class="mb-3">
             <label class="form-label">Nama</label>
             <input type="text" name="nama" class="form-control" value="<?=htmlspecialchars($data['nama'])?>" required>
@@ -149,10 +142,11 @@ if (isset($_POST['submit_edit'])) {
             <label class="form-label">Alamat Kantor</label>
             <input type="text" name="alamat" class="form-control" value="<?=htmlspecialchars($data['alamat_kantor'])?>">
           </div>
-          <button type="submit" name="submit_edit" class="btn btn-primary">Submit</button>
-          <a href="LandingAdmin.php?tab=anggota" 
+          <button type="submit" class="btn btn-primary">Kirim</button>
+          <a href="landingAdmin.php?tab=anggota" 
           class="btn btn-secondary">Batal</a>
         </form>
+
       <?php endif; ?>
     </div>
   </div>

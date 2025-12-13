@@ -1,22 +1,3 @@
-<?php 
-include 'konekDB.php';
-
-if (isset($_POST['simpan'])) {
-
-    $deskripsi = $_POST['deskripsi'];
-    $tanggal   = $_POST['tanggal'];
-    $waktu     = $_POST['waktu'];
-    $nama      = $_POST['nama_kegiatan'];
-
-    $sql = "INSERT INTO agenda (deskripsi, tanggal, waktu, nama_kegiatan) 
-            VALUES ($1, $2, $3, $4)";
-
-    pg_query_params($conn, $sql, array($deskripsi, $tanggal, $waktu, $nama));
-
-     header("Location: landingAdmin.php?tab=tampilanBerita&inner=AgendaTab&msg=agenda_added");
-    exit;
-}
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +8,10 @@ if (isset($_POST['simpan'])) {
 
 <h3 class="text-primary fw-bold mb-3">Tambah Agenda</h3>
 
-<form method="POST">
+<form method="POST" action="backend/prosesAdmin.php">
+
+    <input type="hidden" name="action" value="simpan_agenda">
+
 
     <div class="mb-3">
         <label class="form-label">Deskripsi</label>
@@ -49,12 +33,8 @@ if (isset($_POST['simpan'])) {
         <input type="text" name="nama_kegiatan" class="form-control" required>
     </div>
 
-    <button class="btn btn-primary" name="simpan">Simpan</button>
-   <a href="landingAdmin.php?tab=tampilanBerita&inner=AgendaTab"
-   class="btn btn-secondary">
-   Kembali
-</a>
-
+    <button type="submit" class="btn btn-primary">Simpan</button>
+    <a href="landingAdmin.php?tab=tampilanBerita&inner=AgendaTab" class="btn btn-secondary">Kembali</a>
 </form>
 
 </body>

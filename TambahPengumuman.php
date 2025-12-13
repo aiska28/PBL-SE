@@ -1,21 +1,3 @@
-<?php 
-include 'konekDB.php';
-
-if (isset($_POST['simpan'])) {
-
-    $judul   = $_POST['judul'];
-    $konten  = $_POST['konten'];
-    $tanggal = $_POST['tanggal'];
-
-    $sql = "INSERT INTO pengumuman (judul, konten, tanggal) VALUES ($1, $2, $3)";
-    pg_query_params($conn, $sql, array($judul, $konten, $tanggal));
-
-    header("Location: landingAdmin.php?tab=tampilanBerita&inner=PengumumanTab&msg=pengumuman_added");
-exit;
-
-}
-?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,7 +8,7 @@ exit;
 
 <h3 class="text-primary fw-bold mb-3">Tambah Pengumuman</h3>
 
-<form method="POST">
+<form method="POST" action="backend/prosesAdmin.php">
 
     <div class="mb-3">
         <label class="form-label">Judul</label>
@@ -45,7 +27,6 @@ exit;
 
     <button class="btn btn-primary" name="simpan">Simpan</button>
     <a href="landingAdmin.php?tab=tampilanBerita&inner=PengumumanTab" class="btn btn-secondary">Kembali</a>
-
 
 </form>
 

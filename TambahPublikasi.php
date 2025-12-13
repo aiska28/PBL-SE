@@ -1,23 +1,5 @@
-<?php
+<?php 
 include 'konekDB.php';
-
-$pesan = "";
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $id_dosen = $_POST['id_dosen'];
-    $jenis_publikasi = $_POST['jenis_publikasi'];
-    $link_publikasi = $_POST['link_publikasi'];
-
-    $query = "INSERT INTO publikasi (id_dosen, jenis_publikasi, link_publikasi)
-              VALUES ($1, $2, $3)";
-    $result = pg_query_params($conn, $query, array($id_dosen, $jenis_publikasi, $link_publikasi));
-
-    if ($result) {
-        $pesan = "Data publikasi berhasil disimpan!";
-    } else {
-        $pesan = "Gagal menyimpan data: " . pg_last_error($conn);
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -29,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="TambahPublikasi.css">
+  <link rel="stylesheet" href="css/TambahPublikasi.css">
 </head>
 <body>
 
@@ -58,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <ul class="navbar-nav">
 
         <li class="nav-item mx-3">
-          <a class="nav-link text-white fw-semibold" href="#">Beranda</a>
+          <a class="nav-link text-white fw-semibold" href="landing.php">Beranda</a>
         </li>
 
         <!-- Dropdown Tentang Kami -->
@@ -68,17 +50,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             Tentang Kami
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Sejarah</a></li>
-            <li><a class="dropdown-item" href="#">Visi, Misi dan Tujuan</a></li>
-            <li><a class="dropdown-item" href="#">Struktur Organisasi</a></li>
-            <li><a class="dropdown-item" href="#">Tenaga Pengajar</a></li>
-            <li><a class="dropdown-item" href="#">Tenaga Kependidikan</a></li>
-            <li><a class="dropdown-item" href="#">Sarana dan Prasarana</a></li>
+            <li><a class="dropdown-item" href="tentangKami.php">Sejarah</a></li>
+            <li><a class="dropdown-item" href="tentangKami.php">Visi, Misi dan Tujuan</a></li>
+            <li><a class="dropdown-item" href="tentangKami.php">Struktur Organisasi</a></li>
+            <li><a class="dropdown-item" href="tentangKami.php">Tenaga Pengajar</a></li>
+            <li><a class="dropdown-item" href="tentangKami.php">Tenaga Kependidikan</a></li>
+            <li><a class="dropdown-item" href="tentangKami.php">Sarana dan Prasarana</a></li>
           </ul>
         </li>
 
         <li class="nav-item mx-3">
-          <a class="nav-link text-white fw-semibold" href="#">Berita & Pengumuman</a>
+          <a class="nav-link text-white fw-semibold" href="berita.php">Berita & Pengumuman</a>
         </li>
       </ul>
     </div>
@@ -99,7 +81,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="alert alert-info text-center"><?= $pesan; ?></div>
       <?php endif; ?>
 
-      <form method="post" action="">
+      <form method="post" action="backend/prosesAdmin.php">
+       <input type="hidden" name="add_publikasi" value="1">
         <label for="id_dosen" class="form-label">Pilih Dosen :</label>
             <select name="id_dosen" id="id_dosen" class="form-select mb-3" required>
               <option value="">-- Pilih Dosen --</option>
@@ -111,9 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               ?>
             </select>
 
-
-
-        <div class="mb-3">
+        <div class="mb-3" action="backend/prosesAdmin.php?tab=tampilanPublikasi&inner=PengumumanTab">
           <label class="form-label">Jenis Publikasi :</label><br>
 
           <div class="form-check">
@@ -131,7 +112,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <label class="form-check-label">Sinta</label>
           </div>
         </div>
-
 
         <div class="mb-3">
           <label class="form-label">Link Publikasi :</label>

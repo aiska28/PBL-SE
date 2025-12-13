@@ -20,7 +20,8 @@ if (!$d) {
 
 <h4 class="text-primary fw-bold">Edit Tenaga Pengajar</h4>
 
-<form method="POST" action="landingAdmin.php" enctype="multipart/form-data">
+<form method="POST" action="backend/prosesAdmin.php" enctype="multipart/form-data">
+
     <input type="hidden" name="id" value="<?= $d['id'] ?>">
     <input type="hidden" name="update_pengajar" value="1">
 
@@ -41,8 +42,7 @@ if (!$d) {
 
     <div class="mt-3 d-flex gap-2">
       <button type="submit" name="update" class="btn btn-primary">Simpan Perubahan</button>
-      <a href="landingAdmin.php?tab=tentangKami&inner=tenagaPengajar"
-      class="btn btn-secondary">Batal</a>
+      <a href="landingAdmin.php?tab=tentangKami&inner=tenagaPengajar" class="btn btn-secondary">Batal</a>
     </div>
 </form>
 

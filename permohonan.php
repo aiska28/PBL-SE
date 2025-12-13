@@ -82,7 +82,7 @@ $result = pg_query($conn, "
 <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jtable@2.6.0/lib/jquery.jtable.min.js"></script>
 
-<link rel="stylesheet" href="permohonan.css">
+<link rel="stylesheet" href="css/permohonan.css">
 <style>
 .stats-card {
     border-radius: 15px;

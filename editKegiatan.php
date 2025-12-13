@@ -7,7 +7,7 @@ if (!isset($_GET['id'])) {
 }
 
 $id = $_GET['id'];
-$q = pg_query_params($conn, "SELECT * FROM KegiatanProyek WHERE id = $1", array($id));
+$q = pg_query_params($conn, "SELECT * FROM kegiatanproyek WHERE id = $1", array($id));
 $data = pg_fetch_assoc($q);
 
 if (!$data) {
@@ -30,7 +30,7 @@ if (!$data) {
     <div class="card-body">
       <h4 class="fw-bold text-primary mb-3">Edit Kegiatan & Proyek</h4>
 
-      <form action="landingAdmin.php" method="POST">
+      <form action="backend/prosesAdmin.php" method="POST">
 
         <!-- PENTING -->
         <input type="hidden" name="update_kegiatan" value="1">
@@ -55,14 +55,9 @@ if (!$data) {
             required><?= htmlspecialchars($data['deskripsi']); ?></textarea>
         </div>
 
-        <button type="submit" class="btn btn-primary">
-          Simpan Perubahan
-        </button>
+        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
 
-        <a href="LandingAdmin.php?tab=tampilan&inner=kegiatan"
-           class="btn btn-secondary">
-          Kembali
-        </a>
+        <a href="landingAdmin.php?tab=tampilan&inner=kegiatan"class="btn btn-secondary">Kembali</a>
 
       </form>
 

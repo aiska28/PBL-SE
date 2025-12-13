@@ -20,7 +20,8 @@ if (!$d) {
 
 <h4 class="text-primary fw-bold">Edit Tenaga Kependidikan</h4>
 
-<form method="POST" action="landingAdmin.php">
+<form method="POST" action="backend/prosesAdmin.php">
+
     <input type="hidden" name="id" value="<?= $d['id'] ?>">
     <input type="hidden" name="update_kependidikan" value="1">
 
@@ -32,9 +33,9 @@ if (!$d) {
 
     <div class="mt-3 d-flex gap-2">
       <button type="submit" name="update" class="btn btn-primary">Simpan Perubahan</button>
-      <a href="landingAdmin.php?tab=tentangKami&inner=kependidikan" 
-      class="btn btn-secondary">Batal</a>
+      <a href="landingAdmin.php?tab=tentangKami&inner=kependidikan" class="btn btn-secondary">Batal</a>
     </div>
+</form>
 
 </body>
 </html>

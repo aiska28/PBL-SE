@@ -1,24 +1,3 @@
-<?php
-include "konekDB.php";
-
-if (isset($_POST['simpan'])) {
-    $nama = $_POST['nama'];
-    $desk = $_POST['deskripsi'];
-
-    $foto = $_FILES['foto']['name'];
-    $tmp  = $_FILES['foto']['tmp_name'];
-    move_uploaded_file($tmp, "uploads/" . $foto);
-
-    $q = "INSERT INTO sarana_prasarana (nama_ruangan, deskripsi, foto_url)
-          VALUES ($1, $2, $3)";
-    
-    pg_query_params($conn, $q, array($nama, $desk, $foto));
-
-    header("Location: landingAdmin.php?tab=tentangKami&inner=sarpras&msg=updated");
-    exit;
-}
-?>
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -35,7 +14,9 @@ if (isset($_POST['simpan'])) {
 
         <div class="card-body">
 
-            <form method="POST" enctype="multipart/form-data">
+            <form method="POST" action="backend/prosesAdmin.php" enctype="multipart/form-data">
+
+                <input type="hidden" name="action" value="simpan_sarpras">
 
                 <label class="fw-semibold">Nama Ruangan</label>
                 <input type="text" name="nama" class="form-control" required>
@@ -46,9 +27,8 @@ if (isset($_POST['simpan'])) {
                 <label class="fw-semibold mt-2">Foto</label>
                 <input type="file" name="foto" class="form-control" required>
 
-                <button name="simpan" class="btn btn-primary mt-3">Simpan</button>
-                <a href="landingAdmin.php?tab=tentangKami&inner=sarpras"
-                class="btn btn-secondary mt-3">Kembali</a>
+                <button name="submit" class="btn btn-primary mt-3">Simpan</button>
+                <a href="landingAdmin.php?tab=tentangKami&inner=sarpras"class="btn btn-secondary mt-3">Kembali</a>
 
             </form>
 

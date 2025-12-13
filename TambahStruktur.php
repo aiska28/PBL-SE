@@ -1,20 +1,3 @@
-<?php
-include "konekDB.php";
-
-// PROSES SIMPAN
-if (isset($_POST['simpan'])) {
-    $jabatan = $_POST['jabatan'];
-    $nama    = $_POST['nama'];
-
-    $q = "INSERT INTO struktur_organisasi (jabatan, nama) VALUES ($1, $2)";
-    pg_query_params($conn, $q, array($jabatan, $nama));
-
-    // redirect ke tab Struktur Organisasi
-    header("Location: landingAdmin.php?tab=tentangKami&inner=organisasi&msg=struktur_added");
-    exit;
-}
-?>
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -29,7 +12,7 @@ if (isset($_POST['simpan'])) {
     <div class="card-header bg-warning fw-bold">Tambah Struktur Organisasi</div>
     <div class="card-body">
 
-      <form method="POST">
+      <form method="POST" action="backend/prosesAdmin.php">
         <label class="fw-semibold mt-2">Jabatan</label>
         <input type="text" name="jabatan" class="form-control" required>
 

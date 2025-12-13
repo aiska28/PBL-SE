@@ -1,8 +1,18 @@
 <?php
 include 'konekDB.php';
 
+if (!isset($_GET['id'])) {
+    die("ID tidak ditemukan");
+}
+
 $id = $_GET['id'];
-$q = pg_query($conn, "SELECT * FROM struktur_organisasi WHERE id=$id");
+
+$q = pg_query_params(
+    $conn,
+    "SELECT * FROM struktur_organisasi WHERE id = $1",
+    [$id]
+);
+
 $d = pg_fetch_assoc($q);
 
 if (!$d) {
@@ -20,7 +30,8 @@ if (!$d) {
 
 <h4 class="text-primary fw-bold">Edit Struktur Organisasi</h4>
 
-<form method="POST" action="landingAdmin.php?tab=tentangKami&inner=organisasi">
+<form method="POST" action="backend/prosesAdmin.php">
+
     <input type="hidden" name="id" value="<?= $d['id'] ?>">
     <input type="hidden" name="update_organisasi" value="1">
 

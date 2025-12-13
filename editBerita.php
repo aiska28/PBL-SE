@@ -1,42 +1,22 @@
 <?php
 include "konekDB.php";
 
-// ================== AMBIL DATA ==================
 if (!isset($_GET['id'])) {
-    header("Location: landingAdmin.php?tab=tampilanBerita&inner=BeritaTab&msg=berita_updated");
-exit;
-
+    die("ID berita tidak ditemukan");
 }
 
 $id = $_GET['id'];
 
-$q = pg_query_params($conn, "SELECT * FROM berita WHERE id = $1", array($id));
+$q = pg_query_params(
+    $conn,
+    "SELECT * FROM berita WHERE id = $1",
+    [$id]
+);
+
 $data = pg_fetch_assoc($q);
 
 if (!$data) {
-    echo "Data berita tidak ditemukan!";
-    exit;
-}
-
-// ================== PROSES UPDATE ==================
-if (isset($_POST['update'])) {
-
-    $judul     = $_POST['judul'];
-    $konten    = $_POST['konten'];
-    $tanggal   = $_POST['tanggal'];
-
-    $query = "UPDATE berita 
-              SET judul = $1, konten = $2, tanggal = $3
-              WHERE id = $4";
-
-    $run = pg_query_params($conn, $query, array($judul, $konten, $tanggal, $id));
-
-    if ($run) {
-        header("Location: landingAdmin.php?msg=berita_updated");
-        exit;
-    } else {
-        echo "<script>alert('Gagal memperbarui berita!');</script>";
-    }
+    die("Data berita tidak ditemukan");
 }
 ?>
 
@@ -58,12 +38,14 @@ if (isset($_POST['update'])) {
 
         <div class="card-body">
 
-            <form method="POST">
+            <form method="POST" action="backend/prosesAdmin.php">
+
+                <input type="hidden" name="action" value="update_berita">
+                <input type="hidden" name="id" value="<?= $data['id']; ?>">
 
                 <div class="mb-3">
                     <label class="form-label fw-bold">Judul Berita</label>
-                    <input type="text" name="judul" class="form-control"
-                           value="<?= $data['judul']; ?>" required>
+                    <input type="text" name="judul" class="form-control" value="<?= $data['judul']; ?>" required>
                 </div>
 
                 <div class="mb-3">
@@ -73,15 +55,11 @@ if (isset($_POST['update'])) {
 
                 <div class="mb-3">
                     <label class="form-label fw-bold">Tanggal</label>
-                    <input type="date" name="tanggal" class="form-control"
-                           value="<?= $data['tanggal']; ?>" required>
+                    <input type="date" name="tanggal" class="form-control" value="<?= $data['tanggal']; ?>" required>
                 </div>
 
                 <div class="d-flex justify-content-between">
-                    <a href="landingAdmin.php?tab=tampilanBerita&inner=BeritaTab" 
-                    class="btn btn-secondary">
-                    Kembali
-                    </a>
+                    <a href="landingAdmin.php?tab=tampilanBerita&inner=BeritaTab" class="btn btn-secondary">Kembali</a>
 
                     <button type="submit" name="update" class="btn btn-primary">Simpan Perubahan</button>
                 </div>

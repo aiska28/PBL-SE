@@ -17,26 +17,6 @@ if (!$data) {
     exit;
 }
 
-// ================== PROSES UPDATE ==================
-if (isset($_POST['update'])) {
-
-    $judul     = $_POST['judul'];
-    $konten    = $_POST['konten'];
-    $tanggal   = $_POST['tanggal'];
-
-    $query = "UPDATE pengumuman
-              SET judul = $1, konten = $2, tanggal = $3
-              WHERE id = $4";
-
-    $run = pg_query_params($conn, $query, array($judul, $konten, $tanggal, $id));
-
-    if ($run) {
-        header("Location: landingAdmin.php?msg=pengumuman_updated");
-        exit;
-    } else {
-        echo "<script>alert('Gagal memperbarui pengumuman!');</script>";
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -57,7 +37,9 @@ if (isset($_POST['update'])) {
 
         <div class="card-body">
 
-            <form method="POST">
+            <form method="POST" action="backend/prosesAdmin.php">
+                <input type="hidden" name="action" value="update_pengumuman">
+                <input type="hidden" name="id" value="<?= $data['id']; ?>">
 
                 <div class="mb-3">
                     <label class="form-label fw-bold">Judul Pengumuman</label>
@@ -77,10 +59,7 @@ if (isset($_POST['update'])) {
                 </div>
 
                 <div class="d-flex justify-content-between">
-                    <a href="landingAdmin.php?tab=tampilanBerita&inner=PengumumanTab"
-                    class="btn btn-secondary">
-                    Kembali
-                    </a>
+                    <a href="landingAdmin.php?tab=tampilanBerita&inner=PengumumanTab" class="btn btn-secondary"> Kembali</a>
 
                     <button type="submit" name="update" class="btn btn-primary">Simpan Perubahan</button>
                 </div>

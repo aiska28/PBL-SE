@@ -27,28 +27,20 @@ $data = pg_fetch_assoc($q);
     <div class="card-body">
       <h4 class="fw-bold text-primary mb-3">Edit Fokus Riset</h4>
 
-      <form action="LandingAdmin.php" method="POST">
-  <input type="hidden" name="id" value="<?= $data['id'] ?>">
-  <input type="hidden" name="update_riset" value="1">
+      <form action="backend/prosesAdmin.php" method="POST">
+        <input type="hidden" name="id" value="<?= $data['id'] ?>">
+        <input type="hidden" name="update_riset" value="1">
 
-  <div class="mb-3">
-    <label class="form-label fw-semibold">Deskripsi Riset</label>
-    <textarea name="deskripsi" class="form-control" rows="4" required><?= $data['deskripsi'] ?></textarea>
-  </div>
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Deskripsi Riset</label>
+          <textarea name="deskripsi" class="form-control" rows="4" required><?= $data['deskripsi'] ?></textarea>
+        </div>
 
-  <div class="d-flex gap-2">
-    <button type="submit" class="btn btn-primary">
-      Simpan Perubahan
-    </button>
-
-    <a href="LandingAdmin.php?tab=tampilan&inner=riset"
-       class="btn btn-outline-secondary">
-       Kembali
-    </a>
-  </div>
-</form>
-
-
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+          <a href="landingAdmin.php?tab=tampilan&inner=riset" class="btn btn-outline-secondary">Kembali</a>
+        </div>
+      </form>
 
     </div>
   </div>

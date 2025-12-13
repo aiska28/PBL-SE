@@ -1,18 +1,3 @@
-<?php 
-include 'konekDB.php';
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $judul = $_POST['judul'];
-    $deskripsi = $_POST['deskripsi'];
-
-    $query = "INSERT INTO FasilitasPeralatan (judul, deskripsi) VALUES ($1, $2)";
-    pg_query_params($conn, $query, array($judul, $deskripsi));
-
-    header("Location: LandingAdmin.php?tab=tampilan&inner=fasilitas&msg=added");
-    exit;
-}
-?>
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -22,10 +7,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 <body class="p-4">
 
-<div class="container">
+<div class="container" action="backend/prosesAdmin.php?tab=tampilan&inner=fasilitas">
   <h3 class="text-primary fw-bold mb-3">Tambah Fasilitas / Peralatan</h3>
 
-  <form method="POST">
+  <form method="POST" action="backend/prosesAdmin.php">
+    <input type="hidden" name="action" value="simpan_fasilitas">
     <div class="mb-3">
       <label class="form-label">Judul</label>
       <input type="text" name="judul" class="form-control" required>
@@ -36,11 +22,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       <textarea name="deskripsi" class="form-control" rows="4" required></textarea>
     </div>
 
-    <button class="btn btn-primary">Simpan</button>
-    <a href="LandingAdmin.php?tab=tampilan&inner=fasilitas"
-      class="btn btn-secondary">
-      Kembali
-    </a>
+    <button type="submit" class="btn btn-primary">Simpan</button>
+    <a href="landingAdmin.php?tab=tampilan&inner=fasilitas" class="btn btn-secondary">Kembali</a>
   </form>
 </div>
 

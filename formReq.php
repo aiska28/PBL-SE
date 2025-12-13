@@ -78,7 +78,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <title>Form Open Recruitment</title>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="formReq.css">
+  <link rel="stylesheet" href="css/formReq.css">
 </head>
 <body>
 
