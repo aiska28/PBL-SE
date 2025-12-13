@@ -14,7 +14,7 @@ if (isset($_POST['simpan'])) {
     
     pg_query_params($conn, $q, array($nama, $desk, $foto));
 
-    header("Location: landingAdmin.php?msg=sarpras_added");
+    header("Location: landingAdmin.php?tab=tentangKami&inner=sarpras&msg=updated");
     exit;
 }
 ?>
@@ -47,7 +47,8 @@ if (isset($_POST['simpan'])) {
                 <input type="file" name="foto" class="form-control" required>
 
                 <button name="simpan" class="btn btn-primary mt-3">Simpan</button>
-                <a href="landingAdmin.php" class="btn btn-secondary mt-3">Kembali</a>
+                <a href="landingAdmin.php?tab=tentangKami&inner=sarpras"
+                class="btn btn-secondary mt-3">Kembali</a>
 
             </form>
 

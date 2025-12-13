@@ -13,7 +13,7 @@ if (isset($_POST['simpan'])) {
 
     pg_query_params($conn, $sql, array($deskripsi, $tanggal, $waktu, $nama));
 
-    header("Location: landingAdmin.php?msg=agenda_added");
+     header("Location: landingAdmin.php?tab=tampilanBerita&inner=AgendaTab&msg=agenda_added");
     exit;
 }
 ?>
@@ -50,7 +50,10 @@ if (isset($_POST['simpan'])) {
     </div>
 
     <button class="btn btn-primary" name="simpan">Simpan</button>
-    <a href="landingAdmin.php" class="btn btn-secondary">Kembali</a>
+   <a href="landingAdmin.php?tab=tampilanBerita&inner=AgendaTab"
+   class="btn btn-secondary">
+   Kembali
+</a>
 
 </form>
 

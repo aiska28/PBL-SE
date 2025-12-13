@@ -32,7 +32,8 @@ if (!$d) {
 
     <div class="mt-3 d-flex gap-2">
       <button type="submit" name="update" class="btn btn-primary">Simpan Perubahan</button>
-      <a href="landingAdmin.php" class="btn btn-secondary">Batal</a>
+      <a href="landingAdmin.php?tab=tentangKami&inner=kependidikan" 
+      class="btn btn-secondary">Batal</a>
     </div>
 
 </body>

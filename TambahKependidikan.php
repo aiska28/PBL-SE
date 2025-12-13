@@ -10,7 +10,7 @@ if (isset($_POST['simpan'])) {
 
     pg_query_params($conn, $q, array($nama, $jabatan));
 
-    header("Location: landingAdmin.php?msg=kependidikan_added");
+    header("Location: landingAdmin.php?tab=tentangKami&inner=kependidikan&msg=deleted");
     exit;
 }
 ?>
@@ -38,7 +38,8 @@ if (isset($_POST['simpan'])) {
         <input type="text" name="jabatan" class="form-control" required>
 
         <button name="simpan" class="btn btn-primary mt-3">Simpan</button>
-        <a href="landingAdmin.php" class="btn btn-secondary mt-3">Kembali</a>
+        <a href="landingAdmin.php?tab=tentangKami&inner=kependidikan"
+        class="btn btn-secondary mt-3">Kembali</a>
 
       </form>
 

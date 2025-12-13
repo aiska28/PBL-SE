@@ -18,7 +18,7 @@ if (isset($_POST['simpan'])) {
     $sql = "INSERT INTO berita (judul, konten, tanggal, gambar) VALUES ($1, $2, $3, $4)";
     pg_query_params($conn, $sql, array($judul, $konten, $tanggal, $gambar));
 
-    header("Location: landingAdmin.php?msg=berita_added");
+    header("Location: landingAdmin.php?tab=tampilanBerita&inner=BeritaTab&msg=berita_added");
     exit;
 }
 ?>
@@ -56,7 +56,11 @@ if (isset($_POST['simpan'])) {
     </div>
 
     <button class="btn btn-primary" name="simpan">Simpan</button>
-    <a href="landingAdmin.php" class="btn btn-secondary">Kembali</a>
+        <a href="landingAdmin.php?tab=tampilanBerita&inner=BeritaTab" 
+        class="btn btn-secondary">
+        Kembali
+        </a>
+
 
 </form>
 

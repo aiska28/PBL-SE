@@ -3,8 +3,9 @@ include "konekDB.php";
 
 // ================== AMBIL DATA ==================
 if (!isset($_GET['id'])) {
-    header("Location: landingAdmin.php");
-    exit;
+    header("Location: landingAdmin.php?tab=tampilanBerita&inner=BeritaTab&msg=berita_updated");
+exit;
+
 }
 
 $id = $_GET['id'];
@@ -77,7 +78,11 @@ if (isset($_POST['update'])) {
                 </div>
 
                 <div class="d-flex justify-content-between">
-                    <a href="landingAdmin.php" class="btn btn-secondary">Kembali</a>
+                    <a href="landingAdmin.php?tab=tampilanBerita&inner=BeritaTab" 
+                    class="btn btn-secondary">
+                    Kembali
+                    </a>
+
                     <button type="submit" name="update" class="btn btn-primary">Simpan Perubahan</button>
                 </div>
 
