@@ -1,7 +1,7 @@
 /* ===== GLOBAL ===== */
 body {
   font-family: 'Poppins', sans-serif;
-  background-image: url(img/loginAdmin.jpg);
+  background-image: url(../img/loginAdmin.jpg);
   background-size: cover;
   background-attachment: fixed;
   margin: 0;
