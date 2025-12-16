@@ -405,20 +405,31 @@ switch ($action) {
         header("Location: ../landingAdmin.php?tab=tampilanBerita&inner=PengumumanTab&msg=pengumuman_added");
         exit;
 
-    case 'simpan_berita': // Asumsi: field unik dari data $_POST
-        $judul = $_POST['judul'];
-        $konten = $_POST['konten'];
-        $tanggal = $_POST['tanggal'];
-        $gambar = "";
-        if (!empty($_FILES['gambar']['name'])) {
-            $fname = "img/berita_" . time() . "_" . basename($_FILES['gambar']['name']);
-            move_uploaded_file($_FILES['gambar']['tmp_name'], $fname);
-            $gambar = $fname;
-        }
-        $sql = "INSERT INTO berita (judul, konten, tanggal, gambar) VALUES ($1, $2, $3, $4)";
-        pg_query_params($conn, $sql, array($judul, $konten, $tanggal, $gambar));
-        header("Location: ../landingAdmin.php?tab=tampilanBerita&inner=BeritaTab&msg=berita_added");
-        exit;
+    case 'simpan_berita':
+
+    $judul   = $_POST['judul'];
+    $konten  = $_POST['konten'];
+    $tanggal = $_POST['tanggal'];
+    $gambar = "";
+
+    if (!empty($_FILES['gambar']['name'])) {
+
+        $namaFile = "berita_" . time() . "_" . basename($_FILES['gambar']['name']);
+        $targetPath = "../img/" . $namaFile; // ← PENTING
+
+        move_uploaded_file($_FILES['gambar']['tmp_name'], $targetPath);
+
+        $gambar = "img/" . $namaFile; // ← SIMPAN KE DB
+    }
+
+    $sql = "INSERT INTO berita (judul, konten, tanggal, gambar)
+            VALUES ($1, $2, $3, $4)";
+
+    pg_query_params($conn, $sql, [$judul, $konten, $tanggal, $gambar]);
+
+    header("Location: ../landingAdmin.php?tab=tampilanBerita&inner=BeritaTab");
+    exit;
+
     
     case 'simpan_fasilitas': // Asumsi: Dari kondisi $action
         $judul = $_POST['judul'];

@@ -69,7 +69,7 @@ include 'konekDB.php';
 </nav>
 
 <div class="container mt-3 text-end">
-  <a href="landingAdmin.php" class="btn btn-secondary btn-sm">Kembali</a>
+  <a href="landingAdmin.php" class="btn-kembali">Kembali</a>
 </div>
 
   <!-- FORM -->

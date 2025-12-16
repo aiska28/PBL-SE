@@ -1,77 +1,3 @@
-<?php 
-include "konekDB.php"; // Koneksi ke PostgreSQL  
-
-// Jika form disubmit
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-
-    // Ambil data dari form
-    $fullname  = $_POST['fullname'];
-    $phone     = $_POST['phone'];
-    $email     = $_POST['email'];
-    $detail    = $_POST['detail'];
-    $layanan   = $_POST['layanan'];
-
-    // FIELD BARU
-    $tanggal   = $_POST['tanggal'];
-    $jam       = $_POST['jam']; // JAM PELAKSANAAN
-
-    // CARI ID dari jenis_layanan
-    $queryJenis = "SELECT id FROM jenis_layanan WHERE nama_layanan = $1";
-    $resultJenis = pg_query_params($conn, $queryJenis, array($layanan));
-
-    if ($row = pg_fetch_assoc($resultJenis)) {
-        $id_layanan = $row['id'];
-    } else {
-        die("Jenis layanan tidak ditemukan!");
-    }
-
-    // UPLOAD FILE
-    $fileName = null;
-
-    if (!empty($_FILES["surat"]["name"])) {
-        $folder = "uploads/";
-        if (!is_dir($folder)) {
-            mkdir($folder, 0777, true);
-        }
-
-        $fileName = time() . "_" . basename($_FILES["surat"]["name"]);
-        $targetFile = $folder . $fileName;
-
-        move_uploaded_file($_FILES["surat"]["tmp_name"], $targetFile);
-    }
-
-    // INSERT KE DATABASE
-    $queryInsert = "
-        INSERT INTO layanan (
-            full_name, phone_number, email, detail_kegiatan,
-            jenis_layanan, tanggal, jam_pelaksanaan, file_surat
-        )
-        VALUES ($1,$2,$3,$4,$5,$6,$7,$8)
-    ";
-
-    $resultInsert = pg_query_params(
-        $conn,
-        $queryInsert,
-        array($fullname, $phone, $email, $detail, $id_layanan, $tanggal, $jam, $fileName)
-    );
-
-    if ($resultInsert) {
-        echo "
-            <script>
-                alert('Data pelayanan berhasil dikirim!');
-                window.location = 'landing.php';
-            </script>
-        ";
-    } else {
-        echo "
-            <script>
-                alert('Gagal menyimpan data!');
-                window.history.back();
-            </script>
-        ";
-    }
-}
-?>
 <!doctype html>
 <html lang="id">
 <head>
@@ -82,35 +8,35 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/formPerLay.css">
-
 </head>
 <body>
 
-<!-- NAVBAR -->
+<!-- ✅ NAVBAR (TIDAK DIUBAH) -->
 <nav class="navbar navbar-expand-lg" style="background-color: #1d2c8a;">
   <div class="container-fluid px-5">
 
-    <!-- LOGO + TEXT -->
     <div class="d-flex align-items-center me-auto">
       <img src="img/logoPolinema.png" alt="Logo" style="height: 60px;" class="me-3">
-
       <div class="text-white lh-1">
         <div style="font-size: 14px; font-weight: 600;">JURUSAN TEKNOLOGI INFORMASI</div>
         <div style="font-size: 18px; font-weight: 700;">POLITEKNIK NEGERI MALANG</div>
       </div>
     </div>
 
-    <!-- Toggle button -->
     <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <!-- MENU -->
     <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item mx-3"><a class="nav-link text-white fw-semibold" href="landing.php">Beranda</a></li>
+        <li class="nav-item mx-3">
+          <a class="nav-link text-white fw-semibold" href="landing.php">Beranda</a>
+        </li>
+
         <li class="nav-item dropdown mx-3">
-          <a class="nav-link dropdown-toggle text-white fw-semibold" href="tentangKami.php" id="tentangDropdown" role="button" data-bs-toggle="dropdown">Tentang Kami</a>
+          <a class="nav-link dropdown-toggle text-white fw-semibold" href="tentangKami.php" role="button" data-bs-toggle="dropdown">
+            Tentang Kami
+          </a>
           <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="tentangKami.php">Sejarah</a></li>
             <li><a class="dropdown-item" href="tentangKami.php">Visi, Misi dan Tujuan</a></li>
@@ -120,84 +46,84 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <li><a class="dropdown-item" href="tentangKami.php">Sarana dan Prasarana</a></li>
           </ul>
         </li>
+
         <li class="nav-item mx-3">
           <a class="nav-link text-white fw-semibold" href="berita.php">Berita & Pengumuman</a>
         </li>
       </ul>
     </div>
+
   </div>
 </nav>
 
-<!-- Content -->
+<!-- ✅ CONTENT (TIDAK DIUBAH) -->
 <main class="container mt-4">
   <div class="row justify-content-center">
-      <div class="col-12 col-md-10 col-lg-8">
-          <div class="card-form p-4 shadow-lg rounded-3">
+    <div class="col-12 col-md-10 col-lg-8">
+      <div class="card-form p-4 shadow-lg rounded-3">
 
-              <h4 class="section-title text-center">FORM PELAYANAN</h4>
-              <h5 class="text-center mb-4 fw-bold">Laboratorium Software Engineering</h5>
+        <h4 class="section-title text-center">FORM PELAYANAN</h4>
+        <h5 class="text-center mb-4 fw-bold">Laboratorium Software Engineering</h5>
 
-              <form action="" method="POST" enctype="multipart/form-data">
+        <!-- ✅ ACTION SAJA YANG DIUBAH -->
+        <form action="backend/detail.php" method="POST" enctype="multipart/form-data">
+          <div class="row g-3">
 
-                  <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Nama Lengkap :</label>
+              <input type="text" class="form-control" name="fullname" required>
+            </div>
 
-                      <div class="col-md-6">
-                          <label class="form-label">Nama Lengkap :</label>
-                          <input type="text" class="form-control" name="fullname" required>
-                      </div>
+            <div class="col-md-6">
+              <label class="form-label">Nomer Telepon :</label>
+              <input type="tel" class="form-control" name="phone" required>
+            </div>
 
-                      <div class="col-md-6">
-                          <label class="form-label">Nomer Telepon :</label>
-                          <input type="tel" class="form-control" name="phone" required>
-                      </div>
+            <div class="col-md-6">
+              <label class="form-label">Email :</label>
+              <input type="email" class="form-control" name="email" required>
+            </div>
 
-                      <div class="col-md-6">
-                          <label class="form-label">Email :</label>
-                          <input type="email" class="form-control" name="email" required>
-                      </div>
+            <div class="col-12">
+              <label class="form-label">Detail Kegiatan :</label>
+              <input type="text" class="form-control" name="detail" required>
+            </div>
 
-                      <div class="col-12">
-                          <label class="form-label">Detail Kegiatan :</label>
-                          <input type="text" class="form-control" name="detail" required>
-                      </div>
+            <div class="col-12">
+              <label class="form-label">Jenis Layanan :</label>
+              <select class="form-select" name="layanan" required>
+                <option value="" disabled selected>Pilih Layanan</option>
+                <option>Pelatihan & Workshop</option>
+                <option>Pendampingan Tugas Akhir</option>
+                <option>Pengujian Perangkat Lunak</option>
+              </select>
+            </div>
 
-                      <div class="col-12">
-                          <label class="form-label">Jenis Layanan :</label>
-                          <select class="form-select" name="layanan" required>
-                              <option value="" disabled selected>Pilih Layanan</option>
-                              <option>Pelatihan & Workshop</option>
-                              <option>Pendampingan Tugas Akhir</option>
-                              <option>Pengujian Perangkat Lunak</option>
-                          </select>
-                      </div>
+            <div class="col-md-6">
+              <label class="form-label">Tanggal :</label>
+              <input type="date" class="form-control" name="tanggal" required>
+            </div>
 
-                      <div class="col-md-6">
-                          <label class="form-label">Tanggal :</label>
-                          <input type="date" class="form-control" name="tanggal" required>
-                      </div>
+            <div class="col-md-6">
+              <label class="form-label">Jam Pelaksanaan :</label>
+              <input type="time" class="form-control" name="jam" required>
+            </div>
 
-                      <!-- FIELD BARU -->
-                      <div class="col-md-6">
-                          <label class="form-label">Jam Pelaksanaan :</label>
-                          <input type="time" class="form-control" name="jam" required>
-                      </div>
+            <div class="col-12">
+              <label class="form-label">Kirim Surat Layanan:</label>
+              <input type="file" class="form-control" name="surat">
+            </div>
 
-                      <div class="col-12">
-                          <label class="form-label">Kirim Surat Layanan:</label>
-                          <input type="file" class="form-control" name="surat">
-                      </div>
-
-                      <div class="d-flex justify-content-between mt-4">
-                        <a href="landing.php" class="back-btn"><b>Kembali</b></a>
-                        <button type="submit" class="btn btn-primary px-4"><b>Kirim</b></button>
-                      </div>
-
-                  </div>
-
-              </form>
+            <div class="d-flex justify-content-between mt-4">
+              <a href="landing.php" class="back-btn"><b>Kembali</b></a>
+              <button type="submit" class="btn btn-primary px-4"><b>Kirim</b></button>
+            </div>
 
           </div>
+        </form>
+
       </div>
+    </div>
   </div>
 </main>
 

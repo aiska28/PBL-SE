@@ -51,3 +51,20 @@ body {
 .form-label {
   font-weight: 600;
 }
+
+.btn-kembali {
+    display: inline-block;
+    background-color: #FFC107 !important;
+    color: #000 !important;
+    padding: 14px 32px;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none !important;
+    border: none;
+}
+
+/* hover halus */
+.btn-kembali:hover {
+    background-color: #FFB300;
+    color: #000;
+}
