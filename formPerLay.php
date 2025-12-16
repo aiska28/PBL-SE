@@ -11,7 +11,7 @@
 </head>
 <body>
 
-<!-- ✅ NAVBAR (TIDAK DIUBAH) -->
+<!-- NAVBAR (TIDAK DIUBAH) -->
 <nav class="navbar navbar-expand-lg" style="background-color: #1d2c8a;">
   <div class="container-fluid px-5">
 
@@ -56,7 +56,7 @@
   </div>
 </nav>
 
-<!-- ✅ CONTENT (TIDAK DIUBAH) -->
+<!-- CONTENT (TIDAK DIUBAH) -->
 <main class="container mt-4">
   <div class="row justify-content-center">
     <div class="col-12 col-md-10 col-lg-8">
@@ -65,8 +65,9 @@
         <h4 class="section-title text-center">FORM PELAYANAN</h4>
         <h5 class="text-center mb-4 fw-bold">Laboratorium Software Engineering</h5>
 
-        <!-- ✅ ACTION SAJA YANG DIUBAH -->
+        <!-- ACTION SAJA YANG DIUBAH -->
         <form action="backend/detail.php" method="POST" enctype="multipart/form-data">
+           <input type="hidden" name="action" value="simpan_layanan">
           <div class="row g-3">
 
             <div class="col-md-6">
