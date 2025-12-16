@@ -142,6 +142,7 @@ include 'konekDB.php';
                     <th>Program Studi</th>
                     <th>NIDN</th>
                     <th>Jabatan</th>
+                    <th>foto</th>
                     <th>Email</th>
                     <th>Alamat Kantor</th>
                     <th>Mata Kuliah Ganjil</th>
@@ -159,6 +160,7 @@ include 'konekDB.php';
                     d.program_studi,
                     d.nidn,
                     d.jabatan,
+                    d.foto,
                     d.email,
                     d.alamat_kantor,
                     STRING_AGG(CASE WHEN mk.semester='Ganjil' THEN mk.nama_mk END, ', ') AS mk_ganjil,
@@ -179,6 +181,7 @@ include 'konekDB.php';
                     <td class="text-truncate"><?= $row['program_studi'] ?></td>
                     <td class="text-truncate"><?= $row['nidn'] ?></td>
                     <td class="text-truncate"><?= $row['jabatan'] ?></td>
+                    <td><img src="uploads/<?= $row['foto'] ?>" width="70" alt="Foto Dosen"></td>
                     <td class="text-truncate"><?= $row['email'] ?></td>
                     <td class="text-truncate"><?= $row['alamat_kantor'] ?></td>
                     <td class="text-truncate"><?= $row['mk_ganjil'] ? $row['mk_ganjil'] : '-' ?></td>
@@ -436,7 +439,7 @@ include 'konekDB.php';
             <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#organisasi">Struktur Organisasi</button></li>
             <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#tenagaPengajar">Tenaga Pengajar</button></li>
             <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#kependidikan">Tenaga Kependidikan</button></li>
-            <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#sarpras">SAPRAS</button></li>
+            <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#sarpras">SARPRAS</button></li>
           </ul>
 
           <div class="tab-content">
@@ -766,6 +769,7 @@ include 'konekDB.php';
               <th>No</th>
               <th>Judul</th>
               <th>Tanggal</th>
+              <th>Gambar</th>
               <th>Aksi</th>
             </tr>
           </thead>
@@ -779,6 +783,7 @@ include 'konekDB.php';
                 <td>{$no}</td>
                 <td>{$b['judul']}</td>
                 <td>{$b['tanggal']}</td>
+                <td><img src='uploads/{$b['gambar']}' width='70' alt='gambar'></td>
                 <td>
                   <a href='editBerita.php?id={$b['id']}' 
                     class='btn btn-sm btn-outline-primary'>Edit</a>
@@ -810,6 +815,7 @@ include 'konekDB.php';
               <th>No</th>
               <th>Judul</th>
               <th>Tanggal</th>
+              <th>Gambar</th>
               <th>Aksi</th>
             </tr>
           </thead>
@@ -823,6 +829,7 @@ include 'konekDB.php';
                 <td>{$no}</td>
                 <td>{$p['judul']}</td>
                 <td>{$p['tanggal']}</td>
+                <td><img src='uploads/{$p['gambar']}' width='70' alt='gambar'></td>
                 <td>
                   <a href='editPengumuman.php?id={$p['id']}&tab=tampilanBerita&inner=PengumumanTab'
                     class='btn btn-sm btn-outline-primary'>
@@ -836,7 +843,6 @@ include 'konekDB.php';
                   </a>
                 </td>
               </tr>";
-
               $no++;
             }
             ?>
@@ -846,10 +852,6 @@ include 'konekDB.php';
     </div>
   </div>
 </div>
-
-
-        </div>
-        </div>
 
   <!-- jQuery WAJIB paling atas -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>

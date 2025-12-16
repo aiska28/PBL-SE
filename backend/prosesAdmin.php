@@ -334,8 +334,9 @@ switch ($action) {
         $judul = $_POST['judul'];
         $konten = $_POST['konten'];
         $tanggal = $_POST['tanggal'];
-        $query = "UPDATE berita SET judul = $1, konten = $2, tanggal = $3 WHERE id = $4";
-        pg_query_params($conn, $query, array($judul, $konten, $tanggal, $id));
+        $gambar = $_POST['gambar'];
+        $query = "UPDATE berita SET judul = $1, konten = $2, tanggal = $3 , gambar = $4 WHERE id = $5";
+        pg_query_params($conn, $query, array($judul, $konten, $tanggal, $gambar, $id));
         header("Location: ../landingAdmin.php?tab=tampilanBerita&inner=BeritaTab&msg=berita_updated");
         exit;
 
@@ -344,8 +345,9 @@ switch ($action) {
         $judul = $_POST['judul'];
         $konten = $_POST['konten'];
         $tanggal = $_POST['tanggal'];
-        $query = "UPDATE pengumuman SET judul = $1, konten = $2, tanggal = $3 WHERE id = $4";
-        pg_query_params($conn, $query, array($judul, $konten, $tanggal, $id));
+        $gambar = $_POST['gambar'];
+        $query = "UPDATE pengumuman SET judul = $1, konten = $2, tanggal = $3, gambar = $4 WHERE id = $5";
+        pg_query_params($conn, $query, array($judul, $konten, $tanggal, $gambar, $id));
         header("Location: ../landingAdmin.php?tab=tampilanBerita&inner=PengumumanTab&msg=pengumuman_updated");
         exit;
 

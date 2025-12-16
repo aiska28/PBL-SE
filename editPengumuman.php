@@ -54,8 +54,12 @@ if (!$data) {
 
                 <div class="mb-3">
                     <label class="form-label fw-bold">Tanggal</label>
-                    <input type="date" name="tanggal" class="form-control"
-                           value="<?= $data['tanggal']; ?>" required>
+                    <input type="date" name="tanggal" class="form-control" value="<?= $data['tanggal']; ?>" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="fw-semibold mt-2">Gambar</label>
+                    <input type="file" name="gambar" class="form-control">
                 </div>
 
                 <div class="d-flex justify-content-between">

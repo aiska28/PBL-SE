@@ -34,7 +34,7 @@ if (!$d) {
     <label class="fw-semibold mt-2">NIDN</label>
     <input type="text" name="nidn" class="form-control" value="<?= $d['nidn'] ?>">
 
-    <label class="fw-semibold mt-2">Foto (biarkan kosong kalau tidak diganti)</label>
+    <label class="fw-semibold mt-2">Foto</label>
     <input type="file" name="foto_url" class="form-control">
 
     <p class="mt-2">Foto saat ini:</p>

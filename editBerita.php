@@ -58,6 +58,11 @@ if (!$data) {
                     <input type="date" name="tanggal" class="form-control" value="<?= $data['tanggal']; ?>" required>
                 </div>
 
+                <div class="mb-3">
+                    <label class="fw-semibold mt-2">Gambar</label>
+                    <input type="file" name="gambar" class="form-control">
+                </div>
+
                 <div class="d-flex justify-content-between">
                     <a href="landingAdmin.php?tab=tampilanBerita&inner=BeritaTab" class="btn btn-secondary">Kembali</a>
 
