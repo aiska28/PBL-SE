@@ -30,7 +30,6 @@
       <h4 class="text-center fw-bold">FORM OPEN RECRUITMENT</h4>
 
       <form action="backend/detail.php" method="POST" enctype="multipart/form-data">
-
         <!-- ACTION IDENTIFIER -->
         <input type="hidden" name="action" value="simpan_open_recruitment">
 

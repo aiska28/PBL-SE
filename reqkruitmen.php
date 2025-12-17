@@ -68,7 +68,7 @@ if (isset($_POST['tolak'])) {
     pg_query_params($conn, $queryTolak, [$id]);
     echo "<script>
         alert('Recruitment berhasil ditolak!');
-        window.location.href = 'permohonan.php';
+        window.location.href = 'reqkruitmen.php';
     </script>";
     exit;
 }
@@ -235,7 +235,7 @@ $result = pg_query($conn, "SELECT * FROM open_recruitment ORDER BY created_at DE
                 <span class="badge bg-success">Approved</span>
 
               <?php elseif ($row['status'] == 'ditolak'): ?>
-                <span class="badge text-white" style="background-color:#fd7e14;">Ditolak</span>
+                <span class="btn btn-warning text-white btn-sm">Ditolak</span>
 
               <?php else: ?>
                 <span class="badge bg-secondary">Pending</span>

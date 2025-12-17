@@ -170,9 +170,10 @@ $q_sapras = pg_query($conn, "SELECT * FROM sarana_prasarana ORDER BY id ASC");
                     <div class="card shadow p-2">
 
                         <?php if (!empty($sp['foto_url'])) { ?>
-                            <img src="uploads/<?= $sp['foto_url']; ?>" 
-                                class="card-img-top mb-2"
-                                style="height:220px; object-fit:cover;">
+                            <img src="uploads/<?= $pg['foto_url']; ?>"
+     class="card-img-top mb-2"
+     style="height:220px; object-fit:contain; 
+     background:#f8f9fa;">
                         <?php } ?>
 
                         <div class="card-body">

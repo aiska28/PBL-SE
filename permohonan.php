@@ -196,6 +196,8 @@ $result = pg_query($conn, "
         <td>
           <?php if($row['status']=='approved'): ?>
             <span class="badge bg-success">Approved</span>
+          <?php elseif ($row['status'] == 'ditolak'): ?>
+            <span class="btn btn-warning text-white btn-sm">Ditolak</span>
           <?php else: ?>
             <span class="badge bg-secondary">Pending</span>
           <?php endif; ?>
