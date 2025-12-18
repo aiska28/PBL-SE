@@ -47,50 +47,10 @@ include 'konekDB.php';
   </div>
 </nav>
 
-<section class="wave-section">
- 
-  <svg viewBox="0 120 1440 320" preserveAspectRatio="none" class="curve-svg">
-
-    <path
-      d="M0,220 C240,120 480,120 720,160 
-         C960,200 1200,260 1440,220 
-         L1440,0 L0,0 Z"
-      fill="#1c2d64" />
-
-    <path
-      d="M0,240 C240,150 480,150 720,180 
-         C960,210 1200,270 1440,240"
-      fill="none"
-      stroke="#2b4fa3"
-      stroke-width="3"
-      opacity="0.8" />
-
-    <path
-      d="M0,260 C240,180 480,180 720,200 
-         C960,230 1200,290 1440,260"
-      fill="none"
-      stroke="#4d6fd1"
-      stroke-width="2"
-      opacity="0.6" />
-
-    <path
-      d="M0,280 C240,210 480,210 720,220 
-         C960,240 1200,300 1440,280"
-      fill="none"
-      stroke="#7a93e8"
-      stroke-width="1.5"
-      opacity="0.4" />
-
-  </svg>
-
-  <div class="lab-profile text-center">
-    <img src="img/erasebg-transformed.png" alt="Logo Lab" style="width:240px; height:auto;">
-  </div>
-
-</section>
-
-
-
+<!-- Header Lab -->
+<div class="lab-profile text-center mt-4">
+  <img src="img/logoLab.png" alt="Logo Lab" style="width:450px; height:auto;">
+</div>
 
 <!-- PROFILE LAB -->
 <section class="container">
