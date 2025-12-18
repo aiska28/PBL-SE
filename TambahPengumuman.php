@@ -25,6 +25,11 @@
         <input type="date" name="tanggal" class="form-control" required>
     </div>
 
+    <div class="mb-3">
+        <label class="form-label">Gambar</label>
+        <input type="file" name="gambar" class="form-control">
+    </div>
+
     <button class="btn btn-primary" name="simpan">Simpan</button>
     <a href="landingAdmin.php?tab=tampilanBerita&inner=PengumumanTab" class="btn btn-secondary">Kembali</a>
 

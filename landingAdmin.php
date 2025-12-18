@@ -192,7 +192,6 @@ include 'konekDB.php';
                         onclick="return confirm('Apakah ingin mengedit data anggota ini?')">
                         Edit
                       </a>
-
                       <a href="backend/prosesAdmin.php?hapus_dosen=<?= $row['id_dosen'] ?>&tab=anggota"
                          class="btn btn-outline-danger btn-sm"
                         onclick="return confirm('Yakin ingin menghapus anggota ini?')">
@@ -829,7 +828,7 @@ include 'konekDB.php';
                 <td>{$no}</td>
                 <td>{$p['judul']}</td>
                 <td>{$p['tanggal']}</td>
-                <td><img src='uploads/{$p['gambar']}' width='70' alt='gambar'></td>
+                <td><img src='img/{$p['gambar']}' width='70' alt='gambar'></td>
                 <td>
                   <a href='editPengumuman.php?id={$p['id']}&tab=tampilanBerita&inner=PengumumanTab'
                     class='btn btn-sm btn-outline-primary'>

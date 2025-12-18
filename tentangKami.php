@@ -21,7 +21,12 @@ $q_kependidikan = pg_query($conn, "SELECT * FROM tenaga_kependidikan ORDER BY id
 // ================== SARANA & PRASARANA ===================
 $q_sapras = pg_query($conn, "SELECT * FROM sarana_prasarana ORDER BY id ASC");
 
+$section = $_GET['section'] ?? 'sejarah';
+$allowed = ['sejarah','visi','struktur','pengajar','kependidikan','sarana'];
 
+if (!in_array($section, $allowed)) {
+    $section = 'sejarah';
+}
 ?>
 
 <!DOCTYPE html>
@@ -68,12 +73,12 @@ $q_sapras = pg_query($conn, "SELECT * FROM sarana_prasarana ORDER BY id ASC");
             Tentang Kami
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#" onclick="showSection('sejarah')">Sejarah</a></li>
-            <li><a class="dropdown-item" href="#" onclick="showSection('visi')">Visi, Misi dan Tujuan</a></li>
-            <li><a class="dropdown-item" href="#" onclick="showSection('struktur')">Struktur Organisasi</a></li>
-            <li><a class="dropdown-item" href="#" onclick="showSection('pengajar')">Tenaga Pengajar</a></li>
-            <li><a class="dropdown-item" href="#" onclick="showSection('kependidikan')">Tenaga Kependidikan</a></li>
-            <li><a class="dropdown-item" href="#" onclick="showSection('Sarana')">Sarana dan Prasarana</a></li>
+            <li><a class="dropdown-item" href="tentangKami.php?section=sejarah">Sejarah</a></li>
+            <li><a class="dropdown-item" href="tentangKami.php?section=visi">Visi, Misi dan Tujuan</a></li>
+            <li><a class="dropdown-item" href="tentangKami.php?section=struktur">Struktur Organisasi</a></li>
+            <li><a class="dropdown-item" href="tentangKami.php?section=pengajar">Tenaga Pengajar</a></li>
+            <li><a class="dropdown-item" href="tentangKami.php?section=kependidikan">Tenaga Kependidikan</a></li>
+            <li><a class="dropdown-item" href="tentangKami.php?section=sarana">Sarana dan Prasarana</a></li>
           </ul>
         </li>
 
@@ -89,12 +94,12 @@ $q_sapras = pg_query($conn, "SELECT * FROM sarana_prasarana ORDER BY id ASC");
 <!-- CONTENT -->
 <div class="container py-4">
 
-    <div id="sejarah" class="section active">
+    <div id="sejarah" class="section <?= ($section=='sejarah')?'active':'' ?>">
         <h2><?= $sejarah['judul']; ?></h2>
         <p><?= nl2br($sejarah['deskripsi']); ?></p>
     </div>
 
-    <div id="visi" class="section">
+    <div id="visi" class="section <?= ($section=='visi')?'active':'' ?>">
         <h2>Visi, Misi dan Tujuan</h2>
 
         <h3>Visi</h3>
@@ -107,7 +112,7 @@ $q_sapras = pg_query($conn, "SELECT * FROM sarana_prasarana ORDER BY id ASC");
         <p><?= nl2br($vt['tujuan']); ?></p>
     </div>
 
-    <div id="struktur" class="section">
+    <div id="struktur" class="section <?= ($section=='struktur')?'active':'' ?>">
         <h2 class="text-center mb-4">Struktur Organisasi</h2>
 
         <!-- Gambar struktur -->
@@ -127,15 +132,15 @@ $q_sapras = pg_query($conn, "SELECT * FROM sarana_prasarana ORDER BY id ASC");
         </div>
     </div>
 
-    <div id="pengajar" class="section">
+    <div id="pengajar" class="section <?= ($section=='pengajar')?'active':'' ?>">
         <h2>Tenaga Pengajar</h2>
         
         <div class="row">
             <?php while($pg = pg_fetch_assoc($q_pengajar)) { ?>
                 <div class="col-md-4 mb-3">
                     <div class="card p-2 shadow">
-                        <img src="uploads/<?= $pg['foto_url']; ?>" class="card-img-top mb-2"
-                             style="height:200px; object-fit:cover;">
+                        <img src="uploads/<?= $pg['foto_url']; ?>"
+                          class="card-img-top mb-2" style="height:220px; object-fit:contain; background:#f8f9fa;">
                         <h5 class="text-center"><?= $pg['nama_dosen']; ?></h5>
                         <p class="text-center"><?= $pg['jabatan']; ?></p>
                         <p class="text-center text-muted">NIDN: <?= $pg['nidn']; ?></p>
@@ -145,7 +150,7 @@ $q_sapras = pg_query($conn, "SELECT * FROM sarana_prasarana ORDER BY id ASC");
         </div>
     </div>
 
-    <div id="kependidikan" class="section">
+    <div id="kependidikan" class="section <?= ($section=='kependidikan')?'active':'' ?>">
         <h2>Tenaga Kependidikan</h2>
         
         <div class="row">
@@ -161,21 +166,18 @@ $q_sapras = pg_query($conn, "SELECT * FROM sarana_prasarana ORDER BY id ASC");
         </div>
     </div>
 
-    <div id="Sarana" class="section">
+    <div id="sarana" class="section <?= ($section=='sarana')?'active':'' ?>">
         <h2>Sarana dan Prasarana</h2>
         
         <div class="row">
             <?php while($sp = pg_fetch_assoc($q_sapras)) { ?>
                 <div class="col-md-4 mb-3">
                     <div class="card shadow p-2">
-
                         <?php if (!empty($sp['foto_url'])) { ?>
-                            <img src="uploads/<?= $pg['foto_url']; ?>"
-     class="card-img-top mb-2"
-     style="height:220px; object-fit:contain; 
-     background:#f8f9fa;">
+                            <img src="uploads/<?= $sp['foto_url']; ?>" 
+                                class="card-img-top mb-2"
+                                style="height:220px; object-fit:cover;">
                         <?php } ?>
-
                         <div class="card-body">
                             <h5><?= $sp['nama_ruangan']; ?></h5>
                             <p><?= nl2br($sp['deskripsi']); ?></p>
