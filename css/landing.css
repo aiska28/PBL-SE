@@ -338,6 +338,30 @@ ul {
     font-size: 15px;
 }
 
+.wave-section {
+  position: relative;
+  height: 260px;  
+  margin-top: -80px;
+  overflow: hidden;
+}
+
+.lab-profile {
+  position: absolute;
+  top: 68%;                /* 🔥 NAIK (sebelumnya 50%) */
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  text-align: center;
+}
+
+.curve-svg {
+  position: absolute;
+  bottom: -15px;   /* 🔥 wave naik dikit */
+  width: 100%;
+  height: 200px;
+}
+
+
 /* ==========================
    RESPONSIVE NAVBAR FIX
    ========================== */
