@@ -12,3 +12,38 @@ body {
   box-shadow: 0 6px 15px rgba(0,0,0,0.1);
 }
 
+/* ==========================
+   RESPONSIVE NAVBAR FIX
+   ========================== */
+@media (max-width: 768px) {
+
+  nav {
+    display: flex;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+    width: 100%;
+  }
+
+  nav .left-menu,
+  nav .right-menu {
+    width: 100%;
+    display: flex;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+    margin-bottom: 10px;
+  }
+
+  nav a {
+    margin: 8px 12px;
+    display: inline-block;
+  }
+
+  /* Fix area kanan yang kadang jadi putih */
+  nav .right-menu {
+    background: transparent !important;
+  }
+}
+

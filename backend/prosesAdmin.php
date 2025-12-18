@@ -279,7 +279,7 @@ switch ($action) {
         if (!empty($_FILES['foto_url']['name'])) {
             $foto = $_FILES['foto_url']['name'];
             $tmp = $_FILES['foto_url']['tmp_name'];
-            move_uploaded_file($tmp, "uploads/" . $foto);
+            move_uploaded_file($tmp, "../uploads/" . $foto);
             pg_query_params($conn, "UPDATE tenaga_pengajar SET nama_dosen=$1, jabatan=$2, nidn=$3, foto_url=$4 WHERE id=$5", array($nama, $jabatan, $nidn, $foto, $id));
         } else {
             pg_query_params($conn, "UPDATE tenaga_pengajar SET nama_dosen=$1, jabatan=$2, nidn=$3 WHERE id=$4", array($nama, $jabatan, $nidn, $id));
@@ -403,7 +403,7 @@ switch ($action) {
         exit;
 
     case 'add_pengumuman':
-        pg_query_params($conn, "INSERT INTO pengumuman (judul, konten, tanggal) VALUES ($1, $2, $3)", array($_POST['judul'], $_POST['konten'], $_POST['tanggal']));
+        pg_query_params($conn, "INSERT INTO pengumuman (judul, konten, tanggal, gambar) VALUES ($1, $2, $3, $4)", array($_POST['judul'], $_POST['konten'], $_POST['tanggal'], $_POST['gambar']));
         header("Location: ../landingAdmin.php?tab=tampilanBerita&inner=PengumumanTab&msg=pengumuman_added");
         exit;
 
@@ -417,11 +417,11 @@ switch ($action) {
     if (!empty($_FILES['gambar']['name'])) {
 
         $namaFile = "berita_" . time() . "_" . basename($_FILES['gambar']['name']);
-        $targetPath = "../img/" . $namaFile; // ← PENTING
+        $targetPath = "../img/" . $namaFile; 
 
         move_uploaded_file($_FILES['gambar']['tmp_name'], $targetPath);
 
-        $gambar = "img/" . $namaFile; // ← SIMPAN KE DB
+        $gambar = "img/" . $namaFile; 
     }
 
     $sql = "INSERT INTO berita (judul, konten, tanggal, gambar)
@@ -470,7 +470,7 @@ switch ($action) {
         $nidn = $_POST['nidn'];
         $foto = $_FILES['foto']['name'];
         $tmp = $_FILES['foto']['tmp_name'];
-        $folder = "uploads/" . $foto;
+        $folder = "../uploads/" . $foto;
         move_uploaded_file($tmp, $folder);
         $q = "INSERT INTO tenaga_pengajar (nama_dosen, jabatan, nidn, foto_url) VALUES ($1, $2, $3, $4)";
         pg_query_params($conn, $q, array($nama, $jabatan, $nidn, $foto));
@@ -481,8 +481,10 @@ switch ($action) {
         $judul = $_POST['judul'];
         $konten = $_POST['konten'];
         $tanggal = $_POST['tanggal'];
-        $sql = "INSERT INTO pengumuman (judul, konten, tanggal) VALUES ($1, $2, $3)";
-        pg_query_params($conn, $sql, array($judul, $konten, $tanggal));
+        $gambar = $_files['gambar']['name'];
+        $folder = "../img/" . $gambar;
+        $sql = "INSERT INTO pengumuman (judul, konten, tanggal, gambar) VALUES ($1, $2, $3, $4)";
+        pg_query_params($conn, $sql, array($judul, $konten, $tanggal, $gambar));
         header("Location: ../landingAdmin.php?tab=tampilanBerita&inner=PengumumanTab&msg=pengumuman_added");
         exit;
 
@@ -506,7 +508,7 @@ switch ($action) {
         $desk = $_POST['deskripsi'];
         $foto = $_FILES['foto']['name'];
         $tmp = $_FILES['foto']['tmp_name'];
-        move_uploaded_file($tmp, "uploads/" . $foto);
+        move_uploaded_file($tmp, "../uploads/" . $foto);
         $q = "INSERT INTO sarana_prasarana (nama_ruangan, deskripsi, foto_url) VALUES ($1, $2, $3)";
         pg_query_params($conn, $q, array($nama, $desk, $foto));
         header("Location: ../landingAdmin.php?tab=tentangKami&inner=sarpras&msg=updated"); // Perlu periksa kembali msg=updated
@@ -536,7 +538,7 @@ switch ($action) {
         // ... (Logika Upload Foto dan Insert Dosen/MK/Pendidikan) ...
         // Karena kode ini sangat panjang, saya biarkan di dalam case 'simpan_tim'
         
-        $targetDir = "uploads/";
+        $targetDir = "../uploads/";
         if (!file_exists($targetDir)) { mkdir($targetDir, 0777, true); }
         $fotoName = time() . "_" . basename($_FILES['foto']['name']); 
         $fotoTmp = $_FILES['foto']['tmp_name'];
@@ -582,7 +584,7 @@ switch ($action) {
                     }
                 }
 
-                header("Location: ../andingAdmin.php?tab=anggota&msg=added");
+                header("Location: ../landingAdmin.php?tab=anggota&msg=added");
                 exit;
             } else {
                 // Logic error handling

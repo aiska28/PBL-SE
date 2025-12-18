@@ -10,15 +10,35 @@
 </head>
 <body>
 
-<!-- NAVBAR (TIDAK DIUBAH) -->
+<!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg" style="background-color: #1d2c8a;">
   <div class="container-fluid px-5">
     <div class="d-flex align-items-center me-auto">
-      <img src="img/logoPolinema.png" style="height: 60px;" class="me-3">
+      <img src="img/logoPolinema.png" alt="Logo" style="height: 60px;" class="me-3">
       <div class="text-white lh-1">
         <div style="font-size: 14px; font-weight: 600;">JURUSAN TEKNOLOGI INFORMASI</div>
         <div style="font-size: 18px; font-weight: 700;">POLITEKNIK NEGERI MALANG</div>
       </div>
+    </div>
+    <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item mx-3"><a class="nav-link text-white fw-semibold" href="landing.php">Beranda</a></li>
+        <li class="nav-item dropdown mx-3">
+          <a class="nav-link dropdown-toggle text-white fw-semibold" href="tentangKami.php" id="tentangDropdown" data-bs-toggle="dropdown">Tentang Kami</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="tentangKami.php?section=sejarah">Sejarah</a></li>
+            <li><a class="dropdown-item" href="tentangKami.php?section=visi">Visi, Misi dan Tujuan</a></li>
+            <li><a class="dropdown-item" href="tentangKami.php?section=struktur">Struktur Organisasi</a></li>
+            <li><a class="dropdown-item" href="tentangKami.php?section=pengajar">Tenaga Pengajar</a></li>
+            <li><a class="dropdown-item" href="tentangKami.php?section=kependidikan">Tenaga Kependidikan</a></li>
+            <li><a class="dropdown-item" href="tentangKami.php?section=sarana">Sarana dan Prasarana</a></li>
+          </ul>
+        </li>
+        <li class="nav-item mx-3"><a class="nav-link text-white fw-semibold" href="berita.php">Berita & Pengumuman</a></li>
+      </ul>
     </div>
   </div>
 </nav>
